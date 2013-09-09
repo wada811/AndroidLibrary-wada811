@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- AlertDialogFragmnet -->
+    <string name="dialogOk">OK</string>
+    <string name="dialogCancel">キャンセル</string>
+    <string name="dialogClose">閉じる</string>
+    <string name="dialogYes">はい</string>
+    <string name="dialogNo">いいえ</string>
+    <!-- message -->
+    <string name="mailerNotFound">メールアプリが見つかりませんでした。</string>
+    <string name="cameraNotFound">カメラが見つかりませんでした。</string>
+    <string name="failedOpenCamera">カメラの起動に失敗しました。</string>
+    <string name="alertSDcardMount">SDカードを挿入してください。</string>
+    <string name="alertSDcardLowSpace">SDカードの空き容量が足りません。\n%1$dMB以上の容量を確保してください。</string>
+    <string name="failedMakeDirectory">フォルダの作成に失敗しました。</string>
+</resources>

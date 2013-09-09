@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- SecurityUtils -->
+    <string name="debugKey"> <!-- your debug signeture -->
+    </string>
+    <string name="releaseKey"> <!-- your release signature -->
+    </string>
+</resources>
