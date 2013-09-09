@@ -21,14 +21,15 @@
 
 package jp.co.noxi.app;
 
+import java.text.NumberFormat;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.style.StyleSpan;
 import android.view.Gravity;
 import android.view.View;
@@ -39,94 +40,98 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.text.NumberFormat;
-
 /**
- * <p>A dialog showing a progress indicator and an optional text message or view.
- * Only a text message or a view can be used at the same time.</p>
- * <p>The dialog can be made cancelable on back key press.</p>
- * <p>The progress range is 0..10000.</p>
+ * <p>
+ * A dialog showing a progress indicator and an optional text message or view. Only a text message
+ * or a view can be used at the same time.
+ * </p>
+ * <p>
+ * The dialog can be made cancelable on back key press.
+ * </p>
+ * <p>
+ * The progress range is 0..10000.
+ * </p>
  */
 final class ProgressDialogGB extends AlertDialog {
 
-    private ProgressBar mProgress;
-    private TextView mMessageView;
+    private ProgressBar  mProgress;
+    private TextView     mMessageView;
 
-    private int mProgressStyle = NXProgressDialog.STYLE_SPINNER;
-    private TextView mProgressNumber;
-    private String mProgressNumberFormat = "%d/%d";
-    private TextView mProgressPercent;
+    private int          mProgressStyle        = NXProgressDialog.STYLE_SPINNER;
+    private TextView     mProgressNumber;
+    private String       mProgressNumberFormat = "%d/%d";
+    private TextView     mProgressPercent;
     private NumberFormat mProgressPercentFormat;
 
-    private int mMax;
-    private int mProgressVal;
-    private int mSecondaryProgressVal;
-    private int mIncrementBy;
-    private int mIncrementSecondaryBy;
-    private Drawable mProgressDrawable;
-    private Drawable mIndeterminateDrawable;
+    private int          mMax;
+    private int          mProgressVal;
+    private int          mSecondaryProgressVal;
+    private int          mIncrementBy;
+    private int          mIncrementSecondaryBy;
+    private Drawable     mProgressDrawable;
+    private Drawable     mIndeterminateDrawable;
     private CharSequence mMessage;
-    private boolean mIndeterminate;
+    private boolean      mIndeterminate;
 
-    private boolean mHasStarted;
-    private Handler mViewUpdateHandler;
+    private boolean      mHasStarted;
+    private Handler      mViewUpdateHandler;
 
     public ProgressDialogGB(Context context) {
         super(context);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        if (mProgressStyle == NXProgressDialog.STYLE_HORIZONTAL) {
-               
-            /* Use a separate handler to update the text views as they
+    protected void onCreate(Bundle savedInstanceState){
+        if(mProgressStyle == NXProgressDialog.STYLE_HORIZONTAL){
+
+            /*
+             * Use a separate handler to update the text views as they
              * must be updated on the same thread that created them.
              */
-            mViewUpdateHandler = new Handler() {
+            mViewUpdateHandler = new Handler(){
                 @Override
-                public void handleMessage(Message msg) {
+                public void handleMessage(Message msg){
                     super.handleMessage(msg);
-                       
+
                     /* Update the number and percent */
                     int progress = mProgress.getProgress();
                     int max = mProgress.getMax();
-                    double percent = (double) progress / (double) max;
+                    double percent = (double)progress / (double)max;
                     String format = mProgressNumberFormat;
                     mProgressNumber.setText(String.format(format, progress, max));
                     SpannableString tmp = new SpannableString(mProgressPercentFormat.format(percent));
-                    tmp.setSpan(new StyleSpan(android.graphics.Typeface.BOLD),
-                            0, tmp.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    tmp.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, tmp.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     mProgressPercent.setText(tmp);
                 }
             };
             mProgressPercentFormat = NumberFormat.getPercentInstance();
             mProgressPercentFormat.setMaximumFractionDigits(0);
             setView(getHorizontalView());
-        } else {
+        }else{
             setView(getSpinnerView());
         }
-        if (mMax > 0) {
+        if(mMax > 0){
             setMax(mMax);
         }
-        if (mProgressVal > 0) {
+        if(mProgressVal > 0){
             setProgress(mProgressVal);
         }
-        if (mSecondaryProgressVal > 0) {
+        if(mSecondaryProgressVal > 0){
             setSecondaryProgress(mSecondaryProgressVal);
         }
-        if (mIncrementBy > 0) {
+        if(mIncrementBy > 0){
             incrementProgressBy(mIncrementBy);
         }
-        if (mIncrementSecondaryBy > 0) {
+        if(mIncrementSecondaryBy > 0){
             incrementSecondaryProgressBy(mIncrementSecondaryBy);
         }
-        if (mProgressDrawable != null) {
+        if(mProgressDrawable != null){
             setProgressDrawable(mProgressDrawable);
         }
-        if (mIndeterminateDrawable != null) {
+        if(mIndeterminateDrawable != null){
             setIndeterminateDrawable(mIndeterminateDrawable);
         }
-        if (mMessage != null) {
+        if(mMessage != null){
             setMessage(mMessage);
         }
         setIndeterminate(mIndeterminate);
@@ -135,178 +140,173 @@ final class ProgressDialogGB extends AlertDialog {
     }
 
     @Override
-    public void onStart() {
+    public void onStart(){
         super.onStart();
         mHasStarted = true;
     }
 
     @Override
-    protected void onStop() {
+    protected void onStop(){
         super.onStop();
         mHasStarted = false;
     }
 
-    public void setProgress(int value) {
-        if (mHasStarted) {
+    public void setProgress(int value){
+        if(mHasStarted){
             mProgress.setProgress(value);
             onProgressChanged();
-        } else {
+        }else{
             mProgressVal = value;
         }
     }
 
-    public void setSecondaryProgress(int secondaryProgress) {
-        if (mProgress != null) {
+    public void setSecondaryProgress(int secondaryProgress){
+        if(mProgress != null){
             mProgress.setSecondaryProgress(secondaryProgress);
             onProgressChanged();
-        } else {
+        }else{
             mSecondaryProgressVal = secondaryProgress;
         }
     }
 
-    public int getProgress() {
-        if (mProgress != null) {
+    public int getProgress(){
+        if(mProgress != null){
             return mProgress.getProgress();
         }
         return mProgressVal;
     }
 
-    public int getSecondaryProgress() {
-        if (mProgress != null) {
+    public int getSecondaryProgress(){
+        if(mProgress != null){
             return mProgress.getSecondaryProgress();
         }
         return mSecondaryProgressVal;
     }
 
-    public int getMax() {
-        if (mProgress != null) {
+    public int getMax(){
+        if(mProgress != null){
             return mProgress.getMax();
         }
         return mMax;
     }
 
-    public void setMax(int max) {
-        if (mProgress != null) {
+    public void setMax(int max){
+        if(mProgress != null){
             mProgress.setMax(max);
             onProgressChanged();
-        } else {
+        }else{
             mMax = max;
         }
     }
 
-    public void incrementProgressBy(int diff) {
-        if (mProgress != null) {
+    public void incrementProgressBy(int diff){
+        if(mProgress != null){
             mProgress.incrementProgressBy(diff);
             onProgressChanged();
-        } else {
+        }else{
             mIncrementBy += diff;
         }
     }
 
-    public void incrementSecondaryProgressBy(int diff) {
-        if (mProgress != null) {
+    public void incrementSecondaryProgressBy(int diff){
+        if(mProgress != null){
             mProgress.incrementSecondaryProgressBy(diff);
             onProgressChanged();
-        } else {
+        }else{
             mIncrementSecondaryBy += diff;
         }
     }
 
-    public void setProgressDrawable(Drawable d) {
-        if (mProgress != null) {
+    public void setProgressDrawable(Drawable d){
+        if(mProgress != null){
             mProgress.setProgressDrawable(d);
-        } else {
+        }else{
             mProgressDrawable = d;
         }
     }
 
-    public void setIndeterminateDrawable(Drawable d) {
-        if (mProgress != null) {
+    public void setIndeterminateDrawable(Drawable d){
+        if(mProgress != null){
             mProgress.setIndeterminateDrawable(d);
-        } else {
+        }else{
             mIndeterminateDrawable = d;
         }
     }
 
-    public void setIndeterminate(boolean indeterminate) {
-        if (mProgress != null) {
+    public void setIndeterminate(boolean indeterminate){
+        if(mProgress != null){
             mProgress.setIndeterminate(indeterminate);
-        } else {
+        }else{
             mIndeterminate = indeterminate;
         }
     }
 
-    public boolean isIndeterminate() {
-        if (mProgress != null) {
+    public boolean isIndeterminate(){
+        if(mProgress != null){
             return mProgress.isIndeterminate();
         }
         return mIndeterminate;
     }
 
     @Override
-    public void setMessage(CharSequence message) {
-        if (mProgress != null) {
-            if (mProgressStyle == NXProgressDialog.STYLE_HORIZONTAL) {
+    public void setMessage(CharSequence message){
+        if(mProgress != null){
+            if(mProgressStyle == NXProgressDialog.STYLE_HORIZONTAL){
                 super.setMessage(message);
-            } else {
+            }else{
                 mMessageView.setText(message);
             }
-        } else {
+        }else{
             mMessage = message;
         }
     }
 
-    public void setProgressStyle(int style) {
+    public void setProgressStyle(int style){
         mProgressStyle = style;
     }
 
     /**
      * Change the format of Progress Number. The default is "current/max".
      * Should not be called during the number is progressing.
-     *
+     * 
      * @param format Should contain two "%d". The first is used for current number
-     *               and the second is used for the maximum.
+     *        and the second is used for the maximum.
      */
-    public void setProgressNumberFormat(String format) {
+    public void setProgressNumberFormat(String format){
         mProgressNumberFormat = format;
     }
 
-    private void onProgressChanged() {
-        if (mProgressStyle == NXProgressDialog.STYLE_HORIZONTAL) {
+    private void onProgressChanged(){
+        if(mProgressStyle == NXProgressDialog.STYLE_HORIZONTAL){
             mViewUpdateHandler.sendEmptyMessage(0);
         }
     }
 
-    private View getSpinnerView() {
+    private View getSpinnerView(){
         final Context context = getContext();
         final float density = context.getResources().getDisplayMetrics().density;
 
         final FrameLayout root = new FrameLayout(context);
-        root.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        final int paddingH = (int) (8 * density);
-        final int paddingV = (int) (10 * density);
+        final int paddingH = (int)(8 * density);
+        final int paddingV = (int)(10 * density);
         final LinearLayout container = new LinearLayout(context);
-        container.setLayoutParams(new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        container.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         container.setOrientation(LinearLayout.HORIZONTAL);
         container.setBaselineAligned(false);
         container.setPadding(paddingH, paddingV, paddingH, paddingV);
         root.addView(container);
 
-        final LinearLayout.LayoutParams progressParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        progressParams.rightMargin = (int) (12 * density);
-        final ProgressBar progress = mProgress =
-                new ProgressBar(context, null, android.R.attr.progressBarStyle);
+        final LinearLayout.LayoutParams progressParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        progressParams.rightMargin = (int)(12 * density);
+        final ProgressBar progress = mProgress = new ProgressBar(context, null, android.R.attr.progressBarStyle);
         progress.setLayoutParams(progressParams);
         progress.setId(android.R.id.progress);
         progress.setMax(10000);
         container.addView(progress);
 
-        final LinearLayout.LayoutParams messageParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final LinearLayout.LayoutParams messageParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         messageParams.gravity = Gravity.CENTER_VERTICAL;
         final TextView message = mMessageView = new TextView(context);
         message.setLayoutParams(messageParams);
@@ -316,31 +316,27 @@ final class ProgressDialogGB extends AlertDialog {
         return root;
     }
 
-    private View getHorizontalView() {
+    private View getHorizontalView(){
         final Context context = getContext();
         final float density = context.getResources().getDisplayMetrics().density;
 
         final RelativeLayout root = new RelativeLayout(context);
-        root.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        final int marginH = (int) (10 * density);
-        final int marginT = (int) (12 * density);
-        final RelativeLayout.LayoutParams progressParams = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final int marginH = (int)(10 * density);
+        final int marginT = (int)(12 * density);
+        final RelativeLayout.LayoutParams progressParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         progressParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         progressParams.topMargin = marginT;
-        progressParams.bottomMargin = (int) (density + 0.5f);
+        progressParams.bottomMargin = (int)(density + 0.5f);
         progressParams.leftMargin = marginH;
         progressParams.rightMargin = marginH;
-        final ProgressBar progress = mProgress =
-                new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
+        final ProgressBar progress = mProgress = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
         progress.setLayoutParams(progressParams);
         progress.setId(android.R.id.progress);
         root.addView(progress);
 
-        final RelativeLayout.LayoutParams percentParams = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final RelativeLayout.LayoutParams percentParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         percentParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         percentParams.addRule(RelativeLayout.BELOW, android.R.id.progress);
         percentParams.leftMargin = marginH;
@@ -349,8 +345,7 @@ final class ProgressDialogGB extends AlertDialog {
         percent.setLayoutParams(percentParams);
         root.addView(percent);
 
-        final RelativeLayout.LayoutParams numberParams = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final RelativeLayout.LayoutParams numberParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         numberParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         numberParams.addRule(RelativeLayout.BELOW, android.R.id.progress);
         numberParams.leftMargin = marginH;

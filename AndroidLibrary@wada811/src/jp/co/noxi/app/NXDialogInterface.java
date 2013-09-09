@@ -23,7 +23,7 @@ import android.view.View;
 
 /**
  * An interface for {@link NXDialog}
- *
+ * 
  * @author noxi
  * @see android.content.DialogInterface
  */
@@ -36,9 +36,9 @@ public interface NXDialogInterface {
     interface OnChoiceClickListener {
         /**
          * This method will be invoked when an item in the dialog is clicked.
-         *
+         * 
          * @param dialog The dialog that received the click.
-         * @param which  The position of the item clicked.
+         * @param which The position of the item clicked.
          */
         void onClick(NXDialogInterface dialog, int which);
     }
@@ -50,9 +50,9 @@ public interface NXDialogInterface {
     interface OnMultiChoiceClickListener {
         /**
          * This method will be invoked when an item in the dialog is clicked.
-         *
-         * @param dialog    The dialog where the selection was made.
-         * @param which     The position of the item in the list that was clicked.
+         * 
+         * @param dialog The dialog where the selection was made.
+         * @param which The position of the item in the list that was clicked.
          * @param isChecked True if the click checked the item, else false.
          */
         void onClick(NXDialogInterface dialog, int which, boolean isChecked);
@@ -65,21 +65,21 @@ public interface NXDialogInterface {
     interface OnClickListener {
         /**
          * This method will be invoked when a positive button in the dialog is clicked.
-         *
+         * 
          * @param dialog The dialog that received the click.
          */
         void onClickPositive(NXDialogInterface dialog);
 
         /**
          * This method will be invoked when a negative button in the dialog is clicked.
-         *
+         * 
          * @param dialog The dialog that received the click.
          */
         void onClickNegative(NXDialogInterface dialog);
 
         /**
          * This method will be invoked when a neutral button in the dialog is clicked.
-         *
+         * 
          * @param dialog The dialog that received the click.
          */
         void onClickNeutral(NXDialogInterface dialog);
@@ -92,7 +92,7 @@ public interface NXDialogInterface {
     interface OnShowListener {
         /**
          * This method will be invoked when the dialog is shown.
-         *
+         * 
          * @param dialog The dialog that was shown will be passed into the method.
          */
         void onShow(NXDialogInterface dialog);
@@ -102,14 +102,13 @@ public interface NXDialogInterface {
      * Interface used to allow the creator of a dialog to run some code when the
      * dialog is canceled.
      * <p/>
-     * This will only be called when the dialog is canceled, if the creator
-     * needs to know when it is dismissed in general, use
-     * {@link NXDialogInterface.OnDismissListener}.
+     * This will only be called when the dialog is canceled, if the creator needs to know when it is
+     * dismissed in general, use {@link NXDialogInterface.OnDismissListener}.
      */
     interface OnCancelListener {
         /**
          * This method will be invoked when the dialog is canceled.
-         *
+         * 
          * @param dialog The dialog that was canceled will be passed into the method.
          */
         void onCancel(NXDialogInterface dialog);
@@ -122,7 +121,7 @@ public interface NXDialogInterface {
     interface OnDismissListener {
         /**
          * This method will be invoked when the dialog is dismissed.
-         *
+         * 
          * @param dialog The dialog that was dismissed will be passed into the method.
          */
         void onDismiss(NXDialogInterface dialog);
@@ -137,10 +136,10 @@ public interface NXDialogInterface {
         /**
          * Called when a key is dispatched to a dialog. This allows listeners to
          * get a chance to respond before the dialog.
-         *
-         * @param dialog  The dialog the key has been dispatched to.
+         * 
+         * @param dialog The dialog the key has been dispatched to.
          * @param keyCode The code for the physical key that was pressed
-         * @param event   The KeyEvent object containing full information about the event.
+         * @param event The KeyEvent object containing full information about the event.
          * @return True if the listener has consumed the event, false otherwise.
          */
         boolean onKey(NXDialogInterface dialog, int keyCode, KeyEvent event);
@@ -152,7 +151,6 @@ public interface NXDialogInterface {
     interface ViewDelegate {
         View getView(NXDialogInterface dialog);
     }
-
 
     void dismiss();
 
