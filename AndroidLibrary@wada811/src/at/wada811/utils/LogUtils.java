@@ -35,6 +35,12 @@ public class LogUtils {
         }
     }
 
+    public static void v(String tag, String message){
+        if(BuildConfig.DEBUG && isDebug){
+            Log.v(tag, getMetaInfo() + null2str(message));
+        }
+    }
+
     public static void d(){
         if(BuildConfig.DEBUG && isDebug){
             Log.d(TAG, getMetaInfo());
@@ -44,6 +50,12 @@ public class LogUtils {
     public static void d(String message){
         if(BuildConfig.DEBUG && isDebug){
             Log.d(TAG, getMetaInfo() + null2str(message));
+        }
+    }
+
+    public static void d(String tag, String message){
+        if(BuildConfig.DEBUG && isDebug){
+            Log.d(tag, getMetaInfo() + null2str(message));
         }
     }
 
@@ -59,9 +71,21 @@ public class LogUtils {
         }
     }
 
+    public static void i(String tag, String message){
+        if(BuildConfig.DEBUG && isDebug){
+            Log.i(tag, getMetaInfo() + null2str(message));
+        }
+    }
+
     public static void w(String message){
         if(BuildConfig.DEBUG && isDebug){
             Log.w(TAG, getMetaInfo() + null2str(message));
+        }
+    }
+
+    public static void w(String tag, String message){
+        if(BuildConfig.DEBUG && isDebug){
+            Log.w(tag, getMetaInfo() + null2str(message));
         }
     }
 
@@ -78,6 +102,12 @@ public class LogUtils {
     public static void e(String message){
         if(BuildConfig.DEBUG && isDebug){
             Log.e(TAG, getMetaInfo() + null2str(message));
+        }
+    }
+
+    public static void e(String tag, String message){
+        if(BuildConfig.DEBUG && isDebug){
+            Log.e(tag, getMetaInfo() + null2str(message));
         }
     }
 
