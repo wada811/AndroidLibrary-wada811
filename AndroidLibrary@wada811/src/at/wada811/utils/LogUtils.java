@@ -20,7 +20,7 @@ import at.wada811.android.library.BuildConfig;
 
 public class LogUtils {
 
-    private static final String  TAG     = "LogUtil";
+    private static final String  TAG     = LogUtils.class.getSimpleName();
     private static final boolean isDebug = true;
 
     public static void v(){
