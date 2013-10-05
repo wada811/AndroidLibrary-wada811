@@ -15,10 +15,13 @@
  */
 package at.wada811.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
+import android.view.Window;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -105,5 +108,61 @@ public class ViewUtils {
      */
     public static void setImageColorFilter(ImageView imageView, int hexColor){
         imageView.setColorFilter(hexColor);
+    }
+
+    /**
+     * ステータスバーの高さを取得する
+     * 
+     * @param activity
+     */
+    public static int getStatusBarHeight(Activity activity){
+        Rect rectgle = new Rect();
+        Window window = activity.getWindow();
+        window.getDecorView().getWindowVisibleDisplayFrame(rectgle);
+        return rectgle.top;
+    }
+
+    /**
+     * タイトルバーの高さを取得する
+     * Androidの画面サイズを攻略して機種依存を吸収する(ナビゲーションバーとステータスバーのサイズを取得する) | Tech Booster
+     * http://techbooster.org/android/hacks/16066/
+     */
+    public static int getTitleBarHeight(Activity activity){
+        Rect rectgle = new Rect();
+        Window window = activity.getWindow();
+        window.getDecorView().getWindowVisibleDisplayFrame(rectgle);
+        int contentViewTop = window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
+        return contentViewTop - getStatusBarHeight(activity);
+    }
+
+    private void test(Activity activity){
+        LogUtils.d("getStatusBarHeight: " + ViewUtils.getStatusBarHeight(activity));
+        LogUtils.d("getTitleBarHeight: " + ViewUtils.getTitleBarHeight(activity));
+        Rect rectgle = new Rect();
+        Window window = activity.getWindow();
+        window.getDecorView().getWindowVisibleDisplayFrame(rectgle);
+        int contentViewTop = window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
+        int contentViewLeft = window.findViewById(Window.ID_ANDROID_CONTENT).getLeft();
+        int contentViewBottom = window.findViewById(Window.ID_ANDROID_CONTENT).getBottom();
+        int contentViewRight = window.findViewById(Window.ID_ANDROID_CONTENT).getRight();
+        LogUtils.d("contentViewTop: " + contentViewTop);
+        LogUtils.d("contentViewLeft: " + contentViewLeft);
+        LogUtils.d("contentViewBottom: " + contentViewBottom);
+        LogUtils.d("contentViewRight: " + contentViewRight);
+        int contentViewWidth = window.findViewById(Window.ID_ANDROID_CONTENT).getWidth();
+        int contentViewHeight = window.findViewById(Window.ID_ANDROID_CONTENT).getHeight();
+        LogUtils.d("contentViewWidth: " + contentViewWidth);
+        LogUtils.d("contentViewHeight: " + contentViewHeight);
+        int displayWidth = DisplayUtils.getWidth(activity);
+        int displayHeight = DisplayUtils.getHeight(activity);
+        LogUtils.d("displayWidth: " + displayWidth);
+        LogUtils.d("displayHeight: " + displayHeight);
+    }
+
+    /**
+     * コンテンツ部分の上部の座標を取得する
+     */
+    public static int getContentTop(Activity activity){
+        return ViewUtils.getTitleBarHeight(activity) + ViewUtils.getStatusBarHeight(activity);
     }
 }

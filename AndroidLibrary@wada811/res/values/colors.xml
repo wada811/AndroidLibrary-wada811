@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Basic Color -->
+    <color name="white">#FCFCFC</color>
+    <color name="black">#333333</color>
+    <color name="transparent">#00FFFFFF</color>
+    <!-- Android Color -->
+    <color name="gray_light">#E8E8E8</color>
+    <color name="gray_dark">#666666</color>
+    <color name="blue_light">#33B5E5</color>
+    <color name="blue_dark">#0099CC</color>
+    <color name="purple_light">#AA66CC</color>
+    <color name="purple_dark">#9933CC</color>
+    <color name="green_light">#99CC00</color>
+    <color name="green_dark">#669900</color>
+    <color name="orange_light">#FFBB33</color>
+    <color name="orange_dark">#FF8800</color>
+    <color name="red_light">#FF4444</color>
+    <color name="red_dark">#CC0000</color>
+</resources>

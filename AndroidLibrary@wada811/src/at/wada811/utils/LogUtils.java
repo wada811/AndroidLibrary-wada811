@@ -20,112 +20,124 @@ import at.wada811.android.library.BuildConfig;
 
 public class LogUtils {
 
-    private static final String  TAG     = LogUtils.class.getSimpleName();
-    private static final boolean isDebug = true;
+    /**
+     * ログ出力タグ
+     */
+    public static String  TAG         = LogUtils.class.getSimpleName();
+
+    /**
+     * ラッパーメソッドはここを書き換える
+     */
+    public static int     STACK_INDEX = 4;
+    public static boolean isDebug     = true;
+
+    private static boolean isLoggable(){
+        return BuildConfig.DEBUG && isDebug;
+    }
 
     public static void v(){
-        if(BuildConfig.DEBUG && isDebug){
+        if(LogUtils.isLoggable()){
             Log.v(TAG, getMetaInfo());
         }
     }
 
     public static void v(String message){
-        if(BuildConfig.DEBUG && isDebug){
+        if(LogUtils.isLoggable()){
             Log.v(TAG, getMetaInfo() + null2str(message));
         }
     }
 
     public static void v(String tag, String message){
-        if(BuildConfig.DEBUG && isDebug){
+        if(LogUtils.isLoggable()){
             Log.v(tag, getMetaInfo() + null2str(message));
         }
     }
 
     public static void d(){
-        if(BuildConfig.DEBUG && isDebug){
+        if(LogUtils.isLoggable()){
             Log.d(TAG, getMetaInfo());
         }
     }
 
     public static void d(String message){
-        if(BuildConfig.DEBUG && isDebug){
+        if(LogUtils.isLoggable()){
             Log.d(TAG, getMetaInfo() + null2str(message));
         }
     }
 
     public static void d(String tag, String message){
-        if(BuildConfig.DEBUG && isDebug){
+        if(LogUtils.isLoggable()){
             Log.d(tag, getMetaInfo() + null2str(message));
         }
     }
 
     public static void i(){
-        if(BuildConfig.DEBUG && isDebug){
+        if(LogUtils.isLoggable()){
             Log.i(TAG, getMetaInfo());
         }
     }
 
     public static void i(String message){
-        if(BuildConfig.DEBUG && isDebug){
+        if(LogUtils.isLoggable()){
             Log.i(TAG, getMetaInfo() + null2str(message));
         }
     }
 
     public static void i(String tag, String message){
-        if(BuildConfig.DEBUG && isDebug){
+        if(LogUtils.isLoggable()){
             Log.i(tag, getMetaInfo() + null2str(message));
         }
     }
 
     public static void w(String message){
-        if(BuildConfig.DEBUG && isDebug){
+        if(LogUtils.isLoggable()){
             Log.w(TAG, getMetaInfo() + null2str(message));
         }
     }
 
     public static void w(String tag, String message){
-        if(BuildConfig.DEBUG && isDebug){
+        if(LogUtils.isLoggable()){
             Log.w(tag, getMetaInfo() + null2str(message));
         }
     }
 
     public static void w(String message, Throwable e){
-        if(BuildConfig.DEBUG && isDebug){
+        if(LogUtils.isLoggable()){
             Log.w(TAG, getMetaInfo() + null2str(message), e);
-            printThrowable(e);
+            logThrowable(e);
             if(e.getCause() != null){
-                printThrowable(e.getCause());
+                logThrowable(e.getCause());
             }
         }
     }
 
     public static void e(String message){
-        if(BuildConfig.DEBUG && isDebug){
+        if(LogUtils.isLoggable()){
             Log.e(TAG, getMetaInfo() + null2str(message));
         }
     }
 
     public static void e(String tag, String message){
-        if(BuildConfig.DEBUG && isDebug){
+        if(LogUtils.isLoggable()){
             Log.e(tag, getMetaInfo() + null2str(message));
         }
     }
 
     public static void e(String message, Throwable e){
-        if(BuildConfig.DEBUG && isDebug){
+        if(LogUtils.isLoggable()){
             Log.e(TAG, getMetaInfo() + null2str(message), e);
-            printThrowable(e);
+            logThrowable(e);
             if(e.getCause() != null){
-                printThrowable(e.getCause());
+                logThrowable(e.getCause());
             }
         }
     }
 
     public static void e(Throwable e){
-        if(BuildConfig.DEBUG && isDebug){
-            printThrowable(e);
+        if(LogUtils.isLoggable()){
+            logThrowable(e);
             if(e.getCause() != null){
-                printThrowable(e.getCause());
+                logThrowable(e.getCause());
             }
         }
     }
@@ -142,7 +154,7 @@ public class LogUtils {
      * 
      * @param e
      */
-    private static void printThrowable(Throwable e){
+    private static void logThrowable(Throwable e){
         Log.e(TAG, e.getClass().getName() + ": " + e.getMessage());
         for(StackTraceElement element : e.getStackTrace()){
             Log.e(TAG, "  at " + LogUtils.getMetaInfo(element));
@@ -156,7 +168,7 @@ public class LogUtils {
      */
     private static String getMetaInfo(){
         // スタックトレースから情報を取得 // 0: VM, 1: Thread, 2: LogUtil#getMetaInfo, 3: LogUtil#d など, 4: 呼び出し元
-        final StackTraceElement element = Thread.currentThread().getStackTrace()[4];
+        final StackTraceElement element = Thread.currentThread().getStackTrace()[STACK_INDEX];
         return LogUtils.getMetaInfo(element);
     }
 

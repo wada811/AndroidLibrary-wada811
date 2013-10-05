@@ -19,12 +19,14 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.annotation.TargetApi;
+import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.Size;
+import android.media.CamcorderProfile;
 import android.os.Build;
 
 public class CameraUtils {
@@ -47,6 +49,16 @@ public class CameraUtils {
             PreferenceUtils.putBoolean(context, PackageManager.FEATURE_CAMERA, hasCamera);
         }
         return hasCamera;
+    }
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    public static boolean isCameraDisabled(Context context){
+        if(AndroidUtils.isMoreThanBuildVersion(Build.VERSION_CODES.ICE_CREAM_SANDWICH)){
+            DevicePolicyManager devicePolicyManager = (DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+            return devicePolicyManager.getCameraDisabled(null);
+        }else{
+            return false;
+        }
     }
 
     /**
@@ -99,33 +111,42 @@ public class CameraUtils {
     public static int getCameraDisplayOrientation(Context context, CameraInfo info){
         if(AndroidUtils.isMoreThanBuildVersion(Build.VERSION_CODES.GINGERBREAD)){
             int degrees = DisplayUtils.getRotationDegrees(context);
-            if(DEBUG)
+            if(DEBUG){
                 LogUtils.v("degrees: " + degrees);
+            }
             int displayOrientation;
             if(CameraUtils.isBackCamera(info)){
                 // アウトカメラ
-                if(DEBUG)
+                if(DEBUG){
                     LogUtils.v(String.valueOf(degrees));
-                if(DEBUG)
+                }
+                if(DEBUG){
                     LogUtils.v(String.valueOf(info.orientation));
+                }
                 displayOrientation = ((360 - degrees) + info.orientation) % 360;
-                if(DEBUG)
+                if(DEBUG){
                     LogUtils.v(String.valueOf(displayOrientation));
+                }
                 displayOrientation = (360 + displayOrientation) % 360;
-                if(DEBUG)
+                if(DEBUG){
                     LogUtils.v(String.valueOf(displayOrientation));
+                }
             }else{
                 // インカメラ
-                if(DEBUG)
+                if(DEBUG){
                     LogUtils.v(String.valueOf(degrees));
-                if(DEBUG)
+                }
+                if(DEBUG){
                     LogUtils.v(String.valueOf(info.orientation));
+                }
                 displayOrientation = (360 - degrees - info.orientation) % 360;
-                if(DEBUG)
+                if(DEBUG){
                     LogUtils.v(String.valueOf(displayOrientation));
+                }
                 displayOrientation = (360 + displayOrientation) % 360;
-                if(DEBUG)
+                if(DEBUG){
                     LogUtils.v(String.valueOf(displayOrientation));
+                }
             }
             return displayOrientation;
         }
@@ -155,25 +176,31 @@ public class CameraUtils {
         final boolean isPortrait = DisplayUtils.isPortrait(context);
         final int width = DisplayUtils.getWidth(context);
         final int height = DisplayUtils.getHeight(context);
-        if(DEBUG)
+        if(DEBUG){
             LogUtils.v("width: " + width);
-        if(DEBUG)
+        }
+        if(DEBUG){
             LogUtils.v("height: " + height);
+        }
         final double targetRatio = isPortrait ? (double)height / width : (double)width / height;
         final int targetHeight = isPortrait ? width : height;
         Size optimalSize = null;
         double minDiff = Double.MAX_VALUE;
-        if(DEBUG)
+        if(DEBUG){
             LogUtils.v("targetRatio: " + targetRatio);
+        }
         for(Size size : sizes){
             double pictureRatio = isPortrait ? (double)size.height / size.width : (double)size.width / size.height;
             pictureRatio = (double)size.width / size.height;
-            if(DEBUG)
+            if(DEBUG){
                 LogUtils.v("size.width: " + size.width);
-            if(DEBUG)
+            }
+            if(DEBUG){
                 LogUtils.v("size.height: " + size.height);
-            if(DEBUG)
+            }
+            if(DEBUG){
                 LogUtils.v("pictureRatio: " + pictureRatio);
+            }
             if(Math.abs(pictureRatio - targetRatio) > ASPECT_TOLERANCE){
                 continue;
             }
@@ -191,10 +218,12 @@ public class CameraUtils {
                 }
             }
         }
-        if(DEBUG)
+        if(DEBUG){
             LogUtils.v("optimalSize.width: " + optimalSize.width);
-        if(DEBUG)
+        }
+        if(DEBUG){
             LogUtils.v("optimalSize.height: " + optimalSize.height);
+        }
         return optimalSize;
     }
 
@@ -223,25 +252,31 @@ public class CameraUtils {
         final Size pictureSize = camera.getParameters().getPictureSize();
         final int width = pictureSize.width;
         final int height = pictureSize.height;
-        if(DEBUG)
+        if(DEBUG){
             LogUtils.v("width: " + width);
-        if(DEBUG)
+        }
+        if(DEBUG){
             LogUtils.v("height: " + height);
+        }
         final double targetRatio = isPortrait ? (double)height / width : (double)width / height;
         final int targetHeight = isPortrait ? width : height;
         Size optimalSize = null;
         double minDiff = Double.MAX_VALUE;
-        if(DEBUG)
+        if(DEBUG){
             LogUtils.v("targetRatio: " + targetRatio);
+        }
         for(Size size : sizes){
             double previewRatio = isPortrait ? (double)size.height / size.width : (double)size.width / size.height;
             previewRatio = (double)size.width / size.height;
-            if(DEBUG)
+            if(DEBUG){
                 LogUtils.v("size.width: " + size.width);
-            if(DEBUG)
+            }
+            if(DEBUG){
                 LogUtils.v("size.height: " + size.height);
-            if(DEBUG)
+            }
+            if(DEBUG){
                 LogUtils.v("previewRatio: " + previewRatio);
+            }
             if(Math.abs(previewRatio - targetRatio) > ASPECT_TOLERANCE){
                 continue;
             }
@@ -259,10 +294,12 @@ public class CameraUtils {
                 }
             }
         }
-        if(DEBUG)
+        if(DEBUG){
             LogUtils.v("optimalSize.width: " + optimalSize.width);
-        if(DEBUG)
+        }
+        if(DEBUG){
             LogUtils.v("optimalSize.height: " + optimalSize.height);
+        }
         return optimalSize;
     }
 
@@ -290,97 +327,115 @@ public class CameraUtils {
         boolean isPortrait = DisplayUtils.isPortrait(context);
         final int displayWidth = DisplayUtils.getWidth(context);
         final int displayHeight = DisplayUtils.getHeight(context);
-        if(DEBUG)
+        if(DEBUG){
             LogUtils.v("displayWidth: " + displayWidth);
-        if(DEBUG)
+        }
+        if(DEBUG){
             LogUtils.v("displayHeight: " + displayHeight);
-//        XXX
+        }
+        // XXX
 //        PreferenceUtils.putInt(context, context.getString(R.string.keyDisplayWidth), displayWidth);
 //        PreferenceUtils.putInt(context, context.getString(R.string.keyDisplayHeight), displayHeight);
         final int previewWidth = isPortrait ? previewSize.height : previewSize.width;
         final int previewHeight = isPortrait ? previewSize.width : previewSize.height;
-        if(DEBUG)
+        if(DEBUG){
             LogUtils.v("previewWidth: " + previewWidth);
-        if(DEBUG)
+        }
+        if(DEBUG){
             LogUtils.v("previewHeight: " + previewHeight);
-//        XXX
+        }
+        // XXX
 //        PreferenceUtils.putInt(context, context.getString(R.string.keyPreviewWidth), previewWidth);
 //        PreferenceUtils.putInt(context, context.getString(R.string.keyPreviewHeight), previewHeight);
         double displayRatio = displayHeight > displayWidth ? (double)displayHeight / displayWidth : (double)displayWidth / displayHeight;
         double previewRatio = previewHeight > previewWidth ? (double)previewHeight / previewWidth : (double)previewWidth / previewHeight;
-        if(DEBUG)
+        if(DEBUG){
             LogUtils.v("displayRatio: " + displayRatio);
-        if(DEBUG)
+        }
+        if(DEBUG){
             LogUtils.v("previewRatio: " + previewRatio);
-//        XXX
+        }
+        // XXX
 //        PreferenceUtils.putFloat(context, context.getString(R.string.keyDisplayRatio), (float)displayRatio);
 //        PreferenceUtils.putFloat(context, context.getString(R.string.keyPreviewRatio), (float)previewRatio);
         int scaledChildWidth = displayWidth;
         int scaledChildHeight = displayHeight;
         if(displayRatio <= previewRatio){
             if(isPortrait){
-                if(DEBUG)
+                if(DEBUG){
                     LogUtils.v("Portrait");
+                }
                 scaledChildWidth = (displayHeight * previewWidth) / previewHeight;
                 scaledChildHeight = (scaledChildWidth * previewHeight) / previewWidth;
             }else{
-                if(DEBUG)
+                if(DEBUG){
                     LogUtils.v("Landscape");
+                }
                 scaledChildHeight = (displayWidth * previewHeight) / previewWidth;
                 scaledChildWidth = (scaledChildHeight * previewWidth) / previewHeight;
             }
         }else{
             if(isPortrait){
-                if(DEBUG)
+                if(DEBUG){
                     LogUtils.v("Portrait");
+                }
                 scaledChildHeight = (displayWidth * previewHeight) / previewWidth;
                 scaledChildWidth = (scaledChildHeight * previewWidth) / previewHeight;
             }else{
-                if(DEBUG)
+                if(DEBUG){
                     LogUtils.v("Landscape");
+                }
                 scaledChildWidth = (displayHeight * previewWidth) / previewHeight;
                 scaledChildHeight = (scaledChildWidth * previewHeight) / previewWidth;
             }
         }
-        if(DEBUG)
+        if(DEBUG){
             LogUtils.v("scaledChildWidth: " + scaledChildWidth);
-        if(DEBUG)
+        }
+        if(DEBUG){
             LogUtils.v("scaledChildHeight: " + scaledChildHeight);
-//        XXX
+        }
+        // XXX
 //        PreferenceUtils.putInt(context, context.getString(R.string.keyScaledChildWidth), scaledChildWidth);
 //        PreferenceUtils.putInt(context, context.getString(R.string.keyScaledChildHeight), scaledChildHeight);
         int scaledWidth = scaledChildWidth;
         int scaledHeight = scaledChildHeight;
         if(displayRatio <= previewRatio){
             if(isPortrait){
-                if(DEBUG)
+                if(DEBUG){
                     LogUtils.v("Portrait");
+                }
                 scaledHeight = (displayWidth * previewHeight) / previewWidth;
                 scaledWidth = (scaledHeight * previewWidth) / previewHeight;
             }else{
-                if(DEBUG)
+                if(DEBUG){
                     LogUtils.v("Landscape");
+                }
                 scaledWidth = (displayHeight * previewWidth) / previewHeight;
                 scaledHeight = (scaledWidth * previewHeight) / previewWidth;
             }
         }else{
             if(isPortrait){
-                if(DEBUG)
+                if(DEBUG){
                     LogUtils.v("Portrait");
 //                scaledWidth = (displayHeight * previewWidth) / previewHeight;
 //                scaledHeight = (scaledWidth * previewHeight) / previewWidth;
+                }
             }else{
-                if(DEBUG)
+                if(DEBUG){
                     LogUtils.v("Landscape");
 //                scaledHeight = (displayWidth * previewHeight) / previewWidth;
 //                scaledWidth = (scaledHeight * previewWidth) / previewHeight;
+                }
             }
         }
-        if(DEBUG)
+        if(DEBUG){
             LogUtils.v("scaledWidth: " + scaledWidth);
-        if(DEBUG)
+        }
+        if(DEBUG){
             LogUtils.v("scaledHeight: " + scaledHeight);
-//        XXX
+        }
+        // XXX
 //        PreferenceUtils.putInt(context, context.getString(R.string.keyScaledWidth), scaledWidth);
 //        PreferenceUtils.putInt(context, context.getString(R.string.keyScaledHeight), scaledHeight);
         return camera.new Size(scaledWidth, scaledHeight);
@@ -398,16 +453,59 @@ public class CameraUtils {
         for(String element : data){
             String[] splits = element.split("=");
             String key = splits[0];
-            if(DEBUG)
+            if(DEBUG){
                 LogUtils.v(key);
+            }
             String value = splits.length > 1 ? splits[1] : "";
-            if(DEBUG)
+            if(DEBUG){
                 LogUtils.v(value);
+            }
             try{
                 json.put(key, value);
             }catch(JSONException e){
                 e.printStackTrace();
             }
+        }
+        return json.toString();
+    }
+
+    /**
+     * プロファイルをJSONに変換する
+     * 
+     * @param params
+     * @return
+     */
+    public static String toJson(CamcorderProfile camcorderProfile){
+        JSONObject json = new JSONObject();
+        try{
+            json.put("audioBitRate: ", camcorderProfile.audioBitRate);
+            json.put("audioChannels: ", camcorderProfile.audioChannels);
+            json.put("audioCodec: ", camcorderProfile.audioCodec);
+            json.put("audioSampleRate: ", camcorderProfile.audioSampleRate);
+            json.put("duration: ", camcorderProfile.duration);
+            json.put("fileFormat: ", camcorderProfile.fileFormat);
+            json.put("quality: ", camcorderProfile.quality);
+            json.put("videoBitRate: ", camcorderProfile.videoBitRate);
+            json.put("videoCodec: ", camcorderProfile.videoCodec);
+            json.put("videoFrameHeight: ", camcorderProfile.videoFrameHeight);
+            json.put("videoFrameRate: ", camcorderProfile.videoFrameRate);
+            json.put("videoFrameWidth: ", camcorderProfile.videoFrameWidth);
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        if(DEBUG){
+            LogUtils.v("camcorderProfile.audioBitRate: " + camcorderProfile.audioBitRate);
+            LogUtils.v("camcorderProfile.audioChannels: " + camcorderProfile.audioChannels);
+            LogUtils.v("camcorderProfile.audioCodec: " + camcorderProfile.audioCodec);
+            LogUtils.v("camcorderProfile.audioSampleRate: " + camcorderProfile.audioSampleRate);
+            LogUtils.v("camcorderProfile.duration: " + camcorderProfile.duration);
+            LogUtils.v("camcorderProfile.fileFormat: " + camcorderProfile.fileFormat);
+            LogUtils.v("camcorderProfile.quality: " + camcorderProfile.quality);
+            LogUtils.v("camcorderProfile.videoBitRate: " + camcorderProfile.videoBitRate);
+            LogUtils.v("camcorderProfile.videoCodec: " + camcorderProfile.videoCodec);
+            LogUtils.v("camcorderProfile.videoFrameHeight: " + camcorderProfile.videoFrameHeight);
+            LogUtils.v("camcorderProfile.videoFrameRate: " + camcorderProfile.videoFrameRate);
+            LogUtils.v("camcorderProfile.videoFrameWidth: " + camcorderProfile.videoFrameWidth);
         }
         return json.toString();
     }

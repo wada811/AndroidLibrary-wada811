@@ -16,16 +16,19 @@
 package at.wada811.utils;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -35,6 +38,125 @@ import android.webkit.MimeTypeMap;
 import at.wada811.constant.MediaConstant;
 
 public class MediaUtils {
+
+    /**
+     * 保存するディレクトリのパスを取得する
+     * 
+     * @param context アプリ内部領域を除外したい場合は null を渡す
+     * @return save dir path, or null
+     */
+    public static String getSaveDirPath(Context context){
+        String saveDirPath = MediaUtils.getExternalSdCardPath();
+        LogUtils.v(saveDirPath);
+        if(saveDirPath == null){
+            saveDirPath = MediaUtils.getInternalSdCardParh();
+            LogUtils.v(saveDirPath);
+        }
+        if(saveDirPath == null && context != null){
+            saveDirPath = context.getFilesDir().getAbsolutePath();
+            LogUtils.v(saveDirPath);
+        }
+        return saveDirPath;
+    }
+
+    /**
+     * 外部SDカードのパスを取得する
+     * 
+     * @return external SD card path, or null
+     */
+    public static String getExternalSdCardPath(){
+        HashSet<String> paths = new HashSet<String>();
+        Scanner scanner = null;
+        try{
+            // システム設定ファイルを読み込み
+            File vold_fstab = new File("/system/etc/vold.fstab");
+            scanner = new Scanner(new FileInputStream(vold_fstab));
+            while(scanner.hasNextLine()){
+                String line = scanner.nextLine();
+                LogUtils.e(line);
+                // dev_mountまたはfuse_mountで始まる行
+                if(line.startsWith("dev_mount") || line.startsWith("fuse_mount")){
+                    // 半角スペースではなくタブで区切られている機種もあるらしい
+                    // 半角スペース区切り３つめ（path）を取得
+                    String path = line.replaceAll("\t", " ").split(" ")[2];
+                    paths.add(path);
+                }
+            }
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+            LogUtils.e(e);
+            return null;
+        }finally{
+            if(scanner != null){
+                scanner.close();
+            }
+        }
+        // Environment.getExternalStorageDirectory() が内部SDを返す場合は除外
+        if(!Environment.isExternalStorageRemovable()){
+            paths.remove(Environment.getExternalStorageDirectory().getPath());
+        }
+        // マウントされているSDカードのパスを追加 
+        List<String> mountSdCardPaths = new ArrayList<String>();
+        for(String path : paths){
+            if(isMounted(path)){
+                LogUtils.v(path);
+                mountSdCardPaths.add(path);
+            }
+        }
+        // マウントされているSDカードのパス
+        String mountSdCardPath = null;
+        if(mountSdCardPaths.size() > 0){
+            mountSdCardPath = mountSdCardPaths.get(0);
+        }
+        return mountSdCardPath;
+
+    }
+
+    /**
+     * パスがマウントされているSDカードのパスかチェックする
+     * 
+     * @param path SD card path
+     * @return true if path is the mounted SD card's path, otherwise false
+     */
+    public static boolean isMounted(String path){
+        boolean isMounted = false;
+        Scanner scanner = null;
+        try{
+            // マウントポイントを取得する
+            File mounts = new File("/proc/mounts");
+            scanner = new Scanner(new FileInputStream(mounts));
+            while(scanner.hasNextLine()){
+                if(scanner.nextLine().contains(path)){
+                    isMounted = true;
+                    break;
+                }
+            }
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+            LogUtils.e(e);
+            return false;
+        }finally{
+            if(scanner != null){
+                scanner.close();
+            }
+        }
+        return isMounted;
+    }
+
+    /**
+     * 内部SDカードのパスを取得する
+     * 
+     * @return internal SD card path, or null
+     */
+    public static String getInternalSdCardParh(){
+        if(Environment.isExternalStorageRemovable()){
+            return null;
+        }else if(MediaUtils.checkSdCardMounted()){
+            return Environment.getExternalStorageDirectory().getAbsolutePath();
+        }else{
+            return null;
+        }
+    }
 
     /**
      * SDカードにアプリ用ディレクトリを作成する
@@ -57,33 +179,6 @@ public class MediaUtils {
      */
     public static String getExternalStoragePath(){
         return Environment.getExternalStorageDirectory().getPath();
-    }
-
-    /**
-     * ディレクトリ名を指定してSDカードのパスを取得する
-     * 
-     * @param dirName
-     * @return
-     */
-    public static String getExternalStoragePath(String dirName){
-        return MediaUtils.getExternalStoragePath() + File.separator + dirName;
-    }
-
-    /**
-     * 指定したパスが有効なディレクトリパスか判定する
-     * 
-     * @param path
-     * @return 存在するディレクトリなら true
-     */
-    public static boolean isValidDirectoryPath(String path){
-        if(path == null){
-            return false;
-        }
-        File file = new File(path);
-        if(file.exists() && file.isDirectory()){
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -223,55 +318,4 @@ public class MediaUtils {
         return mimeType;
     }
 
-    /**
-     * サウンドを再生する
-     * 
-     * @param context
-     * @param resId
-     */
-    public static void playSound(Context context, int resId){
-        MediaPlayer mediaPlayer = MediaPlayer.create(context, resId);
-        try{
-            mediaPlayer.prepare();
-        }catch(IllegalStateException e){
-            e.printStackTrace();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-        mediaPlayer.start();
-        mediaPlayer.setOnCompletionListener(new OnCompletionListener(){
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer){
-                mediaPlayer.stop();
-                mediaPlayer.release();
-                mediaPlayer = null;
-            }
-        });
-    }
-
-    /**
-     * サウンドを再生する
-     * 
-     * @param context
-     * @param uri
-     */
-    public static void playSound(Context context, Uri uri){
-        MediaPlayer mediaPlayer = MediaPlayer.create(context, uri);
-        try{
-            mediaPlayer.prepare();
-        }catch(IllegalStateException e){
-            e.printStackTrace();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-        mediaPlayer.start();
-        mediaPlayer.setOnCompletionListener(new OnCompletionListener(){
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer){
-                mediaPlayer.stop();
-                mediaPlayer.release();
-                mediaPlayer = null;
-            }
-        });
-    }
 }

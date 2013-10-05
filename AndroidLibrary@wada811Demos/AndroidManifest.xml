@@ -1,23 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="at.wada811.android.library.demos"
     android:versionCode="1"
     android:versionName="1.0" >
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="18" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <!--
+         ____        _           _        _        _   _       _ _         
+        / ___| _ __ | | __ _ ___| |__    / \   ___| |_(_)_   _(_) |_ _   _ 
+        \___ \| '_ \| |/ _` / __| '_ \  / _ \ / __| __| \ \ / / | __| | | |
+         ___) | |_) | | (_| \__ \ | | |/ ___ \ (__| |_| |\ V /| | |_| |_| |
+        |____/| .__/|_|\__,_|___/_| |_/_/   \_\___|\__|_| \_/ |_|\__|\__, |
+              |_|                                                    |___/ 
+        -->
         <activity
-            android:name="at.wada811.android.library.demos.MainActivity"
+            android:name="at.wada811.android.library.demos.SplashActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <!--
+         __  __       _          _        _   _       _ _         
+        |  \/  | __ _(_)_ __    / \   ___| |_(_)_   _(_) |_ _   _ 
+        | |\/| |/ _` | | '_ \  / _ \ / __| __| \ \ / / | __| | | |
+        | |  | | (_| | | | | |/ ___ \ (__| |_| |\ V /| | |_| |_| |
+        |_|  |_|\__,_|_|_| |_/_/   \_\___|\__|_| \_/ |_|\__|\__, |
+                                                            |___/ 
+        -->
+        <activity
+            android:name="at.wada811.android.library.demos.MainActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <!--
+         ____  _       _             _____                                     _   
+        |  _ \(_) __ _| | ___   __ _|  ___| __ __ _  __ _ _ __ ___   ___ _ __ | |_ 
+        | | | | |/ _` | |/ _ \ / _` | |_ | '__/ _` |/ _` | '_ ` _ \ / _ \ '_ \| __|
+        | |_| | | (_| | | (_) | (_| |  _|| | | (_| | (_| | | | | | |  __/ | | | |_ 
+        |____/|_|\__,_|_|\___/ \__, |_|  |_|  \__,_|\__, |_| |_| |_|\___|_| |_|\__|
+                               |___/                |___/                          
+        -->
+        <activity
+            android:name="at.wada811.android.library.demos.fragment.ProgressDialogFragmentActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <!--
+        __     ___     _            _____                                     _   
+        \ \   / (_) __| | ___  ___ |  ___| __ __ _  __ _ _ __ ___   ___ _ __ | |_ 
+         \ \ / /| |/ _` |/ _ \/ _ \| |_ | '__/ _` |/ _` | '_ ` _ \ / _ \ '_ \| __|
+          \ V / | | (_| |  __/ (_) |  _|| | | (_| | (_| | | | | | |  __/ | | | |_ 
+           \_/  |_|\__,_|\___|\___/|_|  |_|  \__,_|\__, |_| |_| |_|\___|_| |_|\__|
+                                                   |___/                          
+        -->
+        <activity
+            android:name="at.wada811.android.library.demos.fragment.VideoFragmentActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <!--
+         _____           _ _   _       
+        |_   _|__   ___ | | |_(_)_ __  
+          | |/ _ \ / _ \| | __| | '_ \ 
+          | | (_) | (_) | | |_| | |_) |
+          |_|\___/ \___/|_|\__|_| .__/ 
+                                |_|    
+        -->
+        <activity
+            android:name="at.wada811.android.library.demos.ui.TooltipActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <!--
+         _____                                     _   
+        |  ___| __ __ _  __ _ _ __ ___   ___ _ __ | |_ 
+        | |_ | '__/ _` |/ _` | '_ ` _ \ / _ \ '_ \| __|
+        |  _|| | | (_| | (_| | | | | | |  __/ | | | |_ 
+        |_|  |_|  \__,_|\__, |_| |_| |_|\___|_| |_|\__|
+                        |___/                          
+        -->
+        <activity
+            android:name="at.wada811.android.library.demos.fragment.SwitchFragmentActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <!--
+         ____              ____                           
+        |  _ \  __ _ _   _|  _ \ _ __ ___  __ _ _ __ ___  
+        | | | |/ _` | | | | | | | '__/ _ \/ _` | '_ ` _ \ 
+        | |_| | (_| | |_| | |_| | | |  __/ (_| | | | | | |
+        |____/ \__,_|\__, |____/|_|  \___|\__,_|_| |_| |_|
+                     |___/                                
+        -->
+        <activity
+            android:name="at.wada811.android.library.demos.daydream.DayDreamSettingsActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <service
+            android:name="at.wada811.android.library.demos.daydream.DayDreamDemo"
+            android:exported="false"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.service.dreams.DreamService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.dream"
+                android:resource="@xml/daydream" />
+        </service>
+        <service
+            android:name="at.wada811.android.library.demos.daydream.DayDreamLauncher"
+            android:exported="false"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.service.dreams.DreamService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+        <activity
+            android:name="at.wada811.android.library.demos.daydream.DayDreamActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <!--
+          ____ _          _      ___                          __     ___               
+         / ___(_)_ __ ___| | ___|_ _|_ __ ___   __ _  __ _  __\ \   / (_) _____      __
+        | |   | | '__/ __| |/ _ \| || '_ ` _ \ / _` |/ _` |/ _ \ \ / /| |/ _ \ \ /\ / /
+        | |___| | | | (__| |  __/| || | | | | | (_| | (_| |  __/\ V / | |  __/\ V  V / 
+         \____|_|_|  \___|_|\___|___|_| |_| |_|\__,_|\__, |\___| \_/  |_|\___| \_/\_/  
+                                                     |___/                              
+        -->
+        <activity
+            android:name="at.wada811.android.library.demos.ui.CircleImageActivity"
+            android:hardwareAccelerated="false"
+            android:label="@string/app_name" >
         </activity>
     </application>
 </manifest>

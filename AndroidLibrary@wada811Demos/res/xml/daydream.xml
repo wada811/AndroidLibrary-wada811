@@ -1,0 +1,2 @@
+ <dream xmlns:android="http://schemas.android.com/apk/res/android"
+     android:settingsActivity="at.wada811.android.library.demos.daydream.DayDreamSettingsActivity" />
