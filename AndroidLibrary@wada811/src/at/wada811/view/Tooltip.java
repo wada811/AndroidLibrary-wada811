@@ -1,4 +1,4 @@
-package at.wada811.ui;
+package at.wada811.view;
 
 /*
  * Copyright 2013 wada811<at.wada811@gmail.com>

@@ -3,7 +3,7 @@ package at.wada811.android.library.demos;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import at.wada811.android.library.demos.ui.FlickActivity;
+import at.wada811.android.library.demos.view.FlickActivity;
 
 public class MainActivity extends FragmentActivity {
 

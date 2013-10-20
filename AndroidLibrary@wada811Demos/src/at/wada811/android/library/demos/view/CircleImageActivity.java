@@ -1,4 +1,4 @@
-package at.wada811.android.library.demos.ui;
+package at.wada811.android.library.demos.view;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

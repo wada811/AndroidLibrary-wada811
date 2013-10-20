@@ -1,4 +1,4 @@
-package at.wada811.android.library.demos.ui;
+package at.wada811.android.library.demos.view;
 
 import android.graphics.Color;
 import android.os.Bundle;
