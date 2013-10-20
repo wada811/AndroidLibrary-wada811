@@ -9,9 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import at.wada811.android.library.demos.R;
-import at.wada811.ui.CircleImageView;
 import at.wada811.utils.ColorUtils;
 import at.wada811.utils.LogUtils;
+import at.wada811.view.CircleImageView;
 
 public class CircleImageActivity extends FragmentActivity {
 

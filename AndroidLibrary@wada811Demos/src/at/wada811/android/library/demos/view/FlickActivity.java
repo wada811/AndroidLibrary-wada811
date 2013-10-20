@@ -21,10 +21,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import at.wada811.android.library.demos.R;
-import at.wada811.ui.FlickTouchListener;
-import at.wada811.ui.FlickTouchListener.OnFlickListener;
 import at.wada811.utils.AndroidUtils;
 import at.wada811.utils.LogUtils;
+import at.wada811.view.FlickTouchListener;
+import at.wada811.view.FlickTouchListener.OnFlickListener;
 
 public class FlickActivity extends FragmentActivity implements OnFlickListener {
 

@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import at.wada811.android.library.demos.R;
-import at.wada811.ui.Tooltip;
+import at.wada811.view.Tooltip;
 
 public class TooltipActivity extends FragmentActivity {
 
