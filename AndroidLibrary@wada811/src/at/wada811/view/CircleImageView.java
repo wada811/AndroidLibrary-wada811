@@ -36,7 +36,7 @@ public class CircleImageView extends ImageView {
     /**
      * プログラムから動的に生成する場合に使われる<br>
      * 
-     * CircleClipView circleClipView = new CircleClipView(this);
+     * {@code CircleClipView circleClipView = new CircleClipView(this);}
      */
     public CircleImageView(Context context) {
         super(context);
@@ -52,8 +52,7 @@ public class CircleImageView extends ImageView {
      * 指定した属性値が attrs に入る
      */
     public CircleImageView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        loadAttrs(attrs);
+        this(context, attrs, 0);
     }
 
     /**
@@ -69,6 +68,12 @@ public class CircleImageView extends ImageView {
     public CircleImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         loadAttrs(attrs);
+//        TypedArray attrsArray = getContext().obtainStyledAttributes(attrs, R.styleable.circle_view, defStyle, 0);
+//        mX = attrsArray.getFloat(R.styleable.circle_view_center_x, mX);
+//        mY = attrsArray.getFloat(R.styleable.circle_view_center_y, mY);
+//        mR = attrsArray.getInt(R.styleable.circle_view_radius, mR);
+//        // StyledAttributes should be recycled! 
+//        attrsArray.recycle();
     }
 
     private void loadAttrs(AttributeSet attrs){
@@ -89,7 +94,6 @@ public class CircleImageView extends ImageView {
             canvas.clipPath(path);
         }
         super.onDraw(canvas);
-
     }
 
     @Override

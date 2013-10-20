@@ -29,7 +29,8 @@ public class CircleImageActivity extends FragmentActivity {
         Button button = (Button)findViewById(R.id.button);
         mLayoutParamText = (TextView)findViewById(R.id.text);
         final LinearLayout container = (LinearLayout)findViewById(R.id.container);
-        addView(container, mIndex++);
+//        mCircleImageView = (CircleImageView)findViewById(R.id.circle);
+//        addView(container, mIndex++);
         button.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v){
