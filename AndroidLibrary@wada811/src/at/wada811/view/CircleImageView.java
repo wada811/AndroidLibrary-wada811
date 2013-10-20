@@ -45,7 +45,7 @@ public class CircleImageView extends ImageView {
     /**
      * レイアウトファイルから生成する場合に使われる<br>
      * 
-     * <at.wada811.ui.CircleClipView
+     * <at.wada811.view.CircleClipView
      * android:layout_width="MATCH_PARENT"
      * android:layout_height="MATCH_PARENT"
      * />
@@ -59,7 +59,7 @@ public class CircleImageView extends ImageView {
     /**
      * レイアウトファイルから生成する場合でテーマを指定した場合に使われる<br>
      * 
-     * <at.wada811.ui.CircleClipView
+     * <at.wada811.view.CircleClipView
      * android:theme="@style/theme"
      * android:layout_width="MATCH_PARENT"
      * android:layout_height="MATCH_PARENT"
@@ -130,12 +130,24 @@ public class CircleImageView extends ImageView {
         mR = radius;
     }
 
-    public void setCenterX(int centerX){
+    public int getRadius(){
+        return mR;
+    }
+
+    public void setCenterX(float centerX){
         mX = centerX;
     }
 
-    public void setCenterY(int centerY){
+    public float setCenterX(){
+        return mX;
+    }
+
+    public void setCenterY(float centerY){
         mY = centerY;
+    }
+
+    public float setCenterY(){
+        return mY;
     }
 
 }
