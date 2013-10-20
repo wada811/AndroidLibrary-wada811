@@ -47,7 +47,7 @@ public class VideoFragmentActivity extends FragmentActivity implements VideoCall
     public VideoCallback getVideoCallback(){
         return new VideoCallback(){
             @Override
-            public void onActivityCreated(){
+            public void onActivityCreated(VideoFragment videoFragment){
                 LogUtils.d();
 //                String filePath = "/storage/emulated/0/DevCamera/2013-09-20_21-25_01.mp4";
                 try{
@@ -63,12 +63,12 @@ public class VideoFragmentActivity extends FragmentActivity implements VideoCall
             }
 
             @Override
-            public void onPrepared(){
+            public void onPrepared(VideoFragment videoFragment){
                 LogUtils.d();
             }
 
             @Override
-            public void onCompletion(){
+            public void onCompletion(VideoFragment videoFragment){
                 LogUtils.d();
                 if(getSupportFragmentManager().findFragmentByTag(VideoFragment.TAG) != null){
                     LogUtils.d();

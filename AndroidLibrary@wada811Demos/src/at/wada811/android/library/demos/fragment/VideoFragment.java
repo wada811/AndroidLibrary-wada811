@@ -68,11 +68,11 @@ public class VideoFragment extends Fragment implements SurfaceHolder.Callback, O
 
     public static interface VideoCallback {
 
-        public void onActivityCreated();
+        public void onActivityCreated(VideoFragment videoFragment);
 
-        public void onPrepared();
+        public void onPrepared(VideoFragment videoFragment);
 
-        public void onCompletion();
+        public void onCompletion(VideoFragment videoFragment);
 
     }
 
@@ -119,7 +119,7 @@ public class VideoFragment extends Fragment implements SurfaceHolder.Callback, O
             mMediaPlayer.setOnCompletionListener(this);
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             setVideoAutoPlay(true);
-            mCallback.onActivityCreated();
+            mCallback.onActivityCreated(this);
         }catch(Exception e){
             e.printStackTrace();
             LogUtils.e(e);
@@ -127,8 +127,8 @@ public class VideoFragment extends Fragment implements SurfaceHolder.Callback, O
     }
 
     @Override
-    public void onDestroy(){
-        super.onDestroy();
+    public void onDetach(){
+        super.onDetach();
         LogUtils.i();
         stop();
         release();
@@ -185,7 +185,7 @@ public class VideoFragment extends Fragment implements SurfaceHolder.Callback, O
     @Override
     public void onPrepared(MediaPlayer mp){
         LogUtils.i();
-        mCallback.onPrepared();
+        mCallback.onPrepared(this);
         mIsVideoReadyToBePlayed = true;
         if(mIsVideoReadyToBePlayed && mIsVideoSizeKnown && mIsVideoAutoPlay){
             start();
@@ -195,7 +195,7 @@ public class VideoFragment extends Fragment implements SurfaceHolder.Callback, O
     @Override
     public void onCompletion(MediaPlayer mp){
         LogUtils.i();
-        mCallback.onCompletion();
+        mCallback.onCompletion(this);
     }
 
     public void setVideoAutoPlay(boolean isVideoAutoPlay){
