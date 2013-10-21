@@ -8,4 +8,5 @@
     <string name="setFullscreen">setFullscreen</string>
     <string name="touch">touch</string>
     <string name="change">change</string>
+    <string name="style_circle_style_demo">\@style/circle_style_demo</string>
 </resources>

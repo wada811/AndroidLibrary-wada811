@@ -17,7 +17,7 @@
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="top" />
+            android:text="@string/style_circle_style_demo" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/container"
@@ -25,13 +25,12 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical" >
-        <!--
-             <at.wada811.view.CircleImageView
+        <at.wada811.view.CircleImageView
             android:id="@+id/circle"
+            style="@style/circle_style_demo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/lena"
-            circle:radius="400" />
-        -->
+            android:background="@color/blue_light"
+            android:src="@drawable/lena" />
     </LinearLayout>
 </LinearLayout>
