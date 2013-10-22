@@ -6,9 +6,12 @@
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
-    <style name="circle_style_demo">
+    <style name="circle_image_view_style_demo">
         <item name="center_x">50</item>
         <item name="center_y">50</item>
-        <item name="radius">100</item>
+        <item name="radius">50</item>
+    </style>
+    <style name="circle_image_activity_style" parent="@style/AppTheme">
+        <item name="circle_image_view_style">@style/circle_image_view_style_demo</item>
     </style>
 </resources>

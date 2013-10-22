@@ -36,7 +36,7 @@ public class CircleImageView extends ImageView {
     /**
      * プログラムから動的に生成する場合に使われる<br>
      * 
-     * CircleClipView circleClipView = new CircleClipView(this);
+     * CircleImageView circleImageView = new CircleImageView(this);
      */
     public CircleImageView(Context context) {
         super(context);
@@ -45,7 +45,7 @@ public class CircleImageView extends ImageView {
     /**
      * レイアウトファイルから生成する場合に使われる<br>
      * 
-     * <at.wada811.view.CircleClipView
+     * <at.wada811.view.CircleImageView
      * android:layout_width="MATCH_PARENT"
      * android:layout_height="MATCH_PARENT"
      * />
@@ -56,14 +56,7 @@ public class CircleImageView extends ImageView {
     }
 
     /**
-     * レイアウトファイルから生成する場合でテーマを指定した場合に使われる<br>
-     * 
-     * <at.wada811.view.CircleClipView
-     * android:theme="@style/theme"
-     * android:layout_width="MATCH_PARENT"
-     * android:layout_height="MATCH_PARENT"
-     * />
-     * 指定した属性値が attrs に入り、テーマが defStyle に入る
+     * いまいち謎
      */
     public CircleImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -91,12 +84,12 @@ public class CircleImageView extends ImageView {
         int measuredWidth = MeasureSpec.getSize(widthMeasureSpec);
         int measuredHeight = MeasureSpec.getSize(heightMeasureSpec);
         if(mR * mR * 4 > measuredWidth * measuredWidth + measuredHeight * measuredHeight){
-            LogUtils.d("mR * mR * 4 > measuredWidth * measuredWidth + measuredHeight * measuredHeight: " + mR * mR * 4 + " > " + measuredWidth * measuredWidth + measuredHeight * measuredHeight);
+            LogUtils.v("mR * mR * 4 > measuredWidth * measuredWidth + measuredHeight * measuredHeight: " + mR * mR * 4 + " > " + measuredWidth * measuredWidth + measuredHeight * measuredHeight);
             mIsClip = false;
         }
-        LogUtils.d("measuredWidth: " + measuredWidth);
-        LogUtils.d("measuredHeight: " + measuredHeight);
-        LogUtils.d("mR: " + mR);
+        LogUtils.v("measuredWidth: " + measuredWidth);
+        LogUtils.v("measuredHeight: " + measuredHeight);
+        LogUtils.v("mR: " + mR);
         setMeasuredDimension(measuredWidth, measuredHeight);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
@@ -104,19 +97,19 @@ public class CircleImageView extends ImageView {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom){
         super.onLayout(changed, left, top, right, bottom);
-        LogUtils.i("changed: " + changed);
-        LogUtils.i("left: " + left);
-        LogUtils.i("top: " + top);
-        LogUtils.i("right: " + right);
-        LogUtils.i("bottom: " + bottom);
-        LogUtils.i("width: " + (right - left));
-        LogUtils.i("height: " + (bottom - top));
+        LogUtils.v("changed: " + changed);
+        LogUtils.v("left: " + left);
+        LogUtils.v("top: " + top);
+        LogUtils.v("right: " + right);
+        LogUtils.v("bottom: " + bottom);
+        LogUtils.v("width: " + (right - left));
+        LogUtils.v("height: " + (bottom - top));
         if(changed && mR == -1){
-            LogUtils.i();
+            LogUtils.v();
             int width = right - left;
             int height = bottom - top;
             mR = Math.min(width, height) / 2;
-            LogUtils.i("mR: " + mR);
+            LogUtils.v("mR: " + mR);
         }
     }
 
@@ -132,7 +125,7 @@ public class CircleImageView extends ImageView {
         mX = centerX;
     }
 
-    public float setCenterX(){
+    public float getCenterX(){
         return mX;
     }
 
@@ -140,7 +133,7 @@ public class CircleImageView extends ImageView {
         mY = centerY;
     }
 
-    public float setCenterY(){
+    public float getCenterY(){
         return mY;
     }
 

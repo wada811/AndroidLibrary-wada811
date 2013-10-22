@@ -27,7 +27,7 @@
         android:orientation="vertical" >
         <at.wada811.view.CircleImageView
             android:id="@+id/circle"
-            style="@style/circle_style_demo"
+            style="@style/circle_image_view_style_demo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/blue_light"

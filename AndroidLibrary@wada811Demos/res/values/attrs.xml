@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="circle_image_view_style" format="integer|reference" />
+</resources>
