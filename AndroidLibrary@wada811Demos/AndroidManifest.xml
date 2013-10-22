@@ -52,11 +52,7 @@
             android:name="at.wada811.android.library.demos.fragment.ProgressDialogFragmentActivity"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="at.wada811.android.library.demos.ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="at.wada811.android.library.demos.fragment.ProgressDialogFragmentActivity" />
+                <action android:name="" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -72,11 +68,7 @@
             android:name="at.wada811.android.library.demos.fragment.VideoFragmentActivity"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="at.wada811.android.library.demos.ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="at.wada811.android.library.demos.fragment.VideoFragmentActivity" />
+                <action android:name="" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -92,11 +84,7 @@
             android:name="at.wada811.android.library.demos.view.TooltipActivity"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="at.wada811.android.library.demos.ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="at.wada811.android.library.demos.view.TooltipActivity" />
+                <action android:name="" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -112,11 +100,7 @@
             android:name="at.wada811.android.library.demos.fragment.SwitchFragmentActivity"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="at.wada811.android.library.demos.ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="at.wada811.android.library.demos.fragment.SwitchFragmentActivity" />
+                <action android:name="" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -132,11 +116,7 @@
             android:name="at.wada811.android.library.demos.daydream.DayDreamSettingsActivity"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="at.wada811.android.library.demos.ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="at.wada811.android.library.demos.daydream.DayDreamSettingsActivity" />
+                <action android:name="" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -179,11 +159,7 @@
             android:label="@string/app_name"
             android:theme="@style/circle_image_activity_style" >
             <intent-filter>
-                <action android:name="at.wada811.android.library.demos.ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="at.wada811.android.library.demos.view.CircleImageActivity" />
+                <action android:name="" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -191,11 +167,7 @@
             android:name="at.wada811.android.library.demos.view.FlickActivity"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="at.wada811.android.library.demos.ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="at.wada811.android.library.demos.view.FlickActivity" />
+                <action android:name="" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

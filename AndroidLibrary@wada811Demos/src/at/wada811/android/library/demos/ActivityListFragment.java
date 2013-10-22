@@ -35,6 +35,8 @@ public class ActivityListFragment extends ListFragment {
     public void onListItemClick(ListView listView, View view, int position, long id){
         super.onListItemClick(listView, view, position, id);
         ActivityInfo item = (ActivityInfo)getListAdapter().getItem(position);
-        startActivity(new Intent(item.name));
+        Intent intent = new Intent();
+        intent.setClassName(item.packageName, item.name);
+        startActivity(intent);
     }
 }

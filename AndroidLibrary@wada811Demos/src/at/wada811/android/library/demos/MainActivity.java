@@ -16,9 +16,10 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // AndroidManifest.xmlであらかじめ設定したActionでサンプルのActivityのリストを取得
+        // サンプルActivityのリストを取得
         Intent intent = new Intent();
-        intent.setAction("at.wada811.android.library.demos.ACTIVITY");
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.setPackage(getPackageName());
         PackageManager packageManager = getPackageManager();
         List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         ActivityListAdapter adapter = new ActivityListAdapter(this);
