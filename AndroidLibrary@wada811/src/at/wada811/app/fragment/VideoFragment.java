@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.wada811.android.library.demos.fragment;
+package at.wada811.app.fragment;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -37,7 +37,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import at.wada811.android.library.demos.R;
+import at.wada811.android.library.R;
 import at.wada811.utils.DisplayUtils;
 import at.wada811.utils.LogUtils;
 
@@ -62,7 +62,7 @@ public class VideoFragment extends Fragment implements SurfaceHolder.Callback, O
     private boolean            mIsVideoReadyToBePlayed = false;
     private boolean            mIsVideoAutoPlay        = false;
 
-    public static interface VideoCallbackPicker {
+    public static interface VideoCallbackProvider {
         public VideoCallback getVideoCallback();
     }
 
@@ -87,10 +87,10 @@ public class VideoFragment extends Fragment implements SurfaceHolder.Callback, O
     public void onAttach(Activity activity){
         super.onAttach(activity);
 
-        if(activity instanceof VideoCallbackPicker == false){
+        if(activity instanceof VideoCallbackProvider == false){
             throw new ClassCastException("activity must implements VideoCallbackPicker.");
         }
-        VideoCallbackPicker picker = (VideoCallbackPicker)activity;
+        VideoCallbackProvider picker = (VideoCallbackProvider)activity;
         mCallback = picker.getVideoCallback();
     }
 
