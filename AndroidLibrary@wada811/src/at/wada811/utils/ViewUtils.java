@@ -21,6 +21,7 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
@@ -108,6 +109,22 @@ public class ViewUtils {
      */
     public static void setImageColorFilter(ImageView imageView, int hexColor){
         imageView.setColorFilter(hexColor);
+    }
+
+    /**
+     * visible true: Viewの階層構造をダンプするスニペット http://visible-true.blogspot.jp/2012/02/view.html
+     * 
+     * @param view
+     * @param padding
+     */
+    public static void dumpViewTree(View view, String padding){
+        LogUtils.d(padding + view.getClass().getName());
+        if(view instanceof ViewGroup){
+            ViewGroup g = (ViewGroup)view;
+            for(int i = 0; i < g.getChildCount(); i++){
+                dumpViewTree(g.getChildAt(i), padding + " ");
+            }
+        }
     }
 
     /**
