@@ -9,4 +9,9 @@
     <string name="touch">touch</string>
     <string name="change">change</string>
     <string name="style_circle_style_demo">style/circle_image_view_style_demo</string>
+    <string name="start">start</string>
+    <string name="image">image</string>
+    <string name="search">キーワードを入力して下さい。</string>
+    <string name="sync">sync</string>
+    <string name="async">async</string>
 </resources>
