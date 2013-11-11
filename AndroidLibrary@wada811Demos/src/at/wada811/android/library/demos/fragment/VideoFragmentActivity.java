@@ -7,11 +7,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import at.wada811.android.library.demos.R;
-import at.wada811.android.library.demos.fragment.VideoFragment.VideoCallback;
-import at.wada811.android.library.demos.fragment.VideoFragment.VideoCallbackPicker;
+import at.wada811.app.fragment.VideoFragment;
+import at.wada811.app.fragment.VideoFragment.VideoCallback;
+import at.wada811.app.fragment.VideoFragment.VideoCallbackProvider;
 import at.wada811.utils.LogUtils;
 
-public class VideoFragmentActivity extends FragmentActivity implements VideoCallbackPicker {
+public class VideoFragmentActivity extends FragmentActivity implements VideoCallbackProvider {
 
     private VideoFragment mVideoFragment;
 
