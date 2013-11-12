@@ -4,19 +4,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     <Button
-        android:id="@+id/syncMethod"
+        android:id="@+id/syncClassMethod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Button
-        android:id="@+id/asyncMethod"
+        android:id="@+id/asyncClassMethod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Button
-        android:id="@+id/syncVariable"
+        android:id="@+id/syncInstanceMethod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Button
-        android:id="@+id/asyncVariable"
+        android:id="@+id/asyncInstanceMethod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

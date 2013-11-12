@@ -35,104 +35,104 @@ public class SynchronizedActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_synchronized);
 
-        Button syncMethodExecuteButton = (Button)findViewById(R.id.syncMethod);
-        syncMethodExecuteButton.setText("SyncMethodExecute");
-        syncMethodExecuteButton.setOnClickListener(new OnClickListener(){
+        Button syncClassMethodExecuteButton = (Button)findViewById(R.id.syncClassMethod);
+        syncClassMethodExecuteButton.setText("SyncClassMethodExecute");
+        syncClassMethodExecuteButton.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v){
                 LogUtils.d();
-                syncMethodExecute();
+                syncClassMethodExecute();
                 LogUtils.d();
             }
         });
-        Button asyncMethodExecuteButton = (Button)findViewById(R.id.asyncMethod);
-        asyncMethodExecuteButton.setText("AsyncMethodExecute");
-        asyncMethodExecuteButton.setOnClickListener(new OnClickListener(){
+        Button asyncClassMethodExecuteButton = (Button)findViewById(R.id.asyncClassMethod);
+        asyncClassMethodExecuteButton.setText("AsyncClassMethodExecute");
+        asyncClassMethodExecuteButton.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v){
                 LogUtils.d();
-                asyncMethodExecute();
+                asyncClassMethodExecute();
                 LogUtils.d();
             }
         });
-        Button syncVariableExecuteButton = (Button)findViewById(R.id.syncVariable);
-        syncVariableExecuteButton.setText("SyncVariableExecute");
-        syncVariableExecuteButton.setOnClickListener(new OnClickListener(){
+        Button syncInstanceMethodExecuteButton = (Button)findViewById(R.id.syncInstanceMethod);
+        syncInstanceMethodExecuteButton.setText("SyncInstanceMethodExecute");
+        syncInstanceMethodExecuteButton.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v){
                 LogUtils.d();
-                syncVariableExecute();
+                syncInstanceMethodExecute();
                 LogUtils.d();
             }
         });
-        Button asyncVariableExecuteButton = (Button)findViewById(R.id.asyncVariable);
-        asyncVariableExecuteButton.setText("AsyncVariableExecute");
-        asyncVariableExecuteButton.setOnClickListener(new OnClickListener(){
+        Button asyncInstanceMethodExecuteButton = (Button)findViewById(R.id.asyncInstanceMethod);
+        asyncInstanceMethodExecuteButton.setText("AsyncInstanceMethodExecute");
+        asyncInstanceMethodExecuteButton.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v){
                 LogUtils.d();
-                asyncVariableExecute();
+                asyncInstanceMethodExecute();
                 LogUtils.d();
             }
         });
     }
 
-    public void syncMethodExecute(){
+    public void syncClassMethodExecute(){
         LogUtils.d();
-        PreferenceUtils.putString(this, SynchronizedMethodExecutor.SyncExecutor.KEY, null);
-        new Thread(new SyncExecutorRunnable("A")).start();
-        new Thread(new SyncExecutorRunnable("B")).start();
-        new Thread(new SyncExecutorRunnable("C")).start();
+        PreferenceUtils.putString(this, ClassMethodExecutor.SyncExecutor.KEY, null);
+        new Thread(new SyncClassMethodExecutorRunnable("A")).start();
+        new Thread(new SyncClassMethodExecutorRunnable("B")).start();
+        new Thread(new SyncClassMethodExecutorRunnable("C")).start();
     }
 
-    public class SyncExecutorRunnable implements Runnable {
+    public class SyncClassMethodExecutorRunnable implements Runnable {
         String threadName;
 
-        public SyncExecutorRunnable(String threadName) {
+        public SyncClassMethodExecutorRunnable(String threadName) {
             this.threadName = threadName;
         }
 
         @Override
         public void run(){
-            SynchronizedMethodExecutor.SyncExecutor.execute(self, threadName);
+            ClassMethodExecutor.SyncExecutor.execute(self, threadName);
         }
     }
 
-    public void asyncMethodExecute(){
+    public void asyncClassMethodExecute(){
         LogUtils.d();
-        PreferenceUtils.putString(this, SynchronizedMethodExecutor.Async.KEY, null);
-        new Thread(new AsyncExecutorRunnable("A")).start();
-        new Thread(new AsyncExecutorRunnable("B")).start();
-        new Thread(new AsyncExecutorRunnable("C")).start();
+        PreferenceUtils.putString(this, ClassMethodExecutor.Async.KEY, null);
+        new Thread(new AsyncClassMethodExecutorRunnable("A")).start();
+        new Thread(new AsyncClassMethodExecutorRunnable("B")).start();
+        new Thread(new AsyncClassMethodExecutorRunnable("C")).start();
     }
 
-    public class AsyncExecutorRunnable implements Runnable {
+    public class AsyncClassMethodExecutorRunnable implements Runnable {
         String threadName;
 
-        public AsyncExecutorRunnable(String threadName) {
+        public AsyncClassMethodExecutorRunnable(String threadName) {
             this.threadName = threadName;
         }
 
         @Override
         public void run(){
-            SynchronizedMethodExecutor.Async.execute(self, threadName);
+            ClassMethodExecutor.Async.execute(self, threadName);
         }
     }
 
-    public void syncVariableExecute(){
+    public void syncInstanceMethodExecute(){
         LogUtils.d();
         mCount = 0;
-        SyncVariableExecutor executor = new SyncVariableExecutor();
-        new Thread(new SyncVariableExecutorRunnable(executor, "A")).start();
-        new Thread(new SyncVariableExecutorRunnable(executor, "B")).start();
-        new Thread(new SyncVariableExecutorRunnable(executor, "C")).start();
+        SyncInstanceMethodExecutor executor = new SyncInstanceMethodExecutor();
+        new Thread(new SyncInstanceMethodExecutorRunnable(executor, "A")).start();
+        new Thread(new SyncInstanceMethodExecutorRunnable(executor, "B")).start();
+        new Thread(new SyncInstanceMethodExecutorRunnable(executor, "C")).start();
     }
 
-    public class SyncVariableExecutorRunnable implements Runnable {
-        private SyncVariableExecutor mExecutor;
-        private String               mThreadNmae;
+    public class SyncInstanceMethodExecutorRunnable implements Runnable {
+        private SyncInstanceMethodExecutor mExecutor;
+        private String                     mThreadNmae;
 
-        public SyncVariableExecutorRunnable(SyncVariableExecutor executor, String threadNmae) {
+        public SyncInstanceMethodExecutorRunnable(SyncInstanceMethodExecutor executor, String threadNmae) {
             mExecutor = executor;
             mThreadNmae = threadNmae;
         }
@@ -144,7 +144,7 @@ public class SynchronizedActivity extends FragmentActivity {
 
     }
 
-    public class SyncVariableExecutor {
+    public class SyncInstanceMethodExecutor {
         private final Object    lock = new Object();
         public static final int N    = 100;
 
@@ -166,20 +166,20 @@ public class SynchronizedActivity extends FragmentActivity {
         }
     }
 
-    public void asyncVariableExecute(){
+    public void asyncInstanceMethodExecute(){
         LogUtils.d();
         mCount = 0;
-        AsyncVariableExecutor executor = new AsyncVariableExecutor();
-        new Thread(new AsyncVariableExecutorRunnable(executor, "A")).start();
-        new Thread(new AsyncVariableExecutorRunnable(executor, "B")).start();
-        new Thread(new AsyncVariableExecutorRunnable(executor, "C")).start();
+        AsyncInstanceMethodExecutor executor = new AsyncInstanceMethodExecutor();
+        new Thread(new AsyncInstanceMethodExecutorRunnable(executor, "A")).start();
+        new Thread(new AsyncInstanceMethodExecutorRunnable(executor, "B")).start();
+        new Thread(new AsyncInstanceMethodExecutorRunnable(executor, "C")).start();
     }
 
-    public class AsyncVariableExecutorRunnable implements Runnable {
-        private AsyncVariableExecutor mExecutor;
-        private String                mThreadNmae;
+    public class AsyncInstanceMethodExecutorRunnable implements Runnable {
+        private AsyncInstanceMethodExecutor mExecutor;
+        private String                      mThreadNmae;
 
-        public AsyncVariableExecutorRunnable(AsyncVariableExecutor executor, String threadNmae) {
+        public AsyncInstanceMethodExecutorRunnable(AsyncInstanceMethodExecutor executor, String threadNmae) {
             mExecutor = executor;
             mThreadNmae = threadNmae;
         }
@@ -191,7 +191,7 @@ public class SynchronizedActivity extends FragmentActivity {
 
     }
 
-    public class AsyncVariableExecutor {
+    public class AsyncInstanceMethodExecutor {
         public static final int N = 100;
 
         public final void execute(String threadId){

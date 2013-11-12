@@ -20,11 +20,11 @@ import android.content.Context;
 import at.wada811.utils.LogUtils;
 import at.wada811.utils.PreferenceUtils;
 
-public class SynchronizedMethodExecutor {
+public class ClassMethodExecutor {
 
     public static class Async {
 
-        public static final String KEY = SynchronizedMethodExecutor.Async.class.getSimpleName();
+        public static final String KEY = ClassMethodExecutor.Async.class.getSimpleName();
 
         public static final void execute(Context context, String threadName){
             String lastThreadName = PreferenceUtils.getString(context, KEY, null);
@@ -49,7 +49,7 @@ public class SynchronizedMethodExecutor {
 
     public static class SyncExecutor {
 
-        public static final String KEY = SynchronizedMethodExecutor.SyncExecutor.class.getSimpleName();
+        public static final String KEY = ClassMethodExecutor.SyncExecutor.class.getSimpleName();
 
         public static final synchronized void execute(Context context, String threadName){
             String lastThreadName = PreferenceUtils.getString(context, KEY, null);
