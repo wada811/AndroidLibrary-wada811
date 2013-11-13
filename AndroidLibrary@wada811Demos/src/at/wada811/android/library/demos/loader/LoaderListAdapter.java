@@ -84,14 +84,14 @@ public class LoaderListAdapter extends ArrayAdapter<LoaderListItem> {
             mLoaderManager.initLoader(mLoaderIds.get(position), args, new LoaderCallbacks<Bitmap>(){
                 @Override
                 public Loader<Bitmap> onCreateLoader(int id, Bundle args){
-                    LogUtils.i("LoaderId: " + id);
+                    LogUtils.d("LoaderId: " + id);
                     return new AsyncImageDownloadLoader(mContext, args);
                 }
 
                 @Override
                 public void onLoadFinished(Loader<Bitmap> loader, final Bitmap data){
-                    LogUtils.i("LoaderId: " + loader.getId());
-                    LogUtils.i("data: " + (data == null ? data : data.toString()));
+                    LogUtils.d("LoaderId: " + loader.getId());
+                    LogUtils.d("data: " + (data == null ? data : data.toString()));
                     mHandler.post(new Runnable(){
                         @Override
                         public void run(){
