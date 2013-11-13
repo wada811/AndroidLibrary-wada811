@@ -27,8 +27,7 @@ import at.wada811.utils.PreferenceUtils;
 
 public class SynchronizedActivity extends FragmentActivity {
 
-    final SynchronizedActivity self   = this;
-    private static int         mCount = 0;
+    final SynchronizedActivity self = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -121,7 +120,6 @@ public class SynchronizedActivity extends FragmentActivity {
 
     public void syncInstanceMethodExecute(){
         LogUtils.d();
-        mCount = 0;
         SyncInstanceMethodExecutor executor = new SyncInstanceMethodExecutor();
         new Thread(new SyncInstanceMethodExecutorRunnable(executor, "A")).start();
         new Thread(new SyncInstanceMethodExecutorRunnable(executor, "B")).start();
@@ -145,8 +143,9 @@ public class SynchronizedActivity extends FragmentActivity {
     }
 
     public class SyncInstanceMethodExecutor {
-        private final Object    lock = new Object();
-        public static final int N    = 100;
+        private final Object    lock   = new Object();
+        public static final int N      = 100;
+        private int             mCount = 0;
 
         public void execute(String threadName){
             synchronized(lock){
@@ -168,7 +167,6 @@ public class SynchronizedActivity extends FragmentActivity {
 
     public void asyncInstanceMethodExecute(){
         LogUtils.d();
-        mCount = 0;
         AsyncInstanceMethodExecutor executor = new AsyncInstanceMethodExecutor();
         new Thread(new AsyncInstanceMethodExecutorRunnable(executor, "A")).start();
         new Thread(new AsyncInstanceMethodExecutorRunnable(executor, "B")).start();
@@ -192,14 +190,15 @@ public class SynchronizedActivity extends FragmentActivity {
     }
 
     public class AsyncInstanceMethodExecutor {
-        public static final int N = 100;
+        public static final int N      = 100;
+        private int             mCount = 0;
 
-        public final void execute(String threadId){
+        public final void execute(String threadName){
             if(mCount == N){
-                LogUtils.d(threadId + ": do nothing");
+                LogUtils.d(threadName + ": do nothing");
             }else{
                 for(int i = 0; i < N; i++){
-                    LogUtils.d(threadId + ": " + ++mCount);
+                    LogUtils.d(threadName + ": " + ++mCount);
                 }
                 try{
                     TimeUnit.SECONDS.sleep(1);
@@ -209,5 +208,4 @@ public class SynchronizedActivity extends FragmentActivity {
             }
         }
     }
-
 }
