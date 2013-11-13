@@ -118,6 +118,12 @@ public class LoaderListFragment extends ListFragment implements OnScrollListener
      */
     private void searchImageWithUrl(String url){
         LogUtils.i(url);
+        Loader<Object> currentLoader = getLoaderManager().getLoader(mLoaderListAdapter.getCount());
+        if(currentLoader != null && currentLoader.isStarted()){
+            // 実行中はキャンセル
+            LogUtils.i("canceled!");
+            return;
+        }
         Bundle args = new Bundle();
         args.putInt(LoaderListFragment.KEY_START_INDEX, mLoaderListAdapter.getCount());
         args.putString(LoaderListFragment.KEY_SEARCH_URL, url);
