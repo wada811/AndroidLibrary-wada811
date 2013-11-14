@@ -113,7 +113,7 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
      */
     public void syncClassMethodExecute(){
         LogUtils.d();
-        PreferenceUtils.putString(this, SyncClassMethodExecuter.KEY, null);
+        PreferenceUtils.putString(this, SyncClassMethodExecutor.KEY, null);
         new Thread(new SyncClassMethodExecutorRunnable("A")).start();
         new Thread(new SyncClassMethodExecutorRunnable("B")).start();
         new Thread(new SyncClassMethodExecutorRunnable("C")).start();
@@ -128,16 +128,16 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
 
         @Override
         public void run(){
-            SyncClassMethodExecuter.execute(self, threadName);
+            SyncClassMethodExecutor.execute(self, threadName);
         }
     }
 
     /**
      * クラスメソッドを synchronized にした場合のテストクラス
      */
-    public static class SyncClassMethodExecuter {
+    public static class SyncClassMethodExecutor {
 
-        public static final String KEY = SyncClassMethodExecuter.class.getSimpleName();
+        public static final String KEY = SyncClassMethodExecutor.class.getSimpleName();
 
         public static final synchronized void execute(Context context, String threadName){
             String lastThreadName = PreferenceUtils.getString(context, KEY, null);
@@ -165,7 +165,7 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
      */
     public void asyncClassMethodExecute(){
         LogUtils.d();
-        PreferenceUtils.putString(this, AsyncClassMethodExecuter.KEY, null);
+        PreferenceUtils.putString(this, AsyncClassMethodExecutor.KEY, null);
         new Thread(new AsyncClassMethodExecutorRunnable("A")).start();
         new Thread(new AsyncClassMethodExecutorRunnable("B")).start();
         new Thread(new AsyncClassMethodExecutorRunnable("C")).start();
@@ -180,16 +180,16 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
 
         @Override
         public void run(){
-            AsyncClassMethodExecuter.execute(self, threadName);
+            AsyncClassMethodExecutor.execute(self, threadName);
         }
     }
 
     /**
      * クラスメソッドを synchronized にした場合の対照テストクラス
      */
-    public static class AsyncClassMethodExecuter {
+    public static class AsyncClassMethodExecutor {
 
-        public static final String KEY = AsyncClassMethodExecuter.class.getSimpleName();
+        public static final String KEY = AsyncClassMethodExecutor.class.getSimpleName();
 
         public static final void execute(Context context, String threadName){
             String lastThreadName = PreferenceUtils.getString(context, KEY, null);
@@ -416,7 +416,7 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
      */
     public void syncMultiClassMethodExecute(){
         LogUtils.d();
-        SyncMultiClassMethodExecuter.count = 0;
+        SyncMultiClassMethodExecutor.count = 0;
         new Thread(new SyncMultiClassMethodExecutorRunnable("A")).start();
         new Thread(new SyncMultiClassMethodExecutorRunnable("B")).start();
         new Thread(new SyncMultiClassMethodExecutorRunnable("C")).start();
@@ -431,18 +431,18 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
 
         @Override
         public void run(){
-            SyncMultiClassMethodExecuter.execute1(threadName);
-            SyncMultiClassMethodExecuter.execute2(threadName);
-            SyncMultiClassMethodExecuter.execute3(threadName);
+            SyncMultiClassMethodExecutor.execute1(threadName);
+            SyncMultiClassMethodExecutor.execute2(threadName);
+            SyncMultiClassMethodExecutor.execute3(threadName);
         }
     }
 
     /**
      * synchronized な複数のインスタンスメソッドを各スレッドで呼び出した場合のテストクラス
      */
-    public static class SyncMultiClassMethodExecuter {
+    public static class SyncMultiClassMethodExecutor {
 
-        public static final String KEY   = SyncMultiClassMethodExecuter.class.getSimpleName();
+        public static final String KEY   = SyncMultiClassMethodExecutor.class.getSimpleName();
         private static int         count = 0;
 
         public static final synchronized void execute1(String threadName){
@@ -469,7 +469,7 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
      */
     public void asyncMultiClassMethodExecute(){
         LogUtils.d();
-        AsyncMultiClassMethodExecuter.count = 0;
+        AsyncMultiClassMethodExecutor.count = 0;
         new Thread(new AsyncMultiClassMethodExecutorRunnable("A")).start();
         new Thread(new AsyncMultiClassMethodExecutorRunnable("B")).start();
         new Thread(new AsyncMultiClassMethodExecutorRunnable("C")).start();
@@ -484,16 +484,16 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
 
         @Override
         public void run(){
-            AsyncMultiClassMethodExecuter.count = 0;
-            AsyncMultiClassMethodExecuter.execute1(threadName);
-            AsyncMultiClassMethodExecuter.execute2(threadName);
-            AsyncMultiClassMethodExecuter.execute3(threadName);
+            AsyncMultiClassMethodExecutor.count = 0;
+            AsyncMultiClassMethodExecutor.execute1(threadName);
+            AsyncMultiClassMethodExecutor.execute2(threadName);
+            AsyncMultiClassMethodExecutor.execute3(threadName);
         }
     }
 
-    public static class AsyncMultiClassMethodExecuter {
+    public static class AsyncMultiClassMethodExecutor {
 
-        public static final String KEY   = AsyncMultiClassMethodExecuter.class.getSimpleName();
+        public static final String KEY   = AsyncMultiClassMethodExecutor.class.getSimpleName();
         private static int         count = 0;
 
         public static final void execute1(String threadName){
