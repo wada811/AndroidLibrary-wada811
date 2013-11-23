@@ -17,18 +17,14 @@ package at.wada811.android.library.demos.concurrent;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import android.graphics.Color;
+import java.util.concurrent.TimeUnit;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.TextView;
 import at.wada811.android.library.demos.R;
 import at.wada811.utils.LogUtils;
-import at.wada811.view.Tooltip;
 
 public class ExecutorActivity extends FragmentActivity {
 
@@ -63,60 +59,26 @@ public class ExecutorActivity extends FragmentActivity {
     public class Runnable1 implements Runnable {
         @Override
         public void run(){
-            LogUtils.d("Runnable1: " + System.currentTimeMillis());
-            runOnUiThread(new Runnable(){
-                @Override
-                public void run(){
-                    LogUtils.i("Runnable1: " + System.currentTimeMillis());
-                    TextView mTextView = new TextView(self);
-                    mTextView.setBackgroundColor(Color.GREEN);
-                    mTextView.setText("Runnable1: " + System.currentTimeMillis());
-                    Tooltip mTooltip = new Tooltip(self);
-                    mTooltip.setContentView(mTextView);
-                    mTooltip.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
-                    mTooltip.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-                    mTooltip.setAnimationStyle(R.style.tooltipAnimation);
-                    mTooltip.setDuration(3000);
-                    mTooltip.showAtLocation(Gravity.CENTER, 0, 0);
-                    LogUtils.i("Runnable1: " + System.currentTimeMillis());
-                }
-            });
+            LogUtils.d("Runnable1: start");
             try{
-                Thread.sleep(3000);
+                TimeUnit.SECONDS.sleep(1);
             }catch(InterruptedException e){
                 e.printStackTrace();
             }
-            LogUtils.d("Runnable1: " + System.currentTimeMillis());
+            LogUtils.d("Runnable1: end");
         }
     }
 
     public class Runnable2 implements Runnable {
         @Override
         public void run(){
-            LogUtils.d("Runnable2: " + System.currentTimeMillis());
-            runOnUiThread(new Runnable(){
-                @Override
-                public void run(){
-                    LogUtils.i("Runnable2: " + System.currentTimeMillis());
-                    TextView mTextView = new TextView(self);
-                    mTextView.setBackgroundColor(Color.YELLOW);
-                    mTextView.setText("Runnable2: " + System.currentTimeMillis());
-                    Tooltip mTooltip = new Tooltip(self);
-                    mTooltip.setContentView(mTextView);
-                    mTooltip.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
-                    mTooltip.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-                    mTooltip.setAnimationStyle(R.style.tooltipAnimation);
-                    mTooltip.setDuration(3000);
-                    mTooltip.showAtLocation(Gravity.CENTER, 0, 30);
-                    LogUtils.i("Runnable2: " + System.currentTimeMillis());
-                }
-            });
+            LogUtils.d("Runnable2: start");
             try{
-                Thread.sleep(3000);
+                TimeUnit.SECONDS.sleep(1);
             }catch(InterruptedException e){
                 e.printStackTrace();
             }
-            LogUtils.d("Runnable2: " + System.currentTimeMillis());
+            LogUtils.d("Runnable2: end");
         }
     }
 }
