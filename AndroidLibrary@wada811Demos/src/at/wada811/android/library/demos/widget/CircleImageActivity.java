@@ -1,4 +1,4 @@
-package at.wada811.android.library.demos.view;
+package at.wada811.android.library.demos.widget;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -11,16 +11,16 @@ import android.widget.TextView;
 import at.wada811.android.library.demos.R;
 import at.wada811.utils.ColorUtils;
 import at.wada811.utils.LogUtils;
-import at.wada811.view.CircleImageView;
+import at.wada811.widget.CircleImageView;
 
 public class CircleImageActivity extends FragmentActivity {
 
-    final CircleImageActivity self   = this;
-    private int               mIndex = 0;
-    private int               mCount = 14;
-    private CircleImageView   mCircleImageView;
-    private TextView          mLayoutParamText;
-    private LinearLayout      mContainer;
+    final CircleImageActivity self = this;
+    private int mIndex = 0;
+    private int mCount = 14;
+    private CircleImageView mCircleImageView;
+    private TextView mLayoutParamText;
+    private LinearLayout mContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

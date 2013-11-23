@@ -25,7 +25,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical" >
-        <at.wada811.view.CircleImageView
+        <at.wada811.widget.CircleImageView
             android:id="@+id/circle"
             style="@style/circle_image_view_style_demo"
             android:layout_width="wrap_content"

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.wada811.view;
+package at.wada811.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
