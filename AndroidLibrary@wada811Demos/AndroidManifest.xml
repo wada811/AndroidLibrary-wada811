@@ -211,5 +211,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!--
+         _____               _            
+        |_   _|__   __ _ ___| |_ ___ _ __ 
+          | |/ _ \ / _` / __| __/ _ \ '__|
+          | | (_) | (_| \__ \ ||  __/ |   
+          |_|\___/ \__,_|___/\__\___|_|   
+        -->
+        <activity
+            android:name="at.wada811.android.library.demos.widget.ToasterActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <service android:name="at.wada811.widget.ToasterService" />
     </application>
 </manifest>
