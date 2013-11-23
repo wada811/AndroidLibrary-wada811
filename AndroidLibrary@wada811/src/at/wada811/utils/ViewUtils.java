@@ -15,6 +15,8 @@
  */
 package at.wada811.utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -112,6 +114,82 @@ public class ViewUtils {
     }
 
     /**
+     * visible true: List<T> findViewsWithClass(View v, Class<T>)
+     * http://visible-true.blogspot.jp/2012/02/list-findviewswithclassview-v-class.html
+     * 
+     * View のクラスから View を取得する
+     * 
+     * @param v parent view
+     * @param clazz target class
+     * 
+     */
+    public static <T extends View>List<T> findViewsWithClass(View v, Class<T> clazz){
+        List<T> views = new ArrayList<T>();
+        ViewUtils.findViewsWithClass(v, clazz, views);
+        return views;
+    }
+
+    /**
+     * visible true: List<T> findViewsWithClass(View v, Class<T>)
+     * http://visible-true.blogspot.jp/2012/02/list-findviewswithclassview-v-class.html
+     * 
+     * View のクラスから View を取得する内部メソッド
+     * 
+     * @param v parent view
+     * @param clazz target class
+     * @param views view list
+     */
+    private static <T extends View>void findViewsWithClass(View v, Class<T> clazz, List<T> views){
+        if(clazz.isAssignableFrom(v.getClass())){
+            views.add(clazz.cast(v));
+        }
+        if(v instanceof ViewGroup){
+            ViewGroup g = (ViewGroup)v;
+            for(int i = 0; i < g.getChildCount(); i++){
+                ViewUtils.findViewsWithClass(g.getChildAt(i), clazz, views);
+            }
+        }
+    }
+
+    /**
+     * visible true: [Android] アクションバーを画面下側から表示させてみました。アプリ編
+     * http://visible-true.blogspot.jp/2012/02/android.html
+     * 
+     * View のクラス名から View を取得する
+     * 
+     * @param v parent view
+     * @param clazzName target class name
+     */
+    public static List<View> findViewsWithClassName(View v, String className){
+        List<View> views = new ArrayList<View>();
+        ViewUtils.findViewsWithClassName(v, className, views);
+        return views;
+    }
+
+    /**
+     * visible true: [Android] アクションバーを画面下側から表示させてみました。アプリ編
+     * http://visible-true.blogspot.jp/2012/02/android.html
+     * 
+     * View のクラス名から View を取得する内部メソッド
+     * 
+     * @param v parent view
+     * @param clazzName target class name
+     * @param views view list
+     */
+    @SuppressWarnings("unchecked")
+    private static <T extends View>void findViewsWithClassName(View v, String clazzName, List<T> views){
+        if(v.getClass().getName().equals(clazzName)){
+            views.add((T)v);
+        }
+        if(v instanceof ViewGroup){
+            ViewGroup g = (ViewGroup)v;
+            for(int i = 0; i < g.getChildCount(); i++){
+                ViewUtils.findViewsWithClassName(g.getChildAt(i), clazzName, views);
+            }
+        }
+    }
+
+    /**
      * visible true: Viewの階層構造をダンプするスニペット http://visible-true.blogspot.jp/2012/02/view.html
      * 
      * @param view
@@ -124,6 +202,33 @@ public class ViewUtils {
             for(int i = 0; i < g.getChildCount(); i++){
                 dumpViewTree(g.getChildAt(i), padding + " ");
             }
+        }
+    }
+
+    /**
+     * visible true: [Android] アクションバーを画面下側から表示させてみました。アプリ編
+     * http://visible-true.blogspot.jp/2012/02/android.html
+     * 
+     * ActionBar を下に表示する
+     * 
+     * @param activity
+     */
+    public final static void actionBarUpsideDown(Activity activity){
+        View root = activity.getWindow().getDecorView();
+        View firstChild = ((ViewGroup)root).getChildAt(0);
+        if(firstChild instanceof ViewGroup){
+            ViewGroup viewGroup = (ViewGroup)firstChild;
+            List<View> views = ViewUtils.findViewsWithClassName(root, "com.android.internal.widget.ActionBarContainer");
+            if(!views.isEmpty()){
+                for(View vv : views){
+                    viewGroup.removeView(vv);
+                }
+                for(View vv : views){
+                    viewGroup.addView(vv);
+                }
+            }
+        }else{
+            LogUtils.e("first child is not ViewGroup.");
         }
     }
 
