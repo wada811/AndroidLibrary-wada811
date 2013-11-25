@@ -27,7 +27,7 @@ import android.widget.Button;
 import at.wada811.android.library.demos.R;
 import at.wada811.utils.LogUtils;
 
-public class ExecutorActivity extends FragmentActivity {
+public class ExecutorActivity extends FragmentActivity implements OnClickListener {
 
     final ExecutorActivity self = this;
 
@@ -36,87 +36,66 @@ public class ExecutorActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_executor);
 
-        Button newSingleThreadExecutorButton = (Button)findViewById(R.id.button1);
-        newSingleThreadExecutorButton.setText("newSingleThreadExecutor");
-        newSingleThreadExecutorButton.setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View v){
-                newSingleThreadExecutorTest();
-            }
-        });
-        Button newFixedThreadPoolButton = (Button)findViewById(R.id.button2);
-        newFixedThreadPoolButton.setText("newFixedThreadPool");
-        newFixedThreadPoolButton.setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View v){
-                newFixedThreadPoolTest();
-            }
-        });
-        Button newCachedThreadPoolButton = (Button)findViewById(R.id.button3);
-        newCachedThreadPoolButton.setText("newCachedThreadPool");
-        newCachedThreadPoolButton.setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View v){
-                newCachedThreadPoolTest();
-            }
-        });
-        Button newSingleThreadScheduledExecutorButton = (Button)findViewById(R.id.button4);
-        newSingleThreadScheduledExecutorButton.setText("newSingleThreadScheduledExecutor(1)");
-        newSingleThreadScheduledExecutorButton.setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View v){
-                newSingleThreadScheduledExecutorTest();
-            }
-        });
-        Button newSingleThreadScheduledExecutorRunningButton = (Button)findViewById(R.id.button5);
-        newSingleThreadScheduledExecutorRunningButton.setText("newSingleThreadScheduledExecutor(2)");
-        newSingleThreadScheduledExecutorRunningButton.setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View v){
-                newSingleThreadScheduledExecutorRunningTest();
-            }
-        });
-        Button newScheduledThreadPoolButton = (Button)findViewById(R.id.button6);
-        newScheduledThreadPoolButton.setText("newScheduledThreadPool");
-        newScheduledThreadPoolButton.setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View v){
-                newScheduledThreadPoolTest();
-            }
-        });
-        Button newSingleThreadScheduledExecutorAtFixedRateButton = (Button)findViewById(R.id.button7);
-        newSingleThreadScheduledExecutorAtFixedRateButton.setText("AtFixedRate(1)");
-        newSingleThreadScheduledExecutorAtFixedRateButton.setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View v){
-                newSingleThreadScheduledExecutorAtFixedRateTest();
-            }
-        });
-        Button newSingleThreadScheduledExecutorAtFixedRateRunningButton = (Button)findViewById(R.id.button8);
-        newSingleThreadScheduledExecutorAtFixedRateRunningButton.setText("AtFixedRate(2)");
-        newSingleThreadScheduledExecutorAtFixedRateRunningButton.setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View v){
-                newSingleThreadScheduledExecutorAtFixedRateRunningTest();
-            }
-        });
-        Button newSingleThreadScheduledExecutorWithFixedDelayButton = (Button)findViewById(R.id.button9);
-        newSingleThreadScheduledExecutorWithFixedDelayButton.setText("WithFixedDelay(1)");
-        newSingleThreadScheduledExecutorWithFixedDelayButton.setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View v){
-                newSingleThreadScheduledExecutorWithFixedDelayTest();
-            }
-        });
-        Button newSingleThreadScheduledExecutorWithFixedDelayRunningButton = (Button)findViewById(R.id.button10);
-        newSingleThreadScheduledExecutorWithFixedDelayRunningButton.setText("WithFixedDelay(2)");
-        newSingleThreadScheduledExecutorWithFixedDelayRunningButton.setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View v){
-                newSingleThreadScheduledExecutorWithFixedDelayRunningTest();
-            }
-        });
+        ((Button)findViewById(R.id.button1)).setText("newSingleThreadExecutor");
+        ((Button)findViewById(R.id.button1)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button2)).setText("newFixedThreadPool");
+        ((Button)findViewById(R.id.button2)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button3)).setText("newCachedThreadPool");
+        ((Button)findViewById(R.id.button3)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button4)).setText("newSingleThreadScheduledExecutor(1)");
+        ((Button)findViewById(R.id.button4)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button5)).setText("newSingleThreadScheduledExecutor(2)");
+        ((Button)findViewById(R.id.button5)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button6)).setText("newScheduledThreadPool");
+        ((Button)findViewById(R.id.button6)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button7)).setText("AtFixedRate(1)");
+        ((Button)findViewById(R.id.button7)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button8)).setText("AtFixedRate(2)");
+        ((Button)findViewById(R.id.button8)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button9)).setText("WithFixedDelay(1)");
+        ((Button)findViewById(R.id.button9)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button10)).setText("WithFixedDelay(2)");
+        ((Button)findViewById(R.id.button10)).setOnClickListener(this);
+    }
 
+    @Override
+    public void onClick(View v){
+        LogUtils.d();
+        switch(v.getId()){
+            case R.id.button1:
+                newSingleThreadExecutorTest();
+                break;
+            case R.id.button2:
+                newFixedThreadPoolTest();
+                break;
+            case R.id.button3:
+                newCachedThreadPoolTest();
+                break;
+            case R.id.button4:
+                newSingleThreadScheduledExecutorTest();
+                break;
+            case R.id.button5:
+                newSingleThreadScheduledExecutorRunningTest();
+                break;
+            case R.id.button6:
+                newScheduledThreadPoolTest();
+                break;
+            case R.id.button7:
+                newSingleThreadScheduledExecutorAtFixedRateTest();
+                break;
+            case R.id.button8:
+                newSingleThreadScheduledExecutorAtFixedRateRunningTest();
+                break;
+            case R.id.button9:
+                newSingleThreadScheduledExecutorWithFixedDelayTest();
+                break;
+            case R.id.button10:
+                newSingleThreadScheduledExecutorWithFixedDelayRunningTest();
+                break;
+            default:
+                break;
+        }
+        LogUtils.d();
     }
 
     public void newSingleThreadExecutorTest(){
