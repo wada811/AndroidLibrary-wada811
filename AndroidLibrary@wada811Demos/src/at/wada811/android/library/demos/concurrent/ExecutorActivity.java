@@ -20,6 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,11 +43,11 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
         ((Button)findViewById(R.id.button2)).setOnClickListener(this);
         ((Button)findViewById(R.id.button3)).setText("newCachedThreadPool");
         ((Button)findViewById(R.id.button3)).setOnClickListener(this);
-        ((Button)findViewById(R.id.button4)).setText("newSingleThreadScheduledExecutor(1)");
+        ((Button)findViewById(R.id.button4)).setText("newScheduledThreadPool");
         ((Button)findViewById(R.id.button4)).setOnClickListener(this);
-        ((Button)findViewById(R.id.button5)).setText("newSingleThreadScheduledExecutor(2)");
+        ((Button)findViewById(R.id.button5)).setText("newSingleThreadScheduledExecutor(1)");
         ((Button)findViewById(R.id.button5)).setOnClickListener(this);
-        ((Button)findViewById(R.id.button6)).setText("newScheduledThreadPool");
+        ((Button)findViewById(R.id.button6)).setText("newSingleThreadScheduledExecutor(2)");
         ((Button)findViewById(R.id.button6)).setOnClickListener(this);
         ((Button)findViewById(R.id.button7)).setText("AtFixedRate(1)");
         ((Button)findViewById(R.id.button7)).setOnClickListener(this);
@@ -72,25 +73,25 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
                 newCachedThreadPoolTest();
                 break;
             case R.id.button4:
-                newSingleThreadScheduledExecutorTest();
+                newScheduledThreadPoolTest();
                 break;
             case R.id.button5:
-                newSingleThreadScheduledExecutorRunningTest();
+                newSingleThreadScheduledExecutorTest();
                 break;
             case R.id.button6:
-                newScheduledThreadPoolTest();
+                newSingleThreadScheduledExecutorDuringExecutionTest();
                 break;
             case R.id.button7:
                 newSingleThreadScheduledExecutorAtFixedRateTest();
                 break;
             case R.id.button8:
-                newSingleThreadScheduledExecutorAtFixedRateRunningTest();
+                newSingleThreadScheduledExecutorAtFixedRateDuringExecutionTest();
                 break;
             case R.id.button9:
                 newSingleThreadScheduledExecutorWithFixedDelayTest();
                 break;
             case R.id.button10:
-                newSingleThreadScheduledExecutorWithFixedDelayRunningTest();
+                newSingleThreadScheduledExecutorWithFixedDelayDuringExecutionTest();
                 break;
             default:
                 break;
@@ -98,6 +99,9 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
         LogUtils.d();
     }
 
+    /**
+     * Test {@link Executors#newSingleThreadExecutor}
+     */
     public void newSingleThreadExecutorTest(){
         LogUtils.d();
         ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -107,6 +111,9 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
         executorService.submit(new ExecutorRunnable("D", 1));
     }
 
+    /**
+     * Test {@link Executors#newFixedThreadPool(int)}
+     */
     public void newFixedThreadPoolTest(){
         LogUtils.d();
         ExecutorService executorService = Executors.newFixedThreadPool(2);
@@ -116,6 +123,9 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
         executorService.submit(new ExecutorRunnable("D", 1));
     }
 
+    /**
+     * Test {@link Executors#newCachedThreadPool}
+     */
     public void newCachedThreadPoolTest(){
         LogUtils.d();
         ExecutorService executorService = Executors.newCachedThreadPool();
@@ -125,24 +135,9 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
         executorService.submit(new ExecutorRunnable("D", 1));
     }
 
-    public void newSingleThreadScheduledExecutorTest(){
-        LogUtils.d();
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.schedule(new ExecutorRunnable("A", 1), 10, TimeUnit.SECONDS);
-        executorService.schedule(new ExecutorRunnable("B", 1), 5, TimeUnit.SECONDS);
-        executorService.schedule(new ExecutorRunnable("C", 1), 0, TimeUnit.SECONDS);
-        executorService.schedule(new ExecutorRunnable("D", 1), 15, TimeUnit.SECONDS);
-    }
-
-    public void newSingleThreadScheduledExecutorRunningTest(){
-        LogUtils.d();
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.schedule(new ExecutorRunnable("A", 1), 1, TimeUnit.SECONDS);
-        executorService.schedule(new ExecutorRunnable("B", 1), 1, TimeUnit.SECONDS);
-        executorService.schedule(new ExecutorRunnable("C", 1), 1, TimeUnit.SECONDS);
-        executorService.schedule(new ExecutorRunnable("D", 1), 1, TimeUnit.SECONDS);
-    }
-
+    /**
+     * Test {@link Executors#newScheduledThreadPool(int)}
+     */
     public void newScheduledThreadPoolTest(){
         LogUtils.d();
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
@@ -152,6 +147,35 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
         executorService.schedule(new ExecutorRunnable("D", 1), 1, TimeUnit.SECONDS);
     }
 
+    /**
+     * Test {@link ScheduledExecutorService#schedule(Runnable, long, TimeUnit)}
+     */
+    public void newSingleThreadScheduledExecutorTest(){
+        LogUtils.d();
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.schedule(new ExecutorRunnable("A", 1), 8, TimeUnit.SECONDS);
+        executorService.schedule(new ExecutorRunnable("B", 1), 4, TimeUnit.SECONDS);
+        executorService.schedule(new ExecutorRunnable("C", 1), 0, TimeUnit.SECONDS);
+        executorService.schedule(new ExecutorRunnable("D", 1), 12, TimeUnit.SECONDS);
+    }
+
+    /**
+     * Test {@link ScheduledExecutorService#schedule(Runnable, long, TimeUnit)} of
+     * {@link Executors#newSingleThreadScheduledExecutor} during execution
+     */
+    public void newSingleThreadScheduledExecutorDuringExecutionTest(){
+        LogUtils.d();
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.schedule(new ExecutorRunnable("A", 1), 1, TimeUnit.SECONDS);
+        executorService.schedule(new ExecutorRunnable("B", 1), 1, TimeUnit.SECONDS);
+        executorService.schedule(new ExecutorRunnable("C", 1), 1, TimeUnit.SECONDS);
+        executorService.schedule(new ExecutorRunnable("D", 1), 1, TimeUnit.SECONDS);
+    }
+
+    /**
+     * Test {@link ScheduledExecutorService#scheduleAtFixedRate(Runnable, long, long, TimeUnit)} of
+     * {@link Executors#newSingleThreadScheduledExecutor}
+     */
     public void newSingleThreadScheduledExecutorAtFixedRateTest(){
         LogUtils.d();
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
@@ -159,13 +183,21 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
         shutdown(executorService);
     }
 
-    public void newSingleThreadScheduledExecutorAtFixedRateRunningTest(){
+    /**
+     * Test {@link ScheduledExecutorService#scheduleAtFixedRate(Runnable, long, long, TimeUnit)} of
+     * {@link Executors#newSingleThreadScheduledExecutor} during execution
+     */
+    public void newSingleThreadScheduledExecutorAtFixedRateDuringExecutionTest(){
         LogUtils.d();
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.scheduleAtFixedRate(new ExecutorRunnable("A", 3), 1, 2, TimeUnit.SECONDS);
         shutdown(executorService);
     }
 
+    /**
+     * Test {@link ScheduledExecutorService#scheduleWithFixedDelay(Runnable, long, long, TimeUnit)}
+     * of {@link Executors#newSingleThreadScheduledExecutor}
+     */
     public void newSingleThreadScheduledExecutorWithFixedDelayTest(){
         LogUtils.d();
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
@@ -173,27 +205,38 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
         shutdown(executorService);
     }
 
-    public void newSingleThreadScheduledExecutorWithFixedDelayRunningTest(){
+    /**
+     * Test {@link ScheduledExecutorService#scheduleWithFixedDelay(Runnable, long, long, TimeUnit)}
+     * of {@link Executors#newSingleThreadScheduledExecutor} during execution
+     */
+    public void newSingleThreadScheduledExecutorWithFixedDelayDuringExecutionTest(){
         LogUtils.d();
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.scheduleWithFixedDelay(new ExecutorRunnable("A", 3), 1, 2, TimeUnit.SECONDS);
         shutdown(executorService);
     }
 
-    public void shutdown(ExecutorService executorService){
-        try{
-            TimeUnit.SECONDS.sleep(8);
-            LogUtils.d("shutdown");
-            executorService.shutdown();
-            if(!executorService.awaitTermination(1, TimeUnit.SECONDS)){
-                LogUtils.d("shutdownNow");
-                executorService.shutdownNow();
+    /**
+     * Shutdown ExecutorService
+     */
+    public void shutdown(final ExecutorService executorService){
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run(){
+                try{
+                    LogUtils.d("shutdown");
+                    executorService.shutdown();
+                    if(!executorService.awaitTermination(1, TimeUnit.SECONDS)){
+                        LogUtils.d("shutdownNow");
+                        executorService.shutdownNow();
+                    }
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                    LogUtils.d("shutdownNow: " + e.getMessage());
+                    executorService.shutdownNow();
+                }
             }
-        }catch(InterruptedException e){
-            e.printStackTrace();
-            LogUtils.d("shutdownNow: " + e.getMessage());
-            executorService.shutdownNow();
-        }
+        }, 8000);
     }
 
     public class ExecutorRunnable implements Runnable {
