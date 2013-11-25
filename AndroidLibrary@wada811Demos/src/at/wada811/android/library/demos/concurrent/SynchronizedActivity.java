@@ -26,10 +26,14 @@ import at.wada811.android.library.demos.R;
 import at.wada811.utils.LogUtils;
 import at.wada811.utils.PreferenceUtils;
 
+/**
+ * [Java]マルチスレッドでの排他処理を行うsynchronizedを理解する | DevAchieve
+ * http://wada811.blogspot.com/2013/11/java-synchronized-example.html
+ */
 public class SynchronizedActivity extends FragmentActivity implements OnClickListener {
 
     final SynchronizedActivity self = this;
-    public static final int    N    = 10;
+    public static final int N = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -225,7 +229,7 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
 
     public class SyncThisInstanceMethodExecutorRunnable implements Runnable {
         private SyncThisInstanceMethodExecutor mExecutor;
-        private String                         mThreadNmae;
+        private String mThreadNmae;
 
         public SyncThisInstanceMethodExecutorRunnable(SyncThisInstanceMethodExecutor executor, String threadNmae) {
             mExecutor = executor;
@@ -274,7 +278,7 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
 
     public class AsyncThisInstanceMethodExecutorRunnable implements Runnable {
         private AsyncThisInstanceMethodExecutor mExecutor;
-        private String                          mThreadNmae;
+        private String mThreadNmae;
 
         public AsyncThisInstanceMethodExecutorRunnable(AsyncThisInstanceMethodExecutor executor, String threadNmae) {
             mExecutor = executor;
@@ -323,7 +327,7 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
 
     public class SyncLockInstanceMethodExecutorRunnable implements Runnable {
         private SyncLockInstanceMethodExecutor mExecutor;
-        private String                         mThreadNmae;
+        private String mThreadNmae;
 
         public SyncLockInstanceMethodExecutorRunnable(SyncLockInstanceMethodExecutor executor, String threadNmae) {
             mExecutor = executor;
@@ -341,8 +345,8 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
      * インスタンスメソッドでロックオブジェクトを synchronized した場合のテストクラス
      */
     public class SyncLockInstanceMethodExecutor {
-        private final Object lock   = new Object();
-        private int          mCount = 0;
+        private final Object lock = new Object();
+        private int mCount = 0;
 
         public void execute(String threadName){
             synchronized(lock){
@@ -375,7 +379,7 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
 
     public class AsyncLockInstanceMethodExecutorRunnable implements Runnable {
         private AsyncLockInstanceMethodExecutor mExecutor;
-        private String                          mThreadNmae;
+        private String mThreadNmae;
 
         public AsyncLockInstanceMethodExecutorRunnable(AsyncLockInstanceMethodExecutor executor, String threadNmae) {
             mExecutor = executor;
@@ -442,8 +446,8 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
      */
     public static class SyncMultiClassMethodExecutor {
 
-        public static final String KEY   = SyncMultiClassMethodExecutor.class.getSimpleName();
-        private static int         count = 0;
+        public static final String KEY = SyncMultiClassMethodExecutor.class.getSimpleName();
+        private static int count = 0;
 
         public static final synchronized void execute1(String threadName){
             for(int i = 0; i < N; i++){
@@ -493,8 +497,8 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
 
     public static class AsyncMultiClassMethodExecutor {
 
-        public static final String KEY   = AsyncMultiClassMethodExecutor.class.getSimpleName();
-        private static int         count = 0;
+        public static final String KEY = AsyncMultiClassMethodExecutor.class.getSimpleName();
+        private static int count = 0;
 
         public static final void execute1(String threadName){
             for(int i = 0; i < N; i++){
@@ -525,7 +529,7 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
 
     public class SyncMultiInstanceMethodExecutorRunnable implements Runnable {
         private SyncMultiInstanceMethodExecutor mExecutor;
-        private String                          mThreadNmae;
+        private String mThreadNmae;
 
         public SyncMultiInstanceMethodExecutorRunnable(SyncMultiInstanceMethodExecutor executor, String threadNmae) {
             mExecutor = executor;
@@ -542,8 +546,8 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
     }
 
     public class SyncMultiInstanceMethodExecutor {
-        private final Object lock   = new Object();
-        private int          mCount = 0;
+        private final Object lock = new Object();
+        private int mCount = 0;
 
         public void execute1(String threadName){
             synchronized(lock){
@@ -580,7 +584,7 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
 
     public class AsyncMultiInstanceMethodExecutorRunnable implements Runnable {
         private AsyncMultiInstanceMethodExecutor mExecutor;
-        private String                           mThreadNmae;
+        private String mThreadNmae;
 
         public AsyncMultiInstanceMethodExecutorRunnable(AsyncMultiInstanceMethodExecutor executor, String threadNmae) {
             mExecutor = executor;
