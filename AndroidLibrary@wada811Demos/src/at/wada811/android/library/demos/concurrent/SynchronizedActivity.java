@@ -40,36 +40,26 @@ public class SynchronizedActivity extends FragmentActivity implements OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_synchronized);
 
-        Button syncClassMethodExecuteButton = (Button)findViewById(R.id.button1);
-        syncClassMethodExecuteButton.setText("SyncClassMethodExecute");
-        syncClassMethodExecuteButton.setOnClickListener(this);
-        Button asyncClassMethodExecuteButton = (Button)findViewById(R.id.button2);
-        asyncClassMethodExecuteButton.setText("AsyncClassMethodExecute");
-        asyncClassMethodExecuteButton.setOnClickListener(this);
-        Button syncInstanceMethodExecuteButton = (Button)findViewById(R.id.button3);
-        syncInstanceMethodExecuteButton.setText("SyncThisInstanceMethodExecute");
-        syncInstanceMethodExecuteButton.setOnClickListener(this);
-        Button asyncInstanceMethodExecuteButton = (Button)findViewById(R.id.button4);
-        asyncInstanceMethodExecuteButton.setText("AsyncThisInstanceMethodExecute");
-        asyncInstanceMethodExecuteButton.setOnClickListener(this);
-        Button syncLockInstanceMethodExecuteButton = (Button)findViewById(R.id.button5);
-        syncLockInstanceMethodExecuteButton.setText("SyncLockInstanceMethodExecute");
-        syncLockInstanceMethodExecuteButton.setOnClickListener(this);
-        Button asyncLockInstanceMethodExecuteButton = (Button)findViewById(R.id.button6);
-        asyncLockInstanceMethodExecuteButton.setText("AsyncLockInstanceMethodExecute");
-        asyncLockInstanceMethodExecuteButton.setOnClickListener(this);
-        Button syncMultiClassMethodExecuteButton = (Button)findViewById(R.id.button7);
-        syncMultiClassMethodExecuteButton.setText("SyncMultiClassMethodExecute");
-        syncMultiClassMethodExecuteButton.setOnClickListener(this);
-        Button asyncMultiClassMethodExecuteButton = (Button)findViewById(R.id.button8);
-        asyncMultiClassMethodExecuteButton.setText("AsyncMultiClassMethodExecute");
-        asyncMultiClassMethodExecuteButton.setOnClickListener(this);
-        Button syncMultiInstanceMethodExecuteButton = (Button)findViewById(R.id.button9);
-        syncMultiInstanceMethodExecuteButton.setText("SyncMultiInstanceMethodExecute");
-        syncMultiInstanceMethodExecuteButton.setOnClickListener(this);
-        Button asyncMultiInstanceMethodExecuteButton = (Button)findViewById(R.id.button10);
-        asyncMultiInstanceMethodExecuteButton.setText("AsyncMultiInstanceMethodExecute");
-        asyncMultiInstanceMethodExecuteButton.setOnClickListener(this);
+        ((Button)findViewById(R.id.button1)).setText("SyncClassMethodExecute");
+        ((Button)findViewById(R.id.button1)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button2)).setText("AsyncClassMethodExecute");
+        ((Button)findViewById(R.id.button2)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button3)).setText("SyncThisInstanceMethodExecute");
+        ((Button)findViewById(R.id.button3)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button4)).setText("AsyncThisInstanceMethodExecute");
+        ((Button)findViewById(R.id.button4)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button5)).setText("SyncLockInstanceMethodExecute");
+        ((Button)findViewById(R.id.button5)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button6)).setText("AsyncLockInstanceMethodExecute");
+        ((Button)findViewById(R.id.button6)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button7)).setText("SyncMultiClassMethodExecute");
+        ((Button)findViewById(R.id.button7)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button8)).setText("AsyncMultiClassMethodExecute");
+        ((Button)findViewById(R.id.button8)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button9)).setText("SyncMultiInstanceMethodExecute");
+        ((Button)findViewById(R.id.button9)).setOnClickListener(this);
+        ((Button)findViewById(R.id.button10)).setText("AsyncMultiInstanceMethodExecute");
+        ((Button)findViewById(R.id.button10)).setOnClickListener(this);
     }
 
     @Override
