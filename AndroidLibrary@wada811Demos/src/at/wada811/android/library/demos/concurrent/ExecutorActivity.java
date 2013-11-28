@@ -28,6 +28,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * ExecutorServiceでマルチスレッドで実行可能なタスクキューを使う | DevAchieve
+ * http://wada811.blogspot.com/2013/11/executor-service-that-multi-thread-task-queue-in-java.html
+ */
 public class ExecutorActivity extends FragmentActivity implements OnClickListener {
 
     @Override
