@@ -15,10 +15,6 @@
  */
 package at.wada811.android.library.demos.concurrent;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -27,10 +23,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import at.wada811.android.library.demos.R;
 import at.wada811.utils.LogUtils;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class ExecutorActivity extends FragmentActivity implements OnClickListener {
-
-    final ExecutorActivity self = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -100,7 +98,11 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
     }
 
     /**
-     * Test {@link Executors#newSingleThreadExecutor}
+     * {@link Executors#newSingleThreadExecutor} のテストメソッド
+     * 
+     * <p>
+     * SingleThread なのでタスクをいくつ追加しても一つのスレッドで実行します。
+     * </p>
      */
     public void newSingleThreadExecutorTest(){
         LogUtils.d();
@@ -112,7 +114,11 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
     }
 
     /**
-     * Test {@link Executors#newFixedThreadPool(int)}
+     * {@link Executors#newFixedThreadPool(int)} のテストメソッド
+     * 
+     * <p>
+     * 引数のスレッド数で実行します。
+     * </p>
      */
     public void newFixedThreadPoolTest(){
         LogUtils.d();
@@ -124,7 +130,11 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
     }
 
     /**
-     * Test {@link Executors#newCachedThreadPool}
+     * {@link Executors#newCachedThreadPool} のテストメソッド
+     * 
+     * <p>
+     * 必要な分だけスレッドを生成して実行します。
+     * </p>
      */
     public void newCachedThreadPoolTest(){
         LogUtils.d();
@@ -136,7 +146,11 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
     }
 
     /**
-     * Test {@link Executors#newScheduledThreadPool(int)}
+     * {@link Executors#newScheduledThreadPool(int)} のテストメソッド
+     * 
+     * <p>
+     * 引数のスレッド数で実行します。実行タイミングを設定できます。設定のスレッド数に達したら待たされます。
+     * </p>
      */
     public void newScheduledThreadPoolTest(){
         LogUtils.d();
@@ -148,7 +162,11 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
     }
 
     /**
-     * Test {@link ScheduledExecutorService#schedule(Runnable, long, TimeUnit)}
+     * {@link ScheduledExecutorService#schedule(Runnable, long, TimeUnit)} の実行タイミングが被らないパターンのテストメソッド
+     * 
+     * <p>
+     * 一つのスレッドで実行します。実行タイミングを設定できます。
+     * </p>
      */
     public void newSingleThreadScheduledExecutorTest(){
         LogUtils.d();
@@ -160,8 +178,11 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
     }
 
     /**
-     * Test {@link ScheduledExecutorService#schedule(Runnable, long, TimeUnit)} of
-     * {@link Executors#newSingleThreadScheduledExecutor} during execution
+     * {@link ScheduledExecutorService#schedule(Runnable, long, TimeUnit)} の実行タイミングが被るパターンのテストメソッド
+     * 
+     * <p>
+     * 一つのスレッドで実行します。実行タイミングを設定できます。
+     * </p>
      */
     public void newSingleThreadScheduledExecutorDuringExecutionTest(){
         LogUtils.d();
@@ -173,8 +194,12 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
     }
 
     /**
-     * Test {@link ScheduledExecutorService#scheduleAtFixedRate(Runnable, long, long, TimeUnit)} of
-     * {@link Executors#newSingleThreadScheduledExecutor}
+     * {@link ScheduledExecutorService#scheduleAtFixedRate(Runnable, long, long, TimeUnit)}
+     * の実行タイミングをを過ぎないパターンのテストメソッド
+     * 
+     * <p>
+     * 一つのスレッドで実行します。実行タイミングを設定できます。繰り返し実行でき、実行間隔を設定できます。
+     * </p>
      */
     public void newSingleThreadScheduledExecutorAtFixedRateTest(){
         LogUtils.d();
@@ -184,8 +209,13 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
     }
 
     /**
-     * Test {@link ScheduledExecutorService#scheduleAtFixedRate(Runnable, long, long, TimeUnit)} of
-     * {@link Executors#newSingleThreadScheduledExecutor} during execution
+     * {@link ScheduledExecutorService#scheduleAtFixedRate(Runnable, long, long, TimeUnit)}
+     * の実行タイミングを過ぎるパターンのテストメソッド
+     * 
+     * <p>
+     * 一つのスレッドで実行します。実行タイミングを設定できます。繰り返し実行でき、実行間隔を設定できます。 <br>
+     * 待たされ、次回実行タイミングが過ぎていた場合はすぐに実行します。
+     * </p>
      */
     public void newSingleThreadScheduledExecutorAtFixedRateDuringExecutionTest(){
         LogUtils.d();
@@ -195,8 +225,12 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
     }
 
     /**
-     * Test {@link ScheduledExecutorService#scheduleWithFixedDelay(Runnable, long, long, TimeUnit)}
-     * of {@link Executors#newSingleThreadScheduledExecutor}
+     * {@link ScheduledExecutorService#scheduleWithFixedDelay(Runnable, long, long, TimeUnit)}
+     * の実行タイミングが被らないパターンのテストメソッド
+     * 
+     * <p>
+     * 一つのスレッドで実行します。実行タイミングを設定できます。繰り返し実行できます。実行間隔を設定できます。
+     * </p>
      */
     public void newSingleThreadScheduledExecutorWithFixedDelayTest(){
         LogUtils.d();
@@ -206,8 +240,13 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
     }
 
     /**
-     * Test {@link ScheduledExecutorService#scheduleWithFixedDelay(Runnable, long, long, TimeUnit)}
-     * of {@link Executors#newSingleThreadScheduledExecutor} during execution
+     * {@link ScheduledExecutorService#scheduleWithFixedDelay(Runnable, long, long, TimeUnit)}
+     * の実行タイミングが被るパターンのテストメソッド
+     * 
+     * <p>
+     * 一つのスレッドで実行します。実行タイミングを設定できます。繰り返し実行できます。実行間隔を設定できます。 <br>
+     * 待たされ、次回実行タイミングが過ぎていた場合でも実行間隔の分だけ待ってから実行します。
+     * </p>
      */
     public void newSingleThreadScheduledExecutorWithFixedDelayDuringExecutionTest(){
         LogUtils.d();
@@ -217,9 +256,14 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
     }
 
     /**
-     * Shutdown ExecutorService
+     * ExecutorService をシャットダウンします。
+     * 
+     * <p>
+     * このサンプルでは繰り返し実行するタイプのテストメソッドを停止するために使っています。停止命令を出してから1秒間だけ待って強制終了します。<br>
+     * UIスレッドで8秒待つのは問題があるので Handler を使っています。実際のシャットダウンには必要ありません。
+     * </p>
      */
-    public void shutdown(final ExecutorService executorService){
+    private void shutdown(final ExecutorService executorService){
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run(){
@@ -256,6 +300,7 @@ public class ExecutorActivity extends FragmentActivity implements OnClickListene
                 TimeUnit.SECONDS.sleep(mSeconds);
             }catch(InterruptedException e){
                 e.printStackTrace();
+                LogUtils.w(mName, e);
             }
             LogUtils.d(mName + ": end");
         }
