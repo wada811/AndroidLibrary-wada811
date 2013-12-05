@@ -97,13 +97,16 @@ public class AndroidUtils {
      * @param message
      */
     public static void showToast(final Context context, final String message){
-        ((Activity)context).runOnUiThread(new Runnable(){
-            @Override
-            public void run(){
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-            }
-        });
-
+        if(ThreadUtils.isMainThread()){
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+        }else{
+            ((Activity)context).runOnUiThread(new Runnable(){
+                @Override
+                public void run(){
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     /**
@@ -113,12 +116,16 @@ public class AndroidUtils {
      * @param resId
      */
     public static void showToast(final Context context, final int resId){
-        ((Activity)context).runOnUiThread(new Runnable(){
-            @Override
-            public void run(){
-                Toast.makeText(context, resId, Toast.LENGTH_LONG).show();
-            }
-        });
+        if(ThreadUtils.isMainThread()){
+            Toast.makeText(context, resId, Toast.LENGTH_LONG).show();
+        }else{
+            ((Activity)context).runOnUiThread(new Runnable(){
+                @Override
+                public void run(){
+                    Toast.makeText(context, resId, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
 }
