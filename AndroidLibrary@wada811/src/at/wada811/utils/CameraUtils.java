@@ -15,9 +15,6 @@
  */
 package at.wada811.utils;
 
-import java.util.List;
-import org.json.JSONException;
-import org.json.JSONObject;
 import android.annotation.TargetApi;
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
@@ -28,6 +25,10 @@ import android.hardware.Camera.Parameters;
 import android.hardware.Camera.Size;
 import android.media.CamcorderProfile;
 import android.os.Build;
+import at.wada811.android.library.R;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.util.List;
 
 public class CameraUtils {
 
@@ -333,9 +334,8 @@ public class CameraUtils {
         if(DEBUG){
             LogUtils.v("displayHeight: " + displayHeight);
         }
-        // XXX
-//        PreferenceUtils.putInt(context, context.getString(R.string.keyDisplayWidth), displayWidth);
-//        PreferenceUtils.putInt(context, context.getString(R.string.keyDisplayHeight), displayHeight);
+        PreferenceUtils.putInt(context, context.getString(R.string.keyDisplayWidth), displayWidth);
+        PreferenceUtils.putInt(context, context.getString(R.string.keyDisplayHeight), displayHeight);
         final int previewWidth = isPortrait ? previewSize.height : previewSize.width;
         final int previewHeight = isPortrait ? previewSize.width : previewSize.height;
         if(DEBUG){
@@ -344,9 +344,8 @@ public class CameraUtils {
         if(DEBUG){
             LogUtils.v("previewHeight: " + previewHeight);
         }
-        // XXX
-//        PreferenceUtils.putInt(context, context.getString(R.string.keyPreviewWidth), previewWidth);
-//        PreferenceUtils.putInt(context, context.getString(R.string.keyPreviewHeight), previewHeight);
+        PreferenceUtils.putInt(context, context.getString(R.string.keyPreviewWidth), previewWidth);
+        PreferenceUtils.putInt(context, context.getString(R.string.keyPreviewHeight), previewHeight);
         double displayRatio = displayHeight > displayWidth ? (double)displayHeight / displayWidth : (double)displayWidth / displayHeight;
         double previewRatio = previewHeight > previewWidth ? (double)previewHeight / previewWidth : (double)previewWidth / previewHeight;
         if(DEBUG){
@@ -355,9 +354,8 @@ public class CameraUtils {
         if(DEBUG){
             LogUtils.v("previewRatio: " + previewRatio);
         }
-        // XXX
-//        PreferenceUtils.putFloat(context, context.getString(R.string.keyDisplayRatio), (float)displayRatio);
-//        PreferenceUtils.putFloat(context, context.getString(R.string.keyPreviewRatio), (float)previewRatio);
+        PreferenceUtils.putFloat(context, context.getString(R.string.keyDisplayRatio), (float)displayRatio);
+        PreferenceUtils.putFloat(context, context.getString(R.string.keyPreviewRatio), (float)previewRatio);
         int scaledChildWidth = displayWidth;
         int scaledChildHeight = displayHeight;
         if(displayRatio <= previewRatio){
@@ -395,9 +393,8 @@ public class CameraUtils {
         if(DEBUG){
             LogUtils.v("scaledChildHeight: " + scaledChildHeight);
         }
-        // XXX
-//        PreferenceUtils.putInt(context, context.getString(R.string.keyScaledChildWidth), scaledChildWidth);
-//        PreferenceUtils.putInt(context, context.getString(R.string.keyScaledChildHeight), scaledChildHeight);
+        PreferenceUtils.putInt(context, context.getString(R.string.keyScaledChildWidth), scaledChildWidth);
+        PreferenceUtils.putInt(context, context.getString(R.string.keyScaledChildHeight), scaledChildHeight);
         int scaledWidth = scaledChildWidth;
         int scaledHeight = scaledChildHeight;
         if(displayRatio <= previewRatio){
@@ -435,9 +432,8 @@ public class CameraUtils {
         if(DEBUG){
             LogUtils.v("scaledHeight: " + scaledHeight);
         }
-        // XXX
-//        PreferenceUtils.putInt(context, context.getString(R.string.keyScaledWidth), scaledWidth);
-//        PreferenceUtils.putInt(context, context.getString(R.string.keyScaledHeight), scaledHeight);
+        PreferenceUtils.putInt(context, context.getString(R.string.keyScaledWidth), scaledWidth);
+        PreferenceUtils.putInt(context, context.getString(R.string.keyScaledHeight), scaledHeight);
         return camera.new Size(scaledWidth, scaledHeight);
     }
 
@@ -520,6 +516,19 @@ public class CameraUtils {
             canDisableShutterSound = info.canDisableShutterSound;
         }
         return canDisableShutterSound;
+    }
+
+    /**
+     * 顔検出が使えるか
+     */
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    public static boolean isFaceDetectionSupported(Camera camera){
+        boolean isFaceDetectionSupported = false;
+        if(AndroidUtils.isMoreThanBuildVersion(Build.VERSION_CODES.ICE_CREAM_SANDWICH)){
+            int maxNumDetectedFaces = camera.getParameters().getMaxNumDetectedFaces();
+            isFaceDetectionSupported = maxNumDetectedFaces > 0;
+        }
+        return isFaceDetectionSupported;
     }
 
 }
