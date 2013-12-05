@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 起動カメラID -->
+    <string name="keyIntentCameraId" translatable="false">CameraID</string>
+    <!-- カメラ情報 -->
+    <string name="keyFacingBack" translatable="false">Back</string>
+    <string name="keyFacingFront" translatable="false">Front</string>
+    <string name="keyFacingOfCamera" translatable="false">FacingOfCamera%1$s</string>
+    <string name="keyOrientationOfCamera" translatable="false">OrientationOfCamera%1$d</string>
+    <string name="keyDisableShutterSound" translatable="false">DisableShutterSound%1$d</string>
+    <string name="keyNumberOfCamera" translatable="false">NumberOfCamera</string>
+    <string name="keyCameraParam" translatable="false">ParamsOf</string>
+    <string name="keyCameraParams" translatable="false">ParamsOfCamera%1$d</string>
+    <string name="keyDisplayWidth" translatable="false">keyDisplayWidth</string>
+    <string name="keyDisplayHeight" translatable="false">keyDisplayHeight</string>
+    <string name="keyDisplayRatio" translatable="false">keyDisplayRatio</string>
+    <string name="keyPictureWidth" translatable="false">keyPictureWidth</string>
+    <string name="keyPictureHeight" translatable="false">keyPictureHeight</string>
+    <string name="keyPreviewWidth" translatable="false">keyPreviewWidth</string>
+    <string name="keyPreviewHeight" translatable="false">keyPreviewHeight</string>
+    <string name="keyPreviewRatio" translatable="false">keyPreviewRatio</string>
+    <string name="keyScaledChildWidth" translatable="false">keyScaledChildWidth</string>
+    <string name="keyScaledChildHeight" translatable="false">keyScaledChildHeight</string>
+    <string name="keyScaledWidth" translatable="false">keyScaledWidth</string>
+    <string name="keyScaledHeight" translatable="false">keyScaledHeight</string>
+    <string name="keyVideoCamcorderProfile" translatable="false">ParamsOfVideoCamcorderProfile%1$d</string>
+    <string name="keySupportFaceDetection" translatable="false">keySupportFaceDetection</string>
+    <string name="keyMaxNumDetectedFaces" translatable="false">keyMaxNumDetectedFaces</string>
+</resources>
