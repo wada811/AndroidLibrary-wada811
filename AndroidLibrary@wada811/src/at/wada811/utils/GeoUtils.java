@@ -88,6 +88,7 @@ public class GeoUtils {
      * @param context
      * @param latitude 緯度
      * @param longitude 軽度
+     * @param maxResults 1-5, Set 1 when passing less than 1 and set 5 when passing greater than 5
      * @return address list
      */
     public static List<Address> getAddressList(Context context, double latitude, double longitude, int maxResults){
@@ -97,7 +98,9 @@ public class GeoUtils {
         if(longitude < -180.0 || longitude > 180.0){
             return new ArrayList<Address>();
         }
-        if(maxResults > 5){
+        if(maxResults < 1){
+            maxResults = 1;
+        }else if(maxResults > 5){
             maxResults = 5;
         }
         Geocoder geocoder = new Geocoder(context);
