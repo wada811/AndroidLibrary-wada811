@@ -15,6 +15,13 @@
  */
 package at.wada811.utils;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class GeoUtils {
 
     public static final double WGS84_A = 6378137.000;
@@ -73,6 +80,50 @@ public class GeoUtils {
      */
     public static double toMillisecond(double degree){
         return degree * 3600000;
+    }
+
+    /**
+     * 緯度経度から {@link Address} のリストを取得する
+     * 
+     * @param context
+     * @param latitude 緯度
+     * @param longitude 軽度
+     * @return address list
+     */
+    public static List<Address> getAddressList(Context context, double latitude, double longitude, int maxResults){
+        if(latitude < -90.0 || latitude > 90.0){
+            return new ArrayList<Address>();
+        }
+        if(longitude < -180.0 || longitude > 180.0){
+            return new ArrayList<Address>();
+        }
+        if(maxResults > 5){
+            maxResults = 5;
+        }
+        Geocoder geocoder = new Geocoder(context);
+        try{
+            return geocoder.getFromLocation(latitude, longitude, maxResults);
+        }catch(IOException e){
+            e.printStackTrace();
+            return new ArrayList<Address>();
+        }
+    }
+
+    /**
+     * 緯度経度から {@link Address} を取得する
+     * 
+     * @param context
+     * @param latitude 緯度
+     * @param longitude 軽度
+     * @return address
+     */
+    public static Address getAddress(Context context, double latitude, double longitude){
+        List<Address> addressList = GeoUtils.getAddressList(context, latitude, longitude, 1);
+        if(addressList.isEmpty()){
+            return null;
+        }else{
+            return addressList.get(0);
+        }
     }
 
 }
