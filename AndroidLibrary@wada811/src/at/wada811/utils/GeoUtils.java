@@ -35,6 +35,7 @@ public class GeoUtils {
      * @param lng1 地点1の軽度
      * @param lat2 地点2の緯度
      * @param lng2 地点2の軽度
+     * @return ２地点間の距離(m)
      * @see <a href="http://yamadarake.jp/trdi/report000001.html">二地点の緯度・経度からその距離を計算する（日本は山だらけ〜）</a>
      * @licenses MIT License
      */
