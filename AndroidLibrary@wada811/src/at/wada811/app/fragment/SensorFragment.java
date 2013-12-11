@@ -1,6 +1,5 @@
 package at.wada811.app.fragment;
 
-import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -9,14 +8,15 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import java.util.ArrayList;
 
 public class SensorFragment extends Fragment implements SensorEventListener {
 
-    public static final String  TAG              = SensorFragment.class.getSimpleName();
+    public static final String TAG = SensorFragment.class.getSimpleName();
     private static final String KEY_SENSOR_TYPES = "KEY_SENSOR_TYPES";
-    private SensorCallback      mCallback;
-    private SensorManager       mSensorManager;
-    private float               x, y, z = 0;
+    private SensorCallback mCallback;
+    private SensorManager mSensorManager;
+    private float x, y, z = 0;
 
     public static interface SensorCallbackProvider {
         public SensorCallback getSensorCallback();
