@@ -4,6 +4,8 @@
     <string name="show_tooltip">Tap me! Show tooltip!</string>
     <string name="replace">replace</string>
     <string name="add_remove">add/remove</string>
+    <string name="DayDreamDemo">DayDreamDemo</string>
+    <string name="DayDreamLauncher">DayDreamLauncher</string>
     <string name="setInteractive">setInteractive</string>
     <string name="setFullscreen">setFullscreen</string>
     <string name="touch">touch</string>
