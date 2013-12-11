@@ -227,5 +227,21 @@
             </intent-filter>
         </activity>
         <service android:name="at.wada811.widget.ToasterService" />
+        <!--
+        __     ___               ____                       
+        \ \   / (_) _____      _|  _ \ __ _  __ _  ___ _ __ 
+         \ \ / /| |/ _ \ \ /\ / / |_) / _` |/ _` |/ _ \ '__|
+          \ V / | |  __/\ V  V /|  __/ (_| | (_| |  __/ |   
+           \_/  |_|\___| \_/\_/ |_|   \__,_|\__, |\___|_|   
+                                            |___/            
+        -->
+        <activity
+            android:name="at.wada811.android.library.demos.view.ViewPagerActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>
