@@ -5,40 +5,31 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical" >
-    <LinearLayout
+    <Switch
+        android:id="@+id/setInteractive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/setInteractive" />
-        <Switch
-            android:id="@+id/setInteractive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:textOff="false"
-            android:textOn="true"
-            tools:targetApi="14" />
-    </LinearLayout>
-    <LinearLayout
+        android:layout_margin="8dp"
+        android:text="@string/setInteractive"
+        android:textOff="false"
+        android:textOn="true"
+        tools:targetApi="14" />
+    <Switch
+        android:id="@+id/setFullscreen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/setFullscreen" />
-        <Switch
-            android:id="@+id/setFullscreen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:textOff="false"
-            android:textOn="true"
-            tools:targetApi="14" />
-    </LinearLayout>
+        android:layout_margin="8dp"
+        android:text="@string/setFullscreen"
+        android:textOff="false"
+        android:textOn="true"
+        tools:targetApi="14" />
+    <Switch
+        android:id="@+id/setScreenBright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/setScreenBright"
+        android:textOff="false"
+        android:textOn="true"
+        tools:targetApi="14" />
 </LinearLayout>

@@ -31,6 +31,7 @@ public class DayDreamDemo extends DreamService {
         LogUtils.d();
         setInteractive(PreferenceUtils.getBoolean(getApplicationContext(), getString(R.string.setInteractive), true));
         setFullscreen(PreferenceUtils.getBoolean(getApplicationContext(), getString(R.string.setFullscreen), true));
+        setScreenBright(PreferenceUtils.getBoolean(getApplicationContext(), getString(R.string.setScreenBright), true));
         setContentView(R.layout.daydream);
     }
 

@@ -8,6 +8,7 @@
     <string name="DayDreamLauncher">DayDreamLauncher</string>
     <string name="setInteractive">setInteractive</string>
     <string name="setFullscreen">setFullscreen</string>
+    <string name="setScreenBright">setScreenBright</string>
     <string name="touch">touch</string>
     <string name="change">change</string>
     <string name="style_circle_style_demo">style/circle_image_view_style_demo</string>

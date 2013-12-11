@@ -54,5 +54,14 @@ public class DayDreamSettingsActivity extends FragmentActivity {
                 PreferenceUtils.putBoolean(self, getString(R.string.setFullscreen), isChecked);
             }
         });
+        Switch switchScreenBright = (Switch)findViewById(R.id.setScreenBright);
+        switchScreenBright.setChecked(PreferenceUtils.getBoolean(self, getString(R.string.setScreenBright), true));
+        switchScreenBright.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
+                LogUtils.d(buttonView.getText().toString() + ": " + isChecked);
+                PreferenceUtils.putBoolean(self, getString(R.string.setScreenBright), isChecked);
+            }
+        });
     }
 }
