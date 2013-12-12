@@ -1,11 +1,5 @@
 package at.wada811.android.library.demos;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.TreeSet;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -17,6 +11,12 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import at.wada811.android.library.demos.ActivityListFragment.ExpandableListListener;
 import at.wada811.android.library.demos.ActivityListFragment.ExpandableListListenerProvider;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.TreeSet;
 
 public class MainActivity extends FragmentActivity implements ExpandableListListenerProvider {
 
@@ -64,7 +64,7 @@ public class MainActivity extends FragmentActivity implements ExpandableListList
         // ListFragmentを初期化
         FragmentManager fragmentManager = getSupportFragmentManager();
         ActivityListFragment activityListFragment = ActivityListFragment.newInstance("Activity Not Found!");
-        fragmentManager.beginTransaction().add(R.id.fragment, activityListFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.fragment, activityListFragment).commit();
         activityListFragment.setListAdapter(mActivityListAdapter);
     }
 
