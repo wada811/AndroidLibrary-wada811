@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+    <style name="ActionBarCustomStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="background">@color/orange_dark</item>
+        <item name="backgroundSplit">@color/orange_light</item>
+        <item name="backgroundStacked">@color/orange_light</item>
+        <item name="titleTextStyle">@style/ActionBarCustomTitleStyle</item>
+    </style>
+    <style name="ActionBarCustomTitleStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="ActionBarCustomTabTextStyle" parent="@style/Widget.AppCompat.ActionBar.TabText">
+        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="ActionBarCustomTabViewStyle" parent="@style/Widget.AppCompat.ActionBar.TabView">
+        <item name="background">@drawable/actionbar_tab_indicator</item>
+    </style>
+    <style name="ActionBarCustomActionButtonStyle" parent="@style/Widget.AppCompat.ActionButton">
+        <item name="background">@drawable/actionbar_actionbutton_indicator</item>
+        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    -->
+</resources>

@@ -14,4 +14,12 @@
     <style name="circle_image_activity_style" parent="@style/AppTheme">
         <item name="circle_image_view_style">@style/circle_image_view_style_demo</item>
     </style>
+    <!--
+    <style name="AppCompatTheme" parent="@style/Theme.AppCompat">
+        <item name="actionBarStyle">@style/ActionBarCustomStyle</item>
+        <item name="actionBarTabStyle">@style/ActionBarCustomTabViewStyle</item>
+        <item name="actionBarTabTextStyle">@style/ActionBarCustomTabTextStyle</item>
+        <item name="actionButtonStyle">@style/ActionBarCustomActionButtonStyle</item>
+    </style>
+    -->
 </resources>
