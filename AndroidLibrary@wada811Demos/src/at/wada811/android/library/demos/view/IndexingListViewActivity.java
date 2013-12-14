@@ -27,7 +27,6 @@ public class IndexingListViewActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_indexing_listview);
 
         LogUtils.d();
         FragmentManager fragmentManager = getSupportFragmentManager();
