@@ -115,6 +115,7 @@ public class ToasterActivity extends Activity {
         view.setTextSize(Math.min(DisplayUtils.getWidth(this), DisplayUtils.getHeight(this)) / 8);
         toast.setView(view);
         toast.setDuration(3000);
+        toast.setAnimationStyle(R.style.toast_animation);
         toast.show();
     }
 }
