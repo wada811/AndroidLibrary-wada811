@@ -85,10 +85,6 @@ public class Toaster {
         return new ToastBread(mContext);
     }
 
-    public ToastBread newToast(OnDismissListener listener){
-        return new ToastBread(mContext, listener);
-    }
-
     public class ToastBread {
         private Bread mBread;
         private int mDuration;
@@ -96,12 +92,6 @@ public class Toaster {
         private OnDismissListener mDismissListener;
 
         private ToastBread(Context context) {
-            mBread = new Bread();
-            mBread.mY = context.getResources().getDimensionPixelSize(R.dimen.toasterBaselineHeight);
-        }
-
-        private ToastBread(Context context, OnDismissListener listener) {
-            mDismissListener = listener;
             mBread = new Bread();
             mBread.mY = context.getResources().getDimensionPixelSize(R.dimen.toasterBaselineHeight);
         }
@@ -303,6 +293,10 @@ public class Toaster {
             mBread.mAnimationStyle = animationStyle;
         }
 
+        public void setOnDismissListener(OnDismissListener onDismissListener){
+            mDismissListener = onDismissListener;
+        }
+
         public class Bread implements ToasterCallback {
             public Bread() {
                 // XXX This should be changed to use a Dialog, with a Theme.
@@ -413,8 +407,7 @@ public class Toaster {
                     // been added...  i have seen cases where we get here when
                     // the view isn't yet added, so let's try not to crash.
                     if(mView.getParent() != null){
-                        ;
-                        mDismissListener = null;
+                        mWindowManager.removeView(mView);
                     }
                     if(mDismissListener != null){
                         mDismissListener.onDismiss();
