@@ -16,6 +16,7 @@
 package at.wada811.android.library.demos.widget;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
 import at.wada811.android.library.demos.R;
@@ -33,18 +34,22 @@ public class ToasterActivity extends Activity {
     private Toaster mToaster;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        mToaster = new Toaster(this);
+    }
+
+    @Override
     protected void onResume(){
         super.onResume();
-        mToaster = new Toaster(this);
         LogUtils.d();
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run(){
                 LogUtils.d();
-                showHereWeGoToast();
+                showInokiToast();
             }
         }, 1000);
-
     }
 
     @Override
@@ -53,7 +58,7 @@ public class ToasterActivity extends Activity {
         mToaster.unplug();
     }
 
-    private void showHereWeGoToast(){
+    private void showInokiToast(){
         final ToastBread toast = mToaster.newToast();
         toast.makeText(this, "元気があればなんでもできる！", 2000);
         toast.setOnDismissListener(new OnDismissListener(){
