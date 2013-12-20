@@ -15,7 +15,6 @@
  */
 package at.wada811.widget;
 
-import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
@@ -25,6 +24,7 @@ import android.os.IBinder;
 import android.os.Message;
 import at.wada811.utils.LogUtils;
 import at.wada811.widget.Toaster.ToasterCallback;
+import java.util.ArrayList;
 
 public class ToasterService extends Service {
 
@@ -203,7 +203,9 @@ public class ToasterService extends Service {
         Message m = Message.obtain(mHandler, MESSAGE_TIMEOUT, record);
         long delay = immediate ? 0 : record.duration;
         mHandler.removeCallbacksAndMessages(record);
-        mHandler.sendMessageDelayed(m, delay);
+        if(delay >= 0){
+            mHandler.sendMessageDelayed(m, delay);
+        }
     }
 
     private void handleTimeout(BreadRecord record){
