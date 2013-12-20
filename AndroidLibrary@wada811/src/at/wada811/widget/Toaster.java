@@ -81,6 +81,13 @@ public class Toaster {
         }
     }
 
+    public void cancelAll(){
+        if(mToasterService != null){
+            LogUtils.d();
+            mToasterService.cancelAllBread();
+        }
+    }
+
     public ToastBread newToast(){
         return new ToastBread(mContext);
     }
