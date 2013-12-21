@@ -22,6 +22,10 @@ import at.wada811.utils.LogUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * [Android]SectionedIndexerを使ってIndex付きListFragmentを作る | DevAchieve
+ * http://wada811.blogspot.com/2013/12/listview-with-sectioned-indexer.html
+ */
 public class IndexingListViewActivity extends FragmentActivity {
 
     @Override

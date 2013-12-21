@@ -27,6 +27,10 @@ import at.wada811.widget.Toaster;
 import at.wada811.widget.Toaster.OnDismissListener;
 import at.wada811.widget.Toaster.ToastBread;
 
+/**
+ * [Android]Toastをカスタマイズして表示時間を変更したりアニメーションを変更したり即時非表示にしたり消えたことを検知したりしたい | DevAchieve
+ * http://wada811.blogspot.com/2013/12/custom-toast-in-android.html
+ */
 public class ToasterActivity extends Activity {
 
     public static final String TAG = ToasterActivity.class.getSimpleName();

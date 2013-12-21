@@ -38,6 +38,7 @@ public class IndexingListAdapter extends BaseExpandableListAdapter implements Se
     private ArrayList<ArrayList<String>> mChildren;
     private SparseIntArray mIndexer;
 
+    @SuppressWarnings("unused")
     public IndexingListAdapter(Context context, List<String> groups, ArrayList<ArrayList<String>> children) {
         LogUtils.d();
         mContext = context;

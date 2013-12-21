@@ -25,6 +25,10 @@ import at.wada811.android.library.demos.R;
 import at.wada811.utils.AndroidUtils;
 import at.wada811.utils.LogUtils;
 
+/**
+ * [Android]DayDream機能でスクリーンセーバーを作る | DevAchieve
+ * http://wada811.blogspot.com/2013/12/android-daydream-screensaver.html
+ */
 public class DayDreamActivity extends FragmentActivity {
 
     final DayDreamActivity self = this;

@@ -12,6 +12,10 @@ import at.wada811.utils.AndroidUtils;
 import at.wada811.utils.LogUtils;
 import java.util.ArrayList;
 
+/**
+ * [Android]端末が振られたことを加速度センサーから検出する | DevAchieve
+ * http://wada811.blogspot.com/2013/12/android-shake-detection.html
+ */
 public class SensorActivity extends FragmentActivity implements SensorCallbackProvider {
 
     final SensorActivity self = this;
