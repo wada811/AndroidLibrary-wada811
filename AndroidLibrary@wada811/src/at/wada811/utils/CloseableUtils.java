@@ -18,9 +18,9 @@ package at.wada811.utils;
 import java.io.Closeable;
 import java.io.IOException;
 
-public class InputOutputUtils {
+public class CloseableUtils {
 
-    private InputOutputUtils() {
+    private CloseableUtils() {
 
     }
 
