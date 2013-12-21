@@ -21,7 +21,7 @@ import java.security.SecureRandom;
 
 /**
  * Fixes for the output of the default PRNG having low entropy.<br>
- * {@link PRNGFixes} make {@link SecureRandom} more random.
+ * {@link PRNGFixes} makes {@link SecureRandom} more random.
  * 
  * @see <a href="http://android-developers.blogspot.jp/2013/08/some-securerandom-thoughts.html">Some
  *      SecureRandom Thoughts | Android Developers Blog</a>
