@@ -310,6 +310,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="at.wada811.android.library.demos.app.TabFragmentViewPagerActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
+            <intent-filter>
+                <action android:name="" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <!--
          _     _     _   _____                                     _   
         | |   (_)___| |_|  ___| __ __ _  __ _ _ __ ___   ___ _ __ | |_ 
