@@ -15,13 +15,16 @@
  */
 package at.wada811.utils;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * {@link PreferenceUtils} is wrapper class of {@link SharedPreferences}.
@@ -200,4 +203,28 @@ public class PreferenceUtils {
         return PreferenceUtils.getDefaultSharedPreferences(context).getLong(key, defaultValue);
     }
 
+    /**
+     * SharedPreferences に保存する
+     * 
+     * @param context
+     * @param key
+     * @param values
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static void putStringSet(Context context, String key, Set<String> values){
+        PreferenceUtils.getDefaultSharedPreferences(context).edit().putStringSet(key, values).commit();
+    }
+
+    /**
+     * SharedPreferences から値を取得する
+     * 
+     * @param context
+     * @param key
+     * @param defaultValues
+     * @return
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static Set<String> getStringSet(Context context, String key, Set<String> defaultValues){
+        return PreferenceUtils.getDefaultSharedPreferences(context).getStringSet(key, defaultValues);
+    }
 }
