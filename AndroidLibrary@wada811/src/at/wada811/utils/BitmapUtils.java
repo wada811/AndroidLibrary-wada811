@@ -15,10 +15,6 @@
  */
 package at.wada811.utils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -33,6 +29,11 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Base64;
 import at.wada811.constant.MediaConstant;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class BitmapUtils {
 
@@ -183,8 +184,16 @@ public class BitmapUtils {
      * File to Bitmap
      * 
      * @param filePath
-     * @param width
-     * @param height
+     * @return
+     */
+    public static Bitmap createBitmapFromFile(File file){
+        return BitmapUtils.createBitmapFromFile(file.getAbsolutePath());
+    }
+
+    /**
+     * File to Bitmap
+     * 
+     * @param filePath
      * @return
      */
     public static Bitmap createBitmapFromFile(String filePath){
@@ -343,7 +352,7 @@ public class BitmapUtils {
     }
 
     /**
-     * 画像を回転する
+     * 画像を時計回りに回転する
      * 
      * @param bitmap
      * @param degrees
@@ -356,6 +365,30 @@ public class BitmapUtils {
         Matrix matrix = new Matrix();
         matrix.postRotate(degrees); // 回転角を設定する
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+    /**
+     * 画像を左右反転する
+     * 
+     * @param bitmap
+     * @return
+     */
+    public static Bitmap invertHorizontal(Bitmap bitmap){
+        Matrix matrix = new Matrix();
+        matrix.preScale(-1.0f, 1.0f);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, false);
+    }
+
+    /**
+     * 画像を上下反転する
+     * 
+     * @param bitmap
+     * @return
+     */
+    public static Bitmap invertVertical(Bitmap bitmap){
+        Matrix matrix = new Matrix();
+        matrix.preScale(1.0f, -1.0f);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, false);
     }
 
     /**
