@@ -18,6 +18,7 @@ package at.wada811.utils;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -28,7 +29,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Base64;
-import at.wada811.constant.MediaConstant;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -438,7 +438,7 @@ public class BitmapUtils {
      */
     public static byte[] toByteArray(Bitmap bitmap){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(MediaConstant.DEFAULT_CONPRESS_FORMAT, MediaConstant.DEFAULT_COMPRESS_QUALITY, stream);
+        bitmap.compress(CompressFormat.JPEG, MediaUtils.DEFAULT_COMPRESS_QUALITY, stream);
         return stream.toByteArray();
     }
 
