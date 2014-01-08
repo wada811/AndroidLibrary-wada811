@@ -15,24 +15,96 @@
  */
 package at.wada811.utils;
 
+import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images.ImageColumns;
 import android.provider.MediaStore.MediaColumns;
 import android.webkit.MimeTypeMap;
-import at.wada811.constant.MediaConstant;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class MediaUtils {
+
+    /** デフォルトの保存品質 */
+    public static int DEFAULT_COMPRESS_QUALITY = 100;
+    public static final String SAVE_VIDEO_EXTENSION_3GP = "3gp";
+    public static final String SAVE_VIDEO_EXTENSION_MP4 = "mp4";
+
+    /**
+     * Specifies the known formats and those's extensions that a bitmap can be compressed into
+     */
+    public static enum ImageFormat {
+        /**
+         * {@link CompressFormat#JPEG}
+         */
+        JPEG(CompressFormat.JPEG, "jpg"),
+        /**
+         * {@link CompressFormat#PNG}
+         */
+        PNG(CompressFormat.PNG, "png"),
+        /**
+         * {@link CompressFormat#WEBP}
+         */
+        WEBP(CompressFormat.WEBP, "webp");
+
+        private CompressFormat mCompressFormat;
+        private String mExtension;
+
+        ImageFormat(CompressFormat compressFormat, String extension) {
+            mCompressFormat = compressFormat;
+            mExtension = extension;
+        }
+
+        public CompressFormat getCompressFormat(){
+            return mCompressFormat;
+        }
+
+        public String getExtension(){
+            return mExtension;
+        }
+    }
+
+    /**
+     * Return the known formats a bitmap can be compressed into
+     * 
+     * @param extension jpg|png|webp
+     * @return {@link CompressFormat}
+     */
+    public static CompressFormat getCompressFormat(String extension){
+        for(ImageFormat imageFormat : ImageFormat.values()){
+            if(imageFormat.getExtension().equals(extension)){
+                return imageFormat.getCompressFormat();
+            }
+        }
+        return ImageFormat.JPEG.getCompressFormat();
+    }
+
+    /**
+     * Return the extension of known formats a bitmap can be compressed into
+     * 
+     * @param {@link CompressFormat}
+     * @return extension jpg|png|webp
+     */
+    public static String getExtension(CompressFormat compressFormat){
+        for(ImageFormat imageFormat : ImageFormat.values()){
+            if(imageFormat.getCompressFormat() == compressFormat){
+                return imageFormat.getExtension();
+            }
+        }
+        return ImageFormat.JPEG.getExtension();
+    }
 
     public static File getExternalStorageDirectory(String dirName){
         return new File(Environment.getExternalStorageDirectory(), dirName);
@@ -72,10 +144,14 @@ public class MediaUtils {
      */
     public static boolean saveBitmap(Context context, Bitmap bitmap, String filePath){
         File file = new File(filePath);
+        String extension = FileNameUtils.getExtension(filePath);
+        LogUtils.d(extension);
+        CompressFormat compressFormat = MediaUtils.getCompressFormat(extension);
+        LogUtils.d(compressFormat.name());
         FileOutputStream fos = null;
         try{
             fos = new FileOutputStream(file);
-            bitmap.compress(MediaConstant.DEFAULT_CONPRESS_FORMAT, MediaConstant.DEFAULT_COMPRESS_QUALITY, fos);
+            bitmap.compress(compressFormat, MediaUtils.DEFAULT_COMPRESS_QUALITY, fos);
         }catch(FileNotFoundException e){
             e.printStackTrace();
             return false;
@@ -157,11 +233,7 @@ public class MediaUtils {
      */
     public static String getMimeType(String filePath){
         String mimeType = null;
-        String extension = null;
-        int index = filePath.lastIndexOf(".");
-        if(index > 0){
-            extension = filePath.substring(index + 1);
-        }
+        String extension = FileNameUtils.getExtension(filePath);
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         if(extension != null){
             mimeType = mime.getMimeTypeFromExtension(extension);
