@@ -160,6 +160,16 @@ public class BitmapUtils {
     }
 
     /**
+     * Base64 string to Bitmap
+     * 
+     * @param base64str
+     */
+    public static Bitmap createBitmapFromBase64(String base64str){
+        byte[] decode = Base64.decode(base64str, Base64.DEFAULT);
+        return BitmapUtils.createBitmapFromByteArray(decode);
+    }
+
+    /**
      * Resource to Bitmap
      * 
      * @param context
