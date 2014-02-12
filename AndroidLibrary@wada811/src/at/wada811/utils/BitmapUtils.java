@@ -448,7 +448,7 @@ public class BitmapUtils {
      */
     public static byte[] toByteArray(Bitmap bitmap){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(CompressFormat.JPEG, MediaUtils.DEFAULT_COMPRESS_QUALITY, stream);
+        bitmap.compress(CompressFormat.PNG, MediaUtils.DEFAULT_COMPRESS_QUALITY, stream);
         return stream.toByteArray();
     }
 
