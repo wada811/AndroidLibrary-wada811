@@ -145,9 +145,7 @@ public class MediaUtils {
     public static boolean saveBitmap(Context context, Bitmap bitmap, String filePath){
         File file = new File(filePath);
         String extension = FileNameUtils.getExtension(filePath);
-        LogUtils.d(extension);
         CompressFormat compressFormat = MediaUtils.getCompressFormat(extension);
-        LogUtils.d(compressFormat.name());
         FileOutputStream fos = null;
         try{
             fos = new FileOutputStream(file);
