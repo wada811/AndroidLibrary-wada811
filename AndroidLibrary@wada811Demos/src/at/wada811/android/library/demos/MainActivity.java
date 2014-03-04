@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import at.wada811.android.library.demos.ActivityListFragment.ExpandableListListener;
 import at.wada811.android.library.demos.ActivityListFragment.ExpandableListListenerProvider;
+import at.wada811.android.library.demos.broadcastreceiver.DateTimeChangeReceiver;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -27,6 +28,11 @@ public class MainActivity extends FragmentActivity implements ExpandableListList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setupSampleList();
+        DateTimeChangeReceiver.registerDateChangeReceiver(this);
+    }
+
+    private void setupSampleList(){
         // サンプルActivityのリストを取得
         Intent intent = new Intent();
         intent.addCategory(Intent.CATEGORY_DEFAULT);

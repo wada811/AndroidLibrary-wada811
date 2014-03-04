@@ -335,5 +335,31 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!--
+         ____                      _               _   ____               _
+        | __ ) _ __ ___   __ _  __| | ___ __ _ ___| |_|  _ \ ___  ___ ___(_)_   _____  _ __
+        |  _ \| '__/ _ \ / _` |/ _` |/ __/ _` / __| __| |_) / _ \/ __/ _ \ \ \ / / _ \| '__|
+        | |_) | | | (_) | (_| | (_| | (_| (_| \__ \ |_|  _ <  __/ (_|  __/ |\ V /  __/| |
+        |____/|_|  \___/ \__,_|\__,_|\___\__,_|___/\__|_| \_\___|\___\___|_| \_/ \___||_|
+        -->
+        <receiver
+            android:name="at.wada811.android.library.demos.broadcastreceiver.BootCompleteReceiver"
+            android:exported="false"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="at.wada811.android.library.demos.broadcastreceiver.DateTimeChangeReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="at.wada811.android.library.demos.action.DATE_CHANGED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>
