@@ -20,7 +20,11 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Bitmap;
 import android.os.Build;
+import android.view.Gravity;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class AndroidUtils {
@@ -123,6 +127,39 @@ public class AndroidUtils {
                 @Override
                 public void run(){
                     Toast.makeText(context, resId, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
+
+    /**
+     * Toastを表示する
+     * 
+     * @param context
+     * @param bitmap
+     */
+    public static void showToast(final Context context, final Bitmap bitmap){
+        if(ThreadUtils.isMainThread()){
+            Toast toast = new Toast(context);
+            ImageView image = new ImageView(context);
+            image.setImageBitmap(bitmap);
+            image.setLayoutParams(new LayoutParams(bitmap.getWidth(), bitmap.getHeight()));
+            toast.setView(image);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.show();
+        }else{
+            ((Activity)context).runOnUiThread(new Runnable(){
+                @Override
+                public void run(){
+                    Toast toast = new Toast(context);
+                    ImageView image = new ImageView(context);
+                    image.setImageBitmap(bitmap);
+                    image.setLayoutParams(new LayoutParams(bitmap.getWidth(), bitmap.getHeight()));
+                    toast.setView(image);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.setDuration(Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             });
         }
