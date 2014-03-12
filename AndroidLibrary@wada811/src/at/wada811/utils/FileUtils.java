@@ -26,33 +26,12 @@ import java.nio.channels.FileChannel;
 
 public class FileUtils {
 
-    public static boolean mkdir(File file){
-        if(file.isDirectory()){
-            LogUtils.d(file.getAbsolutePath() + " is direcctory");
-            if(!file.exists()){
-                LogUtils.d(file.getAbsolutePath() + " not exists");
-                return file.mkdirs();
-            }else{
-                LogUtils.d();
-                return true;
-            }
-        }else{
-            LogUtils.d(file.getParentFile().getAbsolutePath() + " is directory");
-            if(!file.getParentFile().exists()){
-                LogUtils.d(file.getParentFile().getAbsolutePath() + " not exists");
-                return file.getParentFile().mkdirs();
-            }else{
-                LogUtils.d();
-                return true;
-            }
-        }
-    }
-
     public static boolean copy(File srcFile, File distFile){
         if(!srcFile.exists()){
             return false;
         }
-        if(!FileUtils.mkdir(distFile)){
+        distFile.mkdirs();
+        if(!distFile.exists()){
             return false;
         }
         FileChannel srcChannel = null;
