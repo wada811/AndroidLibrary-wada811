@@ -22,6 +22,9 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.graphics.drawable.BitmapDrawable;
@@ -425,6 +428,25 @@ public class BitmapUtils {
         Canvas canvas = new Canvas(synthesized);
         canvas.drawBitmap(base, 0, 0, null);
         canvas.drawBitmap(overlay, 0, 0, null);
+        base.recycle();
+        overlay.recycle();
+        return synthesized;
+    }
+
+    /**
+     * 画像を合成する
+     * 
+     * @param base
+     * @param overlay
+     * @param mode
+     */
+    public static Bitmap synthesize(Bitmap base, Bitmap overlay, PorterDuff.Mode mode){
+        Bitmap synthesized = BitmapUtils.createNewBitmap(base.getWidth(), base.getHeight());
+        Canvas canvas = new Canvas(synthesized);
+        Paint paint = new Paint();
+        canvas.drawBitmap(base, 0, 0, paint);
+        paint.setXfermode(new PorterDuffXfermode(mode));
+        canvas.drawBitmap(overlay, 0, 0, paint);
         base.recycle();
         overlay.recycle();
         return synthesized;
