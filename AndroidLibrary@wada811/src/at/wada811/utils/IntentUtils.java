@@ -15,13 +15,6 @@
  */
 package at.wada811.utils;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import org.apache.http.protocol.HTTP;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -29,8 +22,27 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class IntentUtils {
+
+    /**
+     * Intent可能なActivityを返す
+     * 
+     * @param context
+     * @param intent
+     * @return
+     */
+    public static List<ResolveInfo> queryIntentActivities(Context context, Intent intent){
+        PackageManager packageManager = context.getPackageManager();
+        return packageManager.queryIntentActivities(intent, 0);
+    }
 
     /**
      * Intent可能かを返す
@@ -40,9 +52,8 @@ public class IntentUtils {
      * @return
      */
     public static boolean canIntent(Context context, Intent intent){
-        PackageManager packageManager = context.getPackageManager();
-        List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, 0);
-        return !activities.isEmpty();
+        List<ResolveInfo> activities = IntentUtils.queryIntentActivities(context, intent);
+        return activities != null && !activities.isEmpty();
     }
 
     /**
