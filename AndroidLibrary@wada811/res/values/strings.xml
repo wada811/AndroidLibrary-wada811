@@ -7,7 +7,8 @@
     <string name="dialogYes">Yes</string>
     <string name="dialogNo">No</string>
     <!-- message -->
-    <string name="mailerNotFound">Mailer not found!</string>
+    <string name="mailerNotFound">Mail app not found!</string>
+    <string name="cameraNotFound">Camera app not found!</string>
     <string name="failedOpenCamera">Failed in opening camera</string>
     <string name="failedOpenCameraInCrash">Camera crashes! Please reboot your device.</string>
     <string name="alertSDcardMount">Please mount SD card</string>
