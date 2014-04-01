@@ -15,7 +15,10 @@
  */
 package at.wada811.utils;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.List;
@@ -164,6 +167,18 @@ public class DumpUtils {
             dumpBundle.put(key, valueStr);
         }
         return DumpUtils.toString(dumpBundle);
+    }
 
+    public static String toString(SharedPreferences preferences){
+        JSONObject preferencesJson = new JSONObject();
+        Map<String, ?> map = preferences.getAll();
+        try{
+            for(Entry<String, ?> entry : map.entrySet()){
+                preferencesJson.put(entry.getKey(), entry.getValue());
+            }
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        return preferencesJson.toString();
     }
 }
