@@ -21,6 +21,7 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -32,6 +33,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Base64;
+import at.wada811.android.library.R;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -73,7 +75,9 @@ public class BitmapUtils {
      * @param height
      * @return bitmap
      */
-    public static Bitmap createBitmapFromYuv(Context context, byte[] yuvData, int imageFormat, int width, int height){
+    public static Bitmap createBitmapFromYuv(Context context, byte[] yuvData, int width, int height){
+        String key = context.getString(R.string.keyPreviewFormat);
+        int imageFormat = PreferenceUtils.getInt(context, key, ImageFormat.NV21);
         byte[] rgbData = BitmapUtils.decodeYuvData(yuvData, imageFormat, width, height);
         final Bitmap bitmap = BitmapUtils.createBitmapFromByteArray(rgbData, width, height);
         rgbData = null;

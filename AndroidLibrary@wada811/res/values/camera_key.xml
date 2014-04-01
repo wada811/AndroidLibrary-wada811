@@ -24,6 +24,7 @@
     <string name="keyScaledWidth" translatable="false">keyScaledWidth</string>
     <string name="keyScaledHeight" translatable="false">keyScaledHeight</string>
     <string name="keyVideoCamcorderProfile" translatable="false">ParamsOfVideoCamcorderProfile%1$d</string>
+    <string name="keyPreviewFormat" translatable="false">keyPreviewFormat</string>
     <string name="keySupportFaceDetection" translatable="false">keySupportFaceDetection</string>
     <string name="keyMaxNumDetectedFaces" translatable="false">keyMaxNumDetectedFaces</string>
 </resources>
