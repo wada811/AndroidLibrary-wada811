@@ -101,10 +101,10 @@ public class DisplayUtils {
      * @param context
      * @return
      */
-    public static double getDisplayRatio(Context context){
+    public static float getDisplayRatio(Context context){
         int w = DisplayUtils.getWidth(context);
         int h = DisplayUtils.getHeight(context);
-        return DisplayUtils.isPortrait(context) ? (double)h / w : (double)w / h;
+        return DisplayUtils.isPortrait(context) ? (float)h / w : (float)w / h;
     }
 
     /**
