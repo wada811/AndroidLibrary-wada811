@@ -64,7 +64,7 @@ public class SoundPoolManager {
             mSoundIdToPlay = mSoundPool.load(mContext, resId, 1);
             mLoadedSoundIds.put(resId, mSoundIdToPlay);
         }else{
-            int play = mSoundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f);
+            mSoundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f);
         }
     }
 
