@@ -34,7 +34,7 @@ public class IntentUtils {
 
     /**
      * Intent可能なActivityを返す
-     * 
+     *
      * @param context
      * @param intent
      * @return
@@ -46,7 +46,7 @@ public class IntentUtils {
 
     /**
      * Intent可能かを返す
-     * 
+     *
      * @param context
      * @param intent
      * @return
@@ -58,7 +58,7 @@ public class IntentUtils {
 
     /**
      * PendingIntent for OneShot Notification
-     * 
+     *
      * @param context
      * @return
      */
@@ -70,7 +70,7 @@ public class IntentUtils {
 
     /**
      * ファイルをViewerアプリで開くIntentを作成する
-     * 
+     *
      * @param filePath
      * @param mimeType
      * @return intent
@@ -83,7 +83,7 @@ public class IntentUtils {
 
     /**
      * ファイルをViewerアプリで開くPendingIntentを作成する
-     * 
+     *
      * @param context
      * @param filePath
      * @param mimeType
@@ -98,7 +98,7 @@ public class IntentUtils {
 
     /**
      * メールを送信するIntentを作成する
-     * 
+     *
      * @param mailto
      * @param subject
      * @param body
@@ -111,7 +111,7 @@ public class IntentUtils {
 
     /**
      * メールを送信するIntentを作成する
-     * 
+     *
      * @param mailto
      * @param subject
      * @param body
@@ -122,7 +122,7 @@ public class IntentUtils {
 
     /**
      * メールを送信するIntentを作成する
-     * 
+     *
      * @param mailto
      * @param cc
      * @param bcc
@@ -142,7 +142,7 @@ public class IntentUtils {
 
     /**
      * メールIntentにファイルを添付する
-     * 
+     *
      * @param intent
      * @param filePath
      * @return
@@ -153,7 +153,7 @@ public class IntentUtils {
 
     /**
      * メールIntentにファイルを添付する
-     * 
+     *
      * @param intent
      * @param file
      * @return
@@ -164,7 +164,7 @@ public class IntentUtils {
 
     /**
      * メールIntentにファイルを添付する
-     * 
+     *
      * @param intent
      * @param uri
      * @param mimeType
@@ -178,7 +178,7 @@ public class IntentUtils {
 
     /**
      * メールIntentに複数ファイルを送信する
-     * 
+     *
      * @param intent
      * @param filePaths
      * @param mimeType
@@ -197,7 +197,7 @@ public class IntentUtils {
 
     /**
      * Gmail送信Intentを作成する
-     * 
+     *
      * @param intent
      * @return
      */
@@ -209,7 +209,7 @@ public class IntentUtils {
 
     /**
      * ブラウザを開くIntentを作成する
-     * 
+     *
      * @param url
      */
     public static Intent createOpenBrowserIntent(String url){
@@ -218,7 +218,7 @@ public class IntentUtils {
 
     /**
      * ダイアルを開くIntentを作成する
-     * 
+     *
      * @param context
      * @param tel
      */
@@ -228,7 +228,7 @@ public class IntentUtils {
 
     /**
      * 電話をかけるIntentを作成する
-     * 
+     *
      * @param tel
      */
     public static Intent createCallIntent(String tel){
@@ -237,7 +237,7 @@ public class IntentUtils {
 
     /**
      * 電話をかけるIntentを作成する
-     * 
+     *
      * @param context
      * @param tel
      */
@@ -254,7 +254,7 @@ public class IntentUtils {
 
     /**
      * アンインストール画面を開くIntentを作成する
-     * 
+     *
      * @param packageName
      */
     public static Intent createOpenUninstallIntent(String packageName){
@@ -263,7 +263,7 @@ public class IntentUtils {
 
     /**
      * マーケットを開くIntentを作成する
-     * 
+     *
      * @param packageName
      */
     public static Intent createOpenMarketIntent(String packageName){
@@ -272,11 +272,32 @@ public class IntentUtils {
 
     /**
      * マーケットを検索するIntentを作成する
-     * 
+     *
      * @param query
      */
     public static Intent createSearchMarketIntent(String query){
         return new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=" + query));
+    }
+
+    /**
+     * テキストを送るIntentを作成する
+     */
+    public static Intent createSendTextIntent(String text){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, text);
+        return intent;
+    }
+
+    /**
+     * 画像を送るIntentを作成する
+     */
+    public static Intent createSendImageIntent(String filePath){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType(MediaUtils.getMimeType(filePath));
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + filePath));
+        return intent;
     }
 
     public static String dump(Intent intent) throws JSONException{
