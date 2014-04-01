@@ -20,7 +20,6 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.util.Log;
 import android.util.SparseIntArray;
-import at.wada811.utils.LogUtils;
 
 public class SoundPoolManager {
 
@@ -61,13 +60,11 @@ public class SoundPoolManager {
      */
     public synchronized void play(int resId){
         int soundId = mLoadedSoundIds.get(resId, SOUND_NOT_LOADED);
-        LogUtils.d("soundId: " + soundId);
         if(soundId == SOUND_NOT_LOADED){
             mSoundIdToPlay = mSoundPool.load(mContext, resId, 1);
             mLoadedSoundIds.put(resId, mSoundIdToPlay);
         }else{
             int play = mSoundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f);
-            LogUtils.d("play: " + play);
         }
     }
 
