@@ -522,12 +522,15 @@ public class CameraUtils {
      * 顔検出が使えるか
      */
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    public static boolean isFaceDetectionSupported(Camera camera){
+    public static boolean isFaceDetectionSupported(Context context, Camera camera){
         boolean isFaceDetectionSupported = false;
+        int maxNumDetectedFaces = 0;
         if(AndroidUtils.isMoreThanBuildVersion(Build.VERSION_CODES.ICE_CREAM_SANDWICH)){
-            int maxNumDetectedFaces = camera.getParameters().getMaxNumDetectedFaces();
+            maxNumDetectedFaces = camera.getParameters().getMaxNumDetectedFaces();
             isFaceDetectionSupported = maxNumDetectedFaces > 0;
         }
+        PreferenceUtils.putBoolean(context, context.getString(R.string.keySupportFaceDetection), isFaceDetectionSupported);
+        PreferenceUtils.putInt(context, context.getString(R.string.keyMaxNumDetectedFaces), maxNumDetectedFaces);
         return isFaceDetectionSupported;
     }
 
