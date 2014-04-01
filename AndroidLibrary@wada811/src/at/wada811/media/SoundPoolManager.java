@@ -26,7 +26,7 @@ public class SoundPoolManager {
 
     private SoundPool mSoundPool;
     private Context mContext;
-    SparseIntArray mLoadedSoundId;
+    SparseIntArray mLoadedSoundIds;
     private int mSoundIdToPlay;
 
     private static final int NUM_MEDIA_SOUND_STREAMS = 1;
@@ -36,7 +36,7 @@ public class SoundPoolManager {
         mContext = context;
         mSoundPool = new SoundPool(NUM_MEDIA_SOUND_STREAMS, AudioManager.STREAM_SYSTEM, 0);
         mSoundPool.setOnLoadCompleteListener(mLoadCompleteListener);
-        mLoadedSoundId = new SparseIntArray();
+        mLoadedSoundIds = new SparseIntArray();
         mSoundIdToPlay = SOUND_NOT_LOADED;
     }
 
@@ -47,9 +47,9 @@ public class SoundPoolManager {
      * @see #play(int)
      */
     public synchronized void load(int resId){
-        if(mLoadedSoundId.get(resId, SOUND_NOT_LOADED) == SOUND_NOT_LOADED){
+        if(mLoadedSoundIds.get(resId, SOUND_NOT_LOADED) == SOUND_NOT_LOADED){
             int loadedSoundId = mSoundPool.load(mContext, resId, 1);
-            mLoadedSoundId.put(resId, loadedSoundId);
+            mLoadedSoundIds.put(resId, loadedSoundId);
         }
     }
 
@@ -60,11 +60,11 @@ public class SoundPoolManager {
      * @see #load(int)
      */
     public synchronized void play(int resId){
-        int soundId = mLoadedSoundId.get(resId, SOUND_NOT_LOADED);
+        int soundId = mLoadedSoundIds.get(resId, SOUND_NOT_LOADED);
         LogUtils.d("soundId: " + soundId);
         if(soundId == SOUND_NOT_LOADED){
             mSoundIdToPlay = mSoundPool.load(mContext, resId, 1);
-            mLoadedSoundId.put(resId, mSoundIdToPlay);
+            mLoadedSoundIds.put(resId, mSoundIdToPlay);
         }else{
             int play = mSoundPool.play(soundId, 1.0f, 1.0f, 0, 0, 1.0f);
             LogUtils.d("play: " + play);
@@ -90,9 +90,9 @@ public class SoundPoolManager {
      * release().
      */
     public void release(){
-        if(mLoadedSoundId == null){
-            mLoadedSoundId.clear();
-            mLoadedSoundId = null;
+        if(mLoadedSoundIds == null){
+            mLoadedSoundIds.clear();
+            mLoadedSoundIds = null;
         }
         if(mSoundPool != null){
             mSoundPool.release();
