@@ -15,15 +15,14 @@
  */
 package at.wada811.utils;
 
-import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.media.MediaRecorder.OutputFormat;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images.ImageColumns;
@@ -34,18 +33,15 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class MediaUtils {
 
     /** デフォルトの保存品質 */
     public static int DEFAULT_COMPRESS_QUALITY = 100;
-    public static final String SAVE_VIDEO_EXTENSION_3GP = "3gp";
-    public static final String SAVE_VIDEO_EXTENSION_MP4 = "mp4";
 
     /**
      * Specifies the known formats and those's extensions that a bitmap can be compressed into
      */
-    public static enum ImageFormat {
+    public static enum PictureFormat {
         /**
          * {@link CompressFormat#JPEG}
          */
@@ -57,22 +53,36 @@ public class MediaUtils {
         /**
          * {@link CompressFormat#WEBP}
          */
-        WEBP(CompressFormat.WEBP, "webp");
+//        WEBP(CompressFormat.WEBP, "webp")
+        //
+        ;
 
-        private CompressFormat mCompressFormat;
-        private String mExtension;
+        public CompressFormat compressFormat;
+        public String extension;
 
-        ImageFormat(CompressFormat compressFormat, String extension) {
-            mCompressFormat = compressFormat;
-            mExtension = extension;
+        PictureFormat(CompressFormat compressFormat, String extension) {
+            this.compressFormat = compressFormat;
+            this.extension = extension;
         }
 
-        public CompressFormat getCompressFormat(){
-            return mCompressFormat;
-        }
+    }
 
-        public String getExtension(){
-            return mExtension;
+    public static enum VideoFormat {
+        /**
+         * {@link OutputFormat#THREE_GPP}
+         */
+        FORMAT_3GPP(OutputFormat.THREE_GPP, "3gp"),
+        /**
+         * {@link OutputFormat#MPEG_4}
+         */
+        FORMAT_MP4(OutputFormat.MPEG_4, "mp4");
+
+        public int outputFormat;
+        public String extension;
+
+        VideoFormat(int outputFormat, String extension) {
+            this.outputFormat = outputFormat;
+            this.extension = extension;
         }
     }
 
@@ -83,12 +93,12 @@ public class MediaUtils {
      * @return {@link CompressFormat}
      */
     public static CompressFormat getCompressFormat(String extension){
-        for(ImageFormat imageFormat : ImageFormat.values()){
-            if(imageFormat.getExtension().equals(extension)){
-                return imageFormat.getCompressFormat();
+        for(PictureFormat pictureFormat : PictureFormat.values()){
+            if(pictureFormat.extension.equals(extension)){
+                return pictureFormat.compressFormat;
             }
         }
-        return ImageFormat.JPEG.getCompressFormat();
+        return PictureFormat.JPEG.compressFormat;
     }
 
     /**
@@ -98,12 +108,42 @@ public class MediaUtils {
      * @return extension jpg|png|webp
      */
     public static String getExtension(CompressFormat compressFormat){
-        for(ImageFormat imageFormat : ImageFormat.values()){
-            if(imageFormat.getCompressFormat() == compressFormat){
-                return imageFormat.getExtension();
+        for(PictureFormat pictureFormat : PictureFormat.values()){
+            if(pictureFormat.compressFormat == compressFormat){
+                return pictureFormat.extension;
             }
         }
-        return ImageFormat.JPEG.getExtension();
+        return PictureFormat.JPEG.extension;
+    }
+
+    /**
+     * Return the known video formats
+     * 
+     * @param extension 3gp|mp4
+     * @return {@link OutputFormat}
+     */
+    public static int getOutputFormat(String extension){
+        for(VideoFormat videoFormat : VideoFormat.values()){
+            if(videoFormat.extension.equals(extension)){
+                return videoFormat.outputFormat;
+            }
+        }
+        return VideoFormat.FORMAT_MP4.outputFormat;
+    }
+
+    /**
+     * Return the extension of known video formats
+     * 
+     * @param {@link OutputFormat}
+     * @return extension 3gp|mp4
+     */
+    public static String getExtension(int outputFormat){
+        for(VideoFormat videoFormat : VideoFormat.values()){
+            if(videoFormat.outputFormat == outputFormat){
+                return videoFormat.extension;
+            }
+        }
+        return VideoFormat.FORMAT_MP4.extension;
     }
 
     public static File getExternalStorageDirectory(String dirName){
@@ -152,6 +192,7 @@ public class MediaUtils {
             bitmap.compress(compressFormat, MediaUtils.DEFAULT_COMPRESS_QUALITY, fos);
         }catch(FileNotFoundException e){
             e.printStackTrace();
+            LogUtils.e(filePath, e);
             return false;
         }catch(Exception e){
             LogUtils.e(filePath, e);
