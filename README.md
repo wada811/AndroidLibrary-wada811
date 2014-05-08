@@ -1,2 +1,2 @@
-AndroidLibrary-wada811
+AndroidLibrary@wada811
 ======================
