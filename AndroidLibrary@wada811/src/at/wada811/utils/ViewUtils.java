@@ -15,19 +15,21 @@
  */
 package at.wada811.utils;
 
-import java.util.ArrayList;
-import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewUtils {
 
@@ -286,5 +288,28 @@ public class ViewUtils {
      */
     public static int getContentTop(Activity activity){
         return ViewUtils.getTitleBarHeight(activity) + ViewUtils.getStatusBarHeight(activity);
+    }
+
+    /**
+     * Set text size value from dimens.xml
+     * 
+     * @param context
+     * @param textView
+     * @param dimenId
+     */
+    public static void setTextSize(Context context, TextView textView, int dimenId){
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(dimenId));
+    }
+
+    /**
+     * Set fixed text size value from dimens.xml
+     * 
+     * @param context
+     * @param textView
+     * @param dimenId
+     */
+    public static void setTextSizeFixed(Context context, TextView textView, int dimenId){
+        final float scale = DisplayUtils.getFontScale(context);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(dimenId) / scale);
     }
 }

@@ -285,6 +285,7 @@ public class IntentUtils {
     public static Intent createSendTextIntent(String text){
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
+        intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, text);
         return intent;
     }

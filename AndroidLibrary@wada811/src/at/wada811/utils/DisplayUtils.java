@@ -38,6 +38,16 @@ public class DisplayUtils {
     }
 
     /**
+     * DisplayMetrics を取得する
+     * 
+     * @param context
+     * @return
+     */
+    private static DisplayMetrics getDisplayMetrics(Context context){
+        return context.getResources().getDisplayMetrics();
+    }
+
+    /**
      * ディスプレイの幅を返す
      * 
      * @param context
@@ -154,9 +164,7 @@ public class DisplayUtils {
      * @return
      */
     public static int getWidthPixels(Context context){
-        Display display = DisplayUtils.getDisplay(context);
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        display.getMetrics(displayMetrics);
+        DisplayMetrics displayMetrics = DisplayUtils.getDisplayMetrics(context);
         return displayMetrics.widthPixels;
     }
 
@@ -167,9 +175,7 @@ public class DisplayUtils {
      * @return
      */
     public static int getHeightPixels(Context context){
-        Display display = DisplayUtils.getDisplay(context);
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        display.getMetrics(displayMetrics);
+        DisplayMetrics displayMetrics = DisplayUtils.getDisplayMetrics(context);
         return displayMetrics.heightPixels;
     }
 
@@ -180,9 +186,7 @@ public class DisplayUtils {
      * @return
      */
     public static float getXdpi(Context context){
-        Display display = DisplayUtils.getDisplay(context);
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        display.getMetrics(displayMetrics);
+        DisplayMetrics displayMetrics = DisplayUtils.getDisplayMetrics(context);
         return displayMetrics.xdpi;
     }
 
@@ -193,9 +197,7 @@ public class DisplayUtils {
      * @return
      */
     public static float getYdpi(Context context){
-        Display display = DisplayUtils.getDisplay(context);
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        display.getMetrics(displayMetrics);
+        DisplayMetrics displayMetrics = DisplayUtils.getDisplayMetrics(context);
         return displayMetrics.ydpi;
     }
 
@@ -206,9 +208,7 @@ public class DisplayUtils {
      * @return
      */
     public static float getDensity(Context context){
-        Display display = DisplayUtils.getDisplay(context);
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        display.getMetrics(displayMetrics);
+        DisplayMetrics displayMetrics = DisplayUtils.getDisplayMetrics(context);
         return displayMetrics.density;
     }
 
@@ -219,10 +219,19 @@ public class DisplayUtils {
      * @return
      */
     public static int getDensityDpi(Context context){
-        Display display = DisplayUtils.getDisplay(context);
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        display.getMetrics(displayMetrics);
+        DisplayMetrics displayMetrics = DisplayUtils.getDisplayMetrics(context);
         return displayMetrics.densityDpi;
+    }
+
+    /**
+     * フォントサイズの倍率を返す
+     * 
+     * @param context
+     * @return
+     */
+    public static float getFontScale(Context context){
+        Configuration configuration = context.getResources().getConfiguration();
+        return configuration.fontScale;
     }
 
 }
