@@ -107,8 +107,9 @@
         </activity>
         <service
             android:name="at.wada811.android.library.demos.daydream.DayDreamDemo"
-            android:exported="false"
-            android:label="@string/DayDreamDemo" >
+            android:exported="true"
+            android:label="@string/DayDreamDemo"
+            tools:ignore="ExportedService" >
             <intent-filter>
                 <action android:name="android.service.dreams.DreamService" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -119,8 +120,9 @@
         </service>
         <service
             android:name="at.wada811.android.library.demos.daydream.DayDreamLauncher"
-            android:exported="false"
-            android:label="@string/DayDreamLauncher" >
+            android:exported="true"
+            android:label="@string/DayDreamLauncher"
+            tools:ignore="ExportedService" >
             <intent-filter>
                 <action android:name="android.service.dreams.DreamService" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -188,8 +190,7 @@
         -->
         <activity
             android:name="at.wada811.android.library.demos.loader.LoaderListActivity"
-            android:label="@string/app_name"
-            android:permission="android.permission.INTERNET" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -344,7 +345,7 @@
         -->
         <receiver
             android:name="at.wada811.android.library.demos.broadcastreceiver.BootCompleteReceiver"
-            android:exported="false"
+            android:exported="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
