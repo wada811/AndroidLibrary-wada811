@@ -16,13 +16,12 @@
 package at.wada811.android.library.demos.broadcastreceiver;
 
 import android.content.Context;
-import at.wada811.broadcastreceiver.BootCompletedReceiver;
+import at.wada811.broadcastreceiver.UpdatedReceiver;
 
-public class BootCompleteReceiver extends BootCompletedReceiver {
+public class UpdateReceiver extends UpdatedReceiver {
 
     @Override
-    public void onBootCompleted(Context context){
+    public void onUpdated(Context context){
 
     }
-
 }
