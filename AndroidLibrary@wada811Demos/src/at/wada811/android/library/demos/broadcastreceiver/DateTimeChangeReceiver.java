@@ -17,18 +17,17 @@ package at.wada811.android.library.demos.broadcastreceiver;
 
 import android.content.Context;
 import at.wada811.broadcastreceiver.DateTimeChangedReceiver;
-import at.wada811.utils.AndroidUtils;
 
 public class DateTimeChangeReceiver extends DateTimeChangedReceiver {
 
     @Override
     public void onDateChanged(Context context){
-        AndroidUtils.showToast(context, "DateTimeChangeReceiver#onDateChanged");
+
     }
 
     @Override
     public void onTimeChanged(Context context){
-        AndroidUtils.showToast(context, "DateTimeChangeReceiver#onTimeChanged");
+
     }
 
 }

@@ -36,7 +36,7 @@ public class VideoFragmentActivity extends FragmentActivity implements VideoCall
             }
         });
 
-        mVideoFragment = VideoFragment.newInstance();
+        mVideoFragment = VideoFragment.newInstance(R.raw.video);
         Bundle args = new Bundle();
         args.putInt(VideoFragment.KEY_RES_ID, R.raw.video);
 //        String filePath = "/storage/emulated/0/DevCamera/2013-09-20_21-25_01.mp4";
@@ -71,6 +71,16 @@ public class VideoFragmentActivity extends FragmentActivity implements VideoCall
             @Override
             public void onCompletion(VideoFragment videoFragment){
                 LogUtils.d();
+                if(getSupportFragmentManager().findFragmentByTag(VideoFragment.TAG) != null){
+                    LogUtils.d();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.remove(mVideoFragment);
+                    transaction.commit();
+                }
+            }
+
+            @Override
+            public void surfaceDestroyed(VideoFragment videoFragment){
                 if(getSupportFragmentManager().findFragmentByTag(VideoFragment.TAG) != null){
                     LogUtils.d();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

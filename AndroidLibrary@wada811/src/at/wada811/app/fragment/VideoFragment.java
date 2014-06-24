@@ -15,9 +15,6 @@
  */
 package at.wada811.app.fragment;
 
-import java.io.FileDescriptor;
-import java.io.IOException;
-import java.util.Map;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.res.AssetManager;
@@ -40,27 +37,30 @@ import android.widget.FrameLayout;
 import at.wada811.android.library.R;
 import at.wada811.utils.DisplayUtils;
 import at.wada811.utils.LogUtils;
+import java.io.FileDescriptor;
+import java.io.IOException;
+import java.util.Map;
 
 public class VideoFragment extends Fragment implements SurfaceHolder.Callback, OnVideoSizeChangedListener, OnBufferingUpdateListener, OnPreparedListener, OnCompletionListener {
 
-    public static final String TAG                     = VideoFragment.class.getSimpleName();
+    public static final String TAG = VideoFragment.class.getSimpleName();
 
-    private VideoCallback      mCallback;
+    private VideoCallback mCallback;
 
-    public SurfaceView         mSurfaceView;
-    public SurfaceHolder       mHolder;
-    public MediaPlayer         mMediaPlayer;
+    public SurfaceView mSurfaceView;
+    public SurfaceHolder mHolder;
+    public MediaPlayer mMediaPlayer;
 
-    public static final String KEY_RES_ID              = "KEY_RES_ID";
-    public static final String KEY_FILE_PATH           = "KEY_FILE_PATH";
+    public static final String KEY_RES_ID = "KEY_RES_ID";
+    public static final String KEY_FILE_PATH = "KEY_FILE_PATH";
 
-    private int                mDisplayWidth           = 0;
-    private int                mDisplayHeight          = 0;
-    private int                mVideoWidth;
-    private int                mVideoHeight;
-    private boolean            mIsVideoSizeKnown       = false;
-    private boolean            mIsVideoReadyToBePlayed = false;
-    private boolean            mIsVideoAutoPlay        = false;
+    private int mDisplayWidth = 0;
+    private int mDisplayHeight = 0;
+    private int mVideoWidth;
+    private int mVideoHeight;
+    private boolean mIsVideoSizeKnown = false;
+    private boolean mIsVideoReadyToBePlayed = false;
+    private boolean mIsVideoAutoPlay = false;
 
     public static interface VideoCallbackProvider {
         public VideoCallback getVideoCallback();
@@ -74,18 +74,36 @@ public class VideoFragment extends Fragment implements SurfaceHolder.Callback, O
 
         public void onCompletion(VideoFragment videoFragment);
 
+        public void surfaceDestroyed(VideoFragment videoFragment);
     }
 
-    public static VideoFragment newInstance(){
+    public static VideoFragment newInstance(int videoResId){
         VideoFragment fragment = new VideoFragment();
         Bundle args = new Bundle();
+        args.putInt(VideoFragment.KEY_RES_ID, videoResId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static VideoFragment newInstance(String videoFilePath){
+        VideoFragment fragment = new VideoFragment();
+        Bundle args = new Bundle();
+        args.putString(VideoFragment.KEY_FILE_PATH, videoFilePath);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        LogUtils.i();
+        setRetainInstance(true);
+    }
+
+    @Override
     public void onAttach(Activity activity){
         super.onAttach(activity);
+        LogUtils.i();
 
         if(activity instanceof VideoCallbackProvider == false){
             throw new ClassCastException("activity must implements VideoCallbackPicker.");
@@ -96,7 +114,7 @@ public class VideoFragment extends Fragment implements SurfaceHolder.Callback, O
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        LogUtils.d();
+        LogUtils.i();
         mSurfaceView = (SurfaceView)inflater.inflate(R.layout.fragment_video, null);
         mHolder = mSurfaceView.getHolder();
         mHolder.addCallback(this);
@@ -106,24 +124,24 @@ public class VideoFragment extends Fragment implements SurfaceHolder.Callback, O
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        LogUtils.d();
-        try{
-            if(getArguments().keySet().contains(KEY_RES_ID)){
-                mMediaPlayer = MediaPlayer.create(getActivity(), getArguments().getInt(KEY_RES_ID));
-            }else{
-                mMediaPlayer = new MediaPlayer();
-            }
-            mMediaPlayer.setOnVideoSizeChangedListener(this);
-            mMediaPlayer.setOnBufferingUpdateListener(this);
-            mMediaPlayer.setOnPreparedListener(this);
-            mMediaPlayer.setOnCompletionListener(this);
-            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            setVideoAutoPlay(true);
-            mCallback.onActivityCreated(this);
-        }catch(Exception e){
-            e.printStackTrace();
-            LogUtils.e(e);
+        LogUtils.i();
+        initMediaPlayer();
+    }
+
+    private void initMediaPlayer(){
+        LogUtils.i();
+        if(getArguments().keySet().contains(KEY_RES_ID)){
+            mMediaPlayer = MediaPlayer.create(getActivity(), getArguments().getInt(KEY_RES_ID));
+        }else{
+            mMediaPlayer = new MediaPlayer();
         }
+        mMediaPlayer.setOnVideoSizeChangedListener(this);
+        mMediaPlayer.setOnBufferingUpdateListener(this);
+        mMediaPlayer.setOnPreparedListener(this);
+        mMediaPlayer.setOnCompletionListener(this);
+        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        setVideoAutoPlay(true);
+        mCallback.onActivityCreated(this);
     }
 
     @Override
@@ -131,6 +149,7 @@ public class VideoFragment extends Fragment implements SurfaceHolder.Callback, O
         super.onDetach();
         LogUtils.i();
         stop();
+        reset();
         release();
         mHolder.removeCallback(this);
         doCleanUp();
@@ -160,6 +179,7 @@ public class VideoFragment extends Fragment implements SurfaceHolder.Callback, O
     @Override
     public void surfaceDestroyed(SurfaceHolder holder){
         LogUtils.i();
+        mCallback.surfaceDestroyed(this);
     }
 
     @Override
@@ -261,6 +281,10 @@ public class VideoFragment extends Fragment implements SurfaceHolder.Callback, O
         LogUtils.d("CurrentPosition: " + mMediaPlayer.getCurrentPosition());
     }
 
+    public void seekTo(int msec){
+        mMediaPlayer.seekTo(msec);
+    }
+
     public void start(){
         setSize();
         mMediaPlayer.seekTo(mMediaPlayer.getCurrentPosition());
@@ -279,14 +303,12 @@ public class VideoFragment extends Fragment implements SurfaceHolder.Callback, O
         if(mMediaPlayer != null){
             pause();
             mMediaPlayer.stop();
-            mMediaPlayer = null;
         }
     }
 
     public void reset(){
         if(mMediaPlayer != null){
             mMediaPlayer.reset();
-            mMediaPlayer = null;
         }
     }
 
