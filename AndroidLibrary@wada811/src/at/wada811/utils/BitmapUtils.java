@@ -129,7 +129,7 @@ public class BitmapUtils {
         String key = context.getString(R.string.keyPreviewFormat);
         int imageFormat = PreferenceUtils.getInt(context, key, ImageFormat.NV21);
         byte[] rgbData = BitmapUtils.decodeYuvData(yuvData, imageFormat, width, height);
-        final Bitmap bitmap = BitmapUtils.createBitmapFromByteArray(rgbData, width, height);
+        final Bitmap bitmap = BitmapUtils.createBitmapFromByteArray(rgbData);
         rgbData = null;
         return bitmap;
     }
