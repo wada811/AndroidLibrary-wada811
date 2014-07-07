@@ -1,21 +1,22 @@
-# built application files
-*.apk
-*.ap_
-
-# files for the dex VM
-*.dex
-
-# Java class files
-*.class
-
-# generated files
+# Generated files
 bin/
 gen/
 
-# Local configuration file (sdk path, etc)
-local.properties
+# Jar file
+!*.jar
 
-# Eclipse project files
+# Compiled source
+!*.o  # use in Android NDK
+!*.so # use in Android NDK
+
+# Eclipse
 .classpath
 .project
 .settings/
+
+# Gradle files
+.gradle/
+build/
+
+# Local configuration file (sdk path, etc)
+local.properties

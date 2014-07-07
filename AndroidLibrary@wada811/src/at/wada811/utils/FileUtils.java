@@ -30,9 +30,16 @@ public class FileUtils {
         if(!srcFile.exists()){
             return false;
         }
-        distFile.mkdirs();
-        if(!distFile.exists()){
-            return false;
+        if(srcFile.isFile()){
+            distFile.getParentFile().mkdirs();
+            if(!distFile.getParentFile().exists()){
+                return false;
+            }
+        }else{
+            distFile.mkdirs();
+            if(!distFile.exists()){
+                return false;
+            }
         }
         FileChannel srcChannel = null;
         FileChannel distChannel = null;

@@ -124,7 +124,7 @@ public class CameraUtils {
                 if(DEBUG){
                     LogUtils.v(String.valueOf(info.orientation));
                 }
-                displayOrientation = ((360 - degrees) + info.orientation) % 360;
+                displayOrientation = (360 - degrees + info.orientation) % 360;
                 if(DEBUG){
                     LogUtils.v(String.valueOf(displayOrientation));
                 }
