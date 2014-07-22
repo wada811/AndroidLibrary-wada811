@@ -22,6 +22,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.media.MediaPlayer.OnErrorListener;
+import android.media.MediaPlayer.OnInfoListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.media.MediaPlayer.OnVideoSizeChangedListener;
 import android.net.Uri;
@@ -140,7 +142,81 @@ public class VideoFragment extends Fragment implements SurfaceHolder.Callback, O
         mMediaPlayer.setOnPreparedListener(this);
         mMediaPlayer.setOnCompletionListener(this);
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        setVideoAutoPlay(true);
+        mMediaPlayer.setOnInfoListener(new OnInfoListener(){
+            @Override
+            public boolean onInfo(MediaPlayer mp, int what, int extra){
+                switch(what){
+                    case MediaPlayer.MEDIA_INFO_BAD_INTERLEAVING:
+                        LogUtils.i("MediaPlayer.MEDIA_INFO_BAD_INTERLEAVING");
+                        break;
+                    case MediaPlayer.MEDIA_INFO_BUFFERING_END:
+                        LogUtils.i("MediaPlayer.MEDIA_INFO_BUFFERING_END");
+                        break;
+                    case MediaPlayer.MEDIA_INFO_BUFFERING_START:
+                        LogUtils.i("MediaPlayer.MEDIA_INFO_BUFFERING_START");
+                        break;
+                    case MediaPlayer.MEDIA_INFO_METADATA_UPDATE:
+                        LogUtils.i("MediaPlayer.MEDIA_INFO_METADATA_UPDATE");
+                        break;
+                    case MediaPlayer.MEDIA_INFO_NOT_SEEKABLE:
+                        LogUtils.i("MediaPlayer.MEDIA_INFO_NOT_SEEKABLE");
+                        break;
+                    case MediaPlayer.MEDIA_INFO_SUBTITLE_TIMED_OUT:
+                        LogUtils.i("MediaPlayer.MEDIA_INFO_SUBTITLE_TIMED_OUT");
+                        break;
+                    case MediaPlayer.MEDIA_INFO_UNSUPPORTED_SUBTITLE:
+                        LogUtils.i("MediaPlayer.MEDIA_INFO_UNSUPPORTED_SUBTITLE");
+                        break;
+                    case MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:
+                        LogUtils.i("MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START");
+                        break;
+                    case MediaPlayer.MEDIA_INFO_VIDEO_TRACK_LAGGING:
+                        LogUtils.i("MediaPlayer.MEDIA_INFO_VIDEO_TRACK_LAGGING");
+                        break;
+                    case MediaPlayer.MEDIA_INFO_UNKNOWN:
+                    default:
+                        LogUtils.i("MediaPlayer.MEDIA_INFO_UNKNOWN");
+                        break;
+                }
+                LogUtils.d("extra: " + extra);
+                return false;
+            }
+        });
+        mMediaPlayer.setOnErrorListener(new OnErrorListener(){
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra){
+                switch(what){
+                    case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
+                        LogUtils.e("MediaPlayer.MEDIA_ERROR_SERVER_DIED");
+                        break;
+                    case MediaPlayer.MEDIA_ERROR_UNKNOWN:
+                    default:
+                        LogUtils.e("MediaPlayer.MEDIA_ERROR_UNKNOWN");
+                        break;
+                }
+                switch(extra){
+                    case MediaPlayer.MEDIA_ERROR_IO:
+                        LogUtils.e("MediaPlayer.MEDIA_ERROR_IO");
+                        break;
+                    case MediaPlayer.MEDIA_ERROR_MALFORMED:
+                        LogUtils.e("MediaPlayer.MEDIA_ERROR_MALFORMED");
+                        break;
+                    case MediaPlayer.MEDIA_ERROR_NOT_VALID_FOR_PROGRESSIVE_PLAYBACK:
+                        LogUtils.e("MediaPlayer.MEDIA_ERROR_NOT_VALID_FOR_PROGRESSIVE_PLAYBACK");
+                        break;
+                    case MediaPlayer.MEDIA_ERROR_TIMED_OUT:
+                        LogUtils.e("MediaPlayer.MEDIA_ERROR_TIMED_OUT");
+                        break;
+                    case MediaPlayer.MEDIA_ERROR_UNSUPPORTED:
+                        LogUtils.e("MediaPlayer.MEDIA_ERROR_UNSUPPORTED");
+                        break;
+                    default:
+                        LogUtils.e("extra: " + extra);
+                        break;
+                }
+                return false;
+            }
+        });
         mCallback.onActivityCreated(this);
     }
 
@@ -185,7 +261,7 @@ public class VideoFragment extends Fragment implements SurfaceHolder.Callback, O
     @Override
     public void onVideoSizeChanged(MediaPlayer mp, int width, int height){
         LogUtils.i("width: " + width + ", height: " + height);
-        if((width == 0) || (height == 0)){
+        if(width == 0 || height == 0){
             LogUtils.e("invalid video width(" + width + ") or height(" + height + ")");
             return;
         }
