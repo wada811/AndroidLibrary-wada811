@@ -23,13 +23,13 @@ public class LogUtils {
     /**
      * ログ出力タグ
      */
-    public static String  TAG         = LogUtils.class.getSimpleName();
+    public static String TAG = LogUtils.class.getSimpleName();
 
     /**
      * ラッパーメソッドはここを書き換える
      */
-    public static int     STACK_INDEX = 4;
-    public static boolean isDebug     = true;
+    public static int STACK_INDEX = 4;
+    public static boolean isDebug = true;
 
     private static boolean isLoggable(){
         return BuildConfig.DEBUG && isDebug;
@@ -184,7 +184,7 @@ public class LogUtils {
         final String methodName = element.getMethodName();
         final int lineNumber = element.getLineNumber();
         // メタ情報
-        final String metaInfo = "[" + simpleClassName + "#" + methodName + ":" + lineNumber + "]";
+        final String metaInfo = "[" + (BuildConfig.DEBUG ? simpleClassName : fullClassName) + "#" + methodName + ":" + lineNumber + "]";
         return metaInfo;
     }
 
