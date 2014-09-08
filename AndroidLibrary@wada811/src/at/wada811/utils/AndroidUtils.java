@@ -18,6 +18,7 @@ package at.wada811.utils;
 import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -90,6 +91,17 @@ public class AndroidUtils {
             e.printStackTrace();
         }
         return versionName;
+    }
+
+    public static boolean isDebug(Context context){
+        PackageManager pm = context.getPackageManager();
+        try{
+            ApplicationInfo applicationInfo = pm.getApplicationInfo(context.getPackageName(), 0);
+            return (applicationInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+        }catch(NameNotFoundException e){
+            e.printStackTrace();
+        }
+        return false;
     }
 
     // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
