@@ -16,6 +16,7 @@
 package at.wada811.utils;
 
 import android.app.Activity;
+import android.app.Service;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -104,12 +105,33 @@ public class AndroidUtils {
         if(ThreadUtils.isMainThread()){
             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
         }else{
-            ((Activity)context).runOnUiThread(new Runnable(){
-                @Override
-                public void run(){
-                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                }
-            });
+            if(context instanceof Service){
+                // Handler で表示する
+                // 
+                // public class HandlerService extends Service {
+                // 
+                //     Handler handler;
+                // 
+                //     @Override
+                //     public void onCreate() {
+                //         super.onCreate();
+                //         handler = new Handler();
+                //     }
+                // 
+                //     private void runOnUiThread(Runnable runnable) {
+                //         handler.post(runnable);
+                //     }
+                // 
+                // }
+                throw new RuntimeException("Cannot show Toast in Service.");
+            }else if(context instanceof Activity){
+                ((Activity)context).runOnUiThread(new Runnable(){
+                    @Override
+                    public void run(){
+                        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
         }
     }
 
@@ -123,12 +145,33 @@ public class AndroidUtils {
         if(ThreadUtils.isMainThread()){
             Toast.makeText(context, resId, Toast.LENGTH_LONG).show();
         }else{
-            ((Activity)context).runOnUiThread(new Runnable(){
-                @Override
-                public void run(){
-                    Toast.makeText(context, resId, Toast.LENGTH_LONG).show();
-                }
-            });
+            if(context instanceof Service){
+                // Handler で表示する
+                // 
+                // public class HandlerService extends Service {
+                // 
+                //     Handler handler;
+                // 
+                //     @Override
+                //     public void onCreate() {
+                //         super.onCreate();
+                //         handler = new Handler();
+                //     }
+                // 
+                //     private void runOnUiThread(Runnable runnable) {
+                //         handler.post(runnable);
+                //     }
+                // 
+                // }
+                throw new RuntimeException("Cannot show Toast in Service.");
+            }else if(context instanceof Activity){
+                ((Activity)context).runOnUiThread(new Runnable(){
+                    @Override
+                    public void run(){
+                        Toast.makeText(context, resId, Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
         }
     }
 
@@ -149,19 +192,40 @@ public class AndroidUtils {
             toast.setDuration(Toast.LENGTH_SHORT);
             toast.show();
         }else{
-            ((Activity)context).runOnUiThread(new Runnable(){
-                @Override
-                public void run(){
-                    Toast toast = new Toast(context);
-                    ImageView image = new ImageView(context);
-                    image.setImageBitmap(bitmap);
-                    image.setLayoutParams(new LayoutParams(bitmap.getWidth(), bitmap.getHeight()));
-                    toast.setView(image);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.setDuration(Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            });
+            if(context instanceof Service){
+                // Handler で表示する
+                // 
+                // public class HandlerService extends Service {
+                // 
+                //     Handler handler;
+                // 
+                //     @Override
+                //     public void onCreate() {
+                //         super.onCreate();
+                //         handler = new Handler();
+                //     }
+                // 
+                //     private void runOnUiThread(Runnable runnable) {
+                //         handler.post(runnable);
+                //     }
+                // 
+                // }
+                throw new RuntimeException("Cannot show Toast in Service.");
+            }else if(context instanceof Activity){
+                ((Activity)context).runOnUiThread(new Runnable(){
+                    @Override
+                    public void run(){
+                        Toast toast = new Toast(context);
+                        ImageView image = new ImageView(context);
+                        image.setImageBitmap(bitmap);
+                        image.setLayoutParams(new LayoutParams(bitmap.getWidth(), bitmap.getHeight()));
+                        toast.setView(image);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.setDuration(Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                });
+            }
         }
     }
 
