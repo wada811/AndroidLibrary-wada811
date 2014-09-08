@@ -88,6 +88,14 @@ public class PreferenceUtils {
         return PreferenceUtils.getDefaultSharedPreferences(context).contains(key);
     }
 
+    public static void remove(Context context, String key){
+        PreferenceUtils.getDefaultSharedPreferences(context).edit().remove(key);
+    }
+
+    public static void clear(Context context){
+        PreferenceUtils.getDefaultSharedPreferences(context).edit().clear().apply();
+    }
+
     /**
      * SharedPreferences に保存する
      * 
