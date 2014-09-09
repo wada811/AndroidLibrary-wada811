@@ -15,31 +15,31 @@
  */
 package at.wada811.view;
 
-import java.util.EventListener;
 import android.view.MotionEvent;
 import android.view.View;
 import at.wada811.utils.LogUtils;
+import java.util.EventListener;
 
 public class FlickTouchListener implements View.OnTouchListener {
 
     /** x coordinate on MotionEvent.ACTION_DOWN */
-    private float                mDownX;
+    private float mDownX;
     /** y coordinate on MotionEvent.ACTION_DOWN */
-    private float                mDownY;
+    private float mDownY;
     /** x coordinate on MotionEvent.ACTION_UP */
-    private float                mUpX;
+    private float mUpX;
     /** y coordinate on MotionEvent.ACTION_UP */
-    private float                mUpY;
+    private float mUpY;
     /** 最低限移動しないといけない距離 */
-    protected static final float MIN_DISTANCE  = 100;
+    protected static final float MIN_DISTANCE = 100;
     /** event time on MotionEvent.ACTION_DOWN */
-    private long                 mDownTime;
+    private long mDownTime;
     /** event time on MotionEvent.ACTION_UP */
-    private long                 mUpTime;
+    private long mUpTime;
     /** 最大移動時間 */
-    protected static final long  MAX_MOVE_TIME = 150;
+    protected static final long MAX_MOVE_TIME = 150;
 
-    private OnFlickListener      mListener;
+    private OnFlickListener mListener;
 
     public interface OnFlickListener extends EventListener {
 
@@ -71,7 +71,7 @@ public class FlickTouchListener implements View.OnTouchListener {
                 mDownX = event.getX();
                 mDownY = event.getY();
                 mDownTime = event.getEventTime();
-                return false;
+                return true;
             case MotionEvent.ACTION_POINTER_DOWN: // タッチ中に追加でタッチした場合
                 LogUtils.v("motionEvent: ACTION_POINTER_DOWN");
                 return true;
