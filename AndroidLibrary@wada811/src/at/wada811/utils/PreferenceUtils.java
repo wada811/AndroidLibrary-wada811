@@ -88,6 +88,14 @@ public class PreferenceUtils {
         return PreferenceUtils.getDefaultSharedPreferences(context).contains(key);
     }
 
+    public static void remove(Context context, String key){
+        PreferenceUtils.getDefaultSharedPreferences(context).edit().remove(key);
+    }
+
+    public static void clear(Context context){
+        PreferenceUtils.getDefaultSharedPreferences(context).edit().clear().apply();
+    }
+
     /**
      * SharedPreferences に保存する
      * 
@@ -96,7 +104,7 @@ public class PreferenceUtils {
      * @param value
      */
     public static void putString(Context context, String key, String value){
-        PreferenceUtils.getDefaultSharedPreferences(context).edit().putString(key, value).commit();
+        PreferenceUtils.getDefaultSharedPreferences(context).edit().putString(key, value).apply();
     }
 
     /**
@@ -119,7 +127,7 @@ public class PreferenceUtils {
      * @param value
      */
     public static void putInt(Context context, String key, int value){
-        PreferenceUtils.getDefaultSharedPreferences(context).edit().putInt(key, value).commit();
+        PreferenceUtils.getDefaultSharedPreferences(context).edit().putInt(key, value).apply();
     }
 
     /**
@@ -142,7 +150,7 @@ public class PreferenceUtils {
      * @param value
      */
     public static void putBoolean(Context context, String key, Boolean value){
-        PreferenceUtils.getDefaultSharedPreferences(context).edit().putBoolean(key, value).commit();
+        PreferenceUtils.getDefaultSharedPreferences(context).edit().putBoolean(key, value).apply();
     }
 
     /**
@@ -165,7 +173,7 @@ public class PreferenceUtils {
      * @param value
      */
     public static void putFloat(Context context, String key, float value){
-        PreferenceUtils.getDefaultSharedPreferences(context).edit().putFloat(key, value).commit();
+        PreferenceUtils.getDefaultSharedPreferences(context).edit().putFloat(key, value).apply();
     }
 
     /**
@@ -188,7 +196,7 @@ public class PreferenceUtils {
      * @param value
      */
     public static void putLong(Context context, String key, long value){
-        PreferenceUtils.getDefaultSharedPreferences(context).edit().putLong(key, value).commit();
+        PreferenceUtils.getDefaultSharedPreferences(context).edit().putLong(key, value).apply();
     }
 
     /**
@@ -212,7 +220,7 @@ public class PreferenceUtils {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static void putStringSet(Context context, String key, Set<String> values){
-        PreferenceUtils.getDefaultSharedPreferences(context).edit().putStringSet(key, values).commit();
+        PreferenceUtils.getDefaultSharedPreferences(context).edit().putStringSet(key, values).apply();
     }
 
     /**
@@ -227,4 +235,5 @@ public class PreferenceUtils {
     public static Set<String> getStringSet(Context context, String key, Set<String> defaultValues){
         return PreferenceUtils.getDefaultSharedPreferences(context).getStringSet(key, defaultValues);
     }
+
 }

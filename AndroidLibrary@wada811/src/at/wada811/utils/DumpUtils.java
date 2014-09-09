@@ -17,10 +17,9 @@ package at.wada811.utils;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.lang.reflect.Array;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -64,121 +63,72 @@ public class DumpUtils {
     }
 
     public static String toString(Object[] array){
-        final String fSTART_CHAR = "[";
-        final String fEND_CHAR = "]";
-        final String fSEPARATOR = ", ";
-        final String fNULL = "null";
-
         if(array == null){
-            return fNULL;
+            return "null";
         }
 
-        StringBuilder result = new StringBuilder(fSTART_CHAR);
-        int length = Array.getLength(array);
-        for(int index = 0; index < length; ++index){
-            Object item = Array.get(array, index);
-            if(isNonNullArray(item)){
-                //recursive call!
-                result.append(DumpUtils.toString((Object[])item));
-            }else{
-                result.append(item);
-            }
-            if(!isLastItem(index, length)){
-                result.append(fSEPARATOR);
-            }
+        JSONArray json = new JSONArray();
+        for(Object object : array){
+            json.put(DumpUtils.toString(object));
         }
-        result.append(fEND_CHAR);
-        return result.toString();
+        return json.toString();
     }
 
-    private static boolean isNonNullArray(Object object){
-        return object != null && object.getClass().isArray();
-    }
-
-    private static boolean isLastItem(int index, int length){
-        return index == length - 1;
-    }
-
-    @SuppressWarnings("unchecked")
-    public static String toString(List<Object> list){
-        final String fSTART_CHAR = "[";
-        final String fEND_CHAR = "]";
-        final String fSEPARATOR = ", ";
-        final String fNULL = "null";
-
+    public static String toString(List<?> list){
         if(list == null){
-            return fNULL;
+            return "null";
         }
-
-        StringBuilder result = new StringBuilder(fSTART_CHAR);
-        int length = list.size();
-        for(int index = 0; index < length; ++index){
-            Object item = list.get(index);
-            if(isNonNullList(item)){
-                //recursive call!
-                result.append(DumpUtils.toString((List<Object>)item));
-            }else{
-                result.append(item);
-            }
-            if(!isLastItem(index, length)){
-                result.append(fSEPARATOR);
-            }
+        JSONArray json = new JSONArray();
+        for(Object object : list){
+            json.put(DumpUtils.toString(object));
         }
-        result.append(fEND_CHAR);
-        return result.toString();
+        return json.toString();
     }
 
-    private static boolean isNonNullList(Object object){
-        return object != null && object instanceof List;
-    }
-
-    public static String toString(Map<Object, Object> map){
-        final String fSTART_CHAR = "{";
-        final String fEND_CHAR = "}";
-        final String fKEY_VALUE_SEPARATOR = ": ";
-        final String fENTRY_SEPARATOR = ", ";
-        final String fNULL = "null";
-
+    public static String toString(Map<?, ?> map){
         if(map == null){
-            return fNULL;
+            return "null";
         }
-
-        StringBuilder result = new StringBuilder(fSTART_CHAR);
-        int index = 0;
-        int length = map.size();
-        for(Entry<Object, Object> item : map.entrySet()){
-            result.append(DumpUtils.toString(item.getKey()));
-            result.append(fKEY_VALUE_SEPARATOR);
-            result.append(DumpUtils.toString(item.getValue()));
-            if(!isLastItem(index, length)){
-                result.append(fENTRY_SEPARATOR);
+        JSONObject json = new JSONObject();
+        for(Entry<?, ?> entry : map.entrySet()){
+            try{
+                json.put(DumpUtils.toString(entry.getKey()), DumpUtils.toString(entry.getValue()));
+            }catch(JSONException e){
+                e.printStackTrace();
             }
-            index++;
         }
-        result.append(fEND_CHAR);
-        return result.toString();
+        return json.toString();
     }
 
     public static String toString(Bundle bundle){
-        HashMap<String, String> dumpBundle = new HashMap<String, String>();
-        for(String key : bundle.keySet()){
-            Object value = bundle.get(key);
-            String valueStr = DumpUtils.toString(value);
-            dumpBundle.put(key, valueStr);
+        if(bundle == null){
+            return "null";
         }
-        return DumpUtils.toString(dumpBundle);
+        JSONObject json = new JSONObject();
+        for(String key : bundle.keySet()){
+            try{
+                Object value = bundle.get(key);
+                json.put(key, DumpUtils.toString(value));
+            }catch(JSONException e){
+                e.printStackTrace();
+            }
+        }
+        return json.toString();
     }
 
     public static String toString(SharedPreferences preferences){
-        JSONObject preferencesJson = new JSONObject();
-        Map<String, ?> map = preferences.getAll();
-        try{
-            for(Entry<String, ?> entry : map.entrySet()){
-                preferencesJson.put(entry.getKey(), entry.getValue());
-            }
-        }catch(JSONException e){
-            e.printStackTrace();
+        if(preferences == null){
+            return "null";
         }
-        return preferencesJson.toString();
+        JSONObject json = new JSONObject();
+        Map<String, ?> map = preferences.getAll();
+        for(Entry<String, ?> entry : map.entrySet()){
+            try{
+                json.put(entry.getKey(), DumpUtils.toString(entry.getValue()));
+            }catch(JSONException e){
+                e.printStackTrace();
+            }
+        }
+        return json.toString();
     }
 }

@@ -22,10 +22,15 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.text.TextUtils;
+import at.wada811.net.NetworkManager.Wifi.Security;
+import at.wada811.utils.LogUtils;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NetworkManager {
 
-    private WifiManager         mWifiManager;
+    private WifiManager mWifiManager;
     private ConnectivityManager mConnectivityManager;
 
     /**
@@ -54,7 +59,7 @@ public class NetworkManager {
      */
     public boolean isNetworkConnected(int type){
         NetworkInfo networkInfo = mConnectivityManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected();
+        return networkInfo != null && networkInfo.isConnected() && networkInfo.getType() == type;
     }
 
     /**
@@ -63,8 +68,7 @@ public class NetworkManager {
      * @return Wifiに接続している場合は true
      */
     public boolean isWifiConnected(){
-        NetworkInfo networkInfo = mConnectivityManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected() && networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+        return isNetworkConnected(ConnectivityManager.TYPE_WIFI);
     }
 
     public static class Wifi {
@@ -94,9 +98,10 @@ public class NetworkManager {
      * Wifiの有効/無効を設定する
      * 
      * @param enabled
+     * @return
      */
-    public void setWifiEnabled(boolean enabled){
-        mWifiManager.setWifiEnabled(enabled);
+    public boolean setWifiEnabled(boolean enabled){
+        return mWifiManager.setWifiEnabled(enabled);
     }
 
     /**
@@ -108,30 +113,58 @@ public class NetworkManager {
         return mWifiManager.isWifiEnabled();
     }
 
+    public boolean reconnect(){
+        return mWifiManager.reconnect();
+    }
+
     /**
      * Wifiネットワークに接続する
      * 
-     * @return int 接続した networkId
+     * @return boolean
      */
-    public int connect(Wifi.Security security, String ssid, String password){
+    public boolean connect(String ssid){
         int networkId = 0;
-        WifiConfiguration config = getWifiConfig(security, ssid, password);
+        WifiConfiguration config = getWifiConfig(ssid);
         networkId = mWifiManager.addNetwork(config);
+        if(networkId == -1){
+            return false;
+        }
         mWifiManager.saveConfiguration();
         mWifiManager.updateNetwork(config);
+        config.networkId = networkId;
+        return connect(config);
+    }
+
+    /**
+     * Wifiネットワークに接続する
+     * 
+     * @return boolean
+     */
+    public boolean connect(String ssid, String password){
+        int networkId = 0;
+        Security security = getWifiSecurity(ssid);
+        WifiConfiguration config = createWifiConfig(security, ssid, password);
+        networkId = mWifiManager.addNetwork(config);
         if(networkId == -1){
-            return networkId;
+            return false;
         }
+        mWifiManager.saveConfiguration();
+        mWifiManager.updateNetwork(config);
+        config.networkId = networkId;
+        return connect(config);
+    }
+
+    private boolean connect(WifiConfiguration config){
         mWifiManager.startScan();
         for(ScanResult result : mWifiManager.getScanResults()){
             // Android4.2以降のダブルクォーテーションを除去
-            String resultSSID = result.SSID.replace("\"", "");
-            if(resultSSID.equals(ssid)){
-                mWifiManager.enableNetwork(networkId, true);
-                break;
+            LogUtils.i("config.SSID: " + getSsidName(config.SSID));
+            LogUtils.i("result.SSID: " + getSsidName(result.SSID));
+            if(getSsidName(config.SSID).equals(getSsidName(result.SSID))){
+                return mWifiManager.enableNetwork(config.networkId, true);
             }
         }
-        return networkId;
+        return false;
     }
 
     /**
@@ -143,12 +176,43 @@ public class NetworkManager {
         return mWifiManager.disconnect();
     }
 
+    public Security getWifiSecurity(String ssid){
+        List<ScanResult> scanResults = mWifiManager.getScanResults();
+        for(ScanResult scanResult : scanResults){
+            if(scanResult.SSID.equals(ssid)){
+                if(scanResult.capabilities.contains(Security.WPA.type)){
+                    return Security.WPA;
+                }else if(scanResult.capabilities.contains(Security.WEP.type)){
+                    return Security.WEP;
+                }else{
+                    return Security.NONE;
+                }
+            }
+        }
+        return Security.NONE;
+    }
+
     /**
      * Wifi接続設定情報を取得する
      * 
      * @return WifiConfiguration wifi接続情報
      */
-    private WifiConfiguration getWifiConfig(Wifi.Security security, String ssid, String password){
+    public WifiConfiguration getWifiConfig(String ssid){
+        List<WifiConfiguration> configuredNetworks = mWifiManager.getConfiguredNetworks();
+        for(WifiConfiguration wifiConfiguration : configuredNetworks){
+            if(wifiConfiguration.SSID.equals(ssid)){
+                return wifiConfiguration;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Wifi接続設定情報を取得する
+     * 
+     * @return WifiConfiguration wifi接続情報
+     */
+    private WifiConfiguration createWifiConfig(Wifi.Security security, String ssid, String password){
         WifiConfiguration config = new WifiConfiguration();
         config.SSID = "\"" + ssid + "\"";
         switch(security){
@@ -191,6 +255,40 @@ public class NetworkManager {
                 break;
         }
         return config;
+    }
+
+    public boolean scanWifi(){
+        return mWifiManager.startScan();
+    }
+
+    public List<ScanResult> getScanResults(){
+        ArrayList<ScanResult> results = new ArrayList<ScanResult>();
+        List<ScanResult> scanResults = mWifiManager.getScanResults();
+        if(scanResults == null){
+            scanResults = new ArrayList<ScanResult>();
+        }
+        for(ScanResult scanResult : scanResults){
+            String ssid = getSsidName(scanResult.SSID);
+            if(!TextUtils.isEmpty(ssid)){
+                results.add(scanResult);
+            }
+        }
+        return results;
+    }
+
+    public List<WifiConfiguration> getConfiguredNetworks(){
+        List<WifiConfiguration> configs = new ArrayList<WifiConfiguration>();
+        List<WifiConfiguration> configuredNetworks = mWifiManager.getConfiguredNetworks();
+        if(configuredNetworks == null){
+            configuredNetworks = new ArrayList<WifiConfiguration>();
+        }
+        for(WifiConfiguration config : configuredNetworks){
+            String ssid = getSsidName(config.SSID);
+            if(!TextUtils.isEmpty(ssid)){
+                configs.add(config);
+            }
+        }
+        return configs;
     }
 
     /**
@@ -260,9 +358,30 @@ public class NetworkManager {
      * 
      * @return SSID
      */
-    public String getSSID(){
+    public String getSsid(){
         WifiInfo connectionInfo = mWifiManager.getConnectionInfo();
         return connectionInfo.getSSID();
+    }
+
+    /**
+     * Android4.2以降のダブルクォーテーションを除去したSSIDを返す
+     * 
+     * @return SSID
+     */
+    public String getSsidName(){
+        return getSsidName(getSsid());
+    }
+
+    /**
+     * Android4.2以降のダブルクォーテーションを除去
+     * 
+     * @return SSID
+     */
+    public String getSsidName(String ssid){
+        if(ssid == null || ssid.replace("\"", "").equals("null")){
+            return null;
+        }
+        return ssid.replace("\"", "");
     }
 
 }
