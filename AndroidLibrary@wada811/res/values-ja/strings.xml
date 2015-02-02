@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- AlertDialogFragmnet -->
-    <string name="dialogOk">OK</string>
-    <string name="dialogCancel">キャンセル</string>
-    <string name="dialogClose">閉じる</string>
-    <string name="dialogYes">はい</string>
-    <string name="dialogNo">いいえ</string>
     <!-- message -->
     <string name="mailerNotFound">メールアプリが見つかりませんでした。</string>
     <string name="cameraNotFound">カメラが見つかりませんでした。</string>

@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- AlertDialogFragmnet -->
-    <string name="dialogOk">OK</string>
-    <string name="dialogCancel">Cancel</string>
-    <string name="dialogClose">Close</string>
-    <string name="dialogYes">Yes</string>
-    <string name="dialogNo">No</string>
     <!-- message -->
     <string name="mailerNotFound">Mail app not found!</string>
     <string name="cameraNotFound">Camera app not found!</string>
