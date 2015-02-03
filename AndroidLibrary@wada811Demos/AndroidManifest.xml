@@ -165,22 +165,6 @@
             </intent-filter>
         </activity>
         <!--
-            _                        _____         _    _                    _      
-           / \   ___ _   _ _ __   __|_   _|_ _ ___| | _| |    ___   __ _  __| | ___  _ __  
-          / _ \ / __| | | | '_ \ / __|| |/ _` / __| |/ / |   / _ \ / _` |/ _` |/ _ \| '__|
-         / ___ \\__ \ |_| | | | | (__ | | (_| \__ \   <| |__| (_) | (_| | (_| |  __/| |   
-        /_/   \_\___/\__, |_| |_|\___||_|\__,_|___/_|\_\_____\___/ \__,_|\__,_|\___||_|  
-                     |___/                                                          
-        -->
-        <activity
-            android:name="at.wada811.android.library.demos.loader.LoaderListActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <!--
                               _                     _             _ 
          ___ _   _ _ __   ___| |__  _ __ ___  _ __ (_)_______  __| |
         / __| | | | '_ \ / __| '_ \| '__/ _ \| '_ \| |_  / _ \/ _` |
